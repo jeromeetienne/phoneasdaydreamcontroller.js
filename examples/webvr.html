@@ -258,74 +258,6 @@ scene.add(cube);
 	var light	= new THREE.HemisphereLight( 0xfffff0, 0x101020, 0.2 )
 	light.position.set( 0.75, 1, 0.25 )
 	scene.add(light)
-	
-// // Position cube mesh
-// cube.userData.angularSpeed = 0.0006
-// onRenderFcts.push(function(delta){
-// 	cube.rotation.y += delta * cube.userData.angularSpeed;
-// })
-
-</script>
-<script src="../webspeech-commands.js"></script>
-<script>
-;(function(){
-return
-	var webSpeechCommands = new WebSpeechCommands()
-
-	webSpeechCommands.listen(function onResult(event){
-		if( event === null ){
-	                webSpeechCommands.listen(onResult)
-			return
-		}
-		if( event.type === 'error' ){
-			webSpeechCommands.say( 'An error occured, please try again', function(){
-		                webSpeechCommands.listen(onResult)
-		        })		
-			return
-		}
-		
-		
-	        var command = event.results[0][0].transcript
-	        command = command.toLowerCase()
-		console.log('received', command)
-		
-		var aliases = {
-			'hello' : ['hailo'],
-			'reset' : ['risen', 'resort', 'wizard'],
-		}
-				
-	        if( command === 'hello' || aliases['hello'].indexOf(command) !== -1 ){
-	                var text = 'Hello master'
-	        }else if( command === 'how are you' ){
-	                var text = 'Fine, ready to please'
-	        }else if( command === 'open remote expert' ){
-	                var text = 'You are the most expert'
-		}else if( command === 'open gallery' ){
-	                var text = 'Vous etes si beau dans ce mirroir'
-		}else if( command === 'reset' || aliases['reset'].indexOf(command) !== -1  ){
-			vrDisplay.resetPose();
-			var text = 'done, the ui is in front now'
-		}else if( command === 'bigger' ){
-			cube.scale.multiplyScalar(1.2)
-			var text = 'done, the object is bigger'
-		}else if( command === 'smaller' ){
-			cube.scale.multiplyScalar(1/1.2)
-			var text = 'done, the object is smaller'
-		}else if( command === 'stop' ){
-			cube.userData.angularSpeed =0
-			var text = 'done, the object is stopped'
-		}else if( command === 'start' ){
-			cube.userData.angularSpeed = 0.0006
-			var text = 'done, the object is turning'
-	        }else{
-	                var text = command + ' is an unknown command'
-	        }
-	        
-	        webSpeechCommands.say( text, function(){
-	                webSpeechCommands.listen(onResult)
-	        })
-	})
-})()
 </script>
 <script>
 	//////////////////////////////////////////////////////////////////////////////////
@@ -345,9 +277,9 @@ return
 	})
 </script>
 
-<script src="http://192.168.0.2:3000/socket.io/socket.io.js"></script>
+<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 <script>
-var socket = io('http://192.168.0.2:3000');
+var socket = io('http://127.0.0.1:3000');
 var first = null
 socket.on('chat message', function(message){
 	var event = JSON.parse(message)
@@ -385,11 +317,8 @@ socket.on('chat message', function(message){
 		})
 		if( intersecting === undefined )	return
 		console.log('intersecting', intersecting)
-		intersecting.object.parent.remove(intersecting.object);
-		
+		intersecting.object.parent.remove(intersecting.object);	
 	}
-
-	// console.log('chat message', message)
 })
 
 function setOrientation(object3d, alpha, beta, gamma){
@@ -403,31 +332,31 @@ function setOrientation(object3d, alpha, beta, gamma){
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
-	for(var i = 0; i < 200; i++){
-		(function(){
-			var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
-			//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
-			var material	= new THREE.MeshPhongMaterial({
-				color	: 0xffffff,
-				specular: 0xffffff,
-				shininess: 200,
-			});
-			var object3d	= new THREE.Mesh( geometry, material );
-			object3d.scale.set(1,1,1).multiplyScalar(1/2)
-			scene.add( object3d );
-			object3d.position.x	= (Math.random()-0.5)*10
-			object3d.position.y	= (Math.random()-0.5)*5
-			object3d.position.z	= (Math.random()-0.5)*10
-			
-			object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
-			object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
-			object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
-			
-			// onRenderFcts.push(function(delta, now){
-			// 	object3d.rotation.x += 1 * delta;
-			// 	object3d.rotation.y += 0.01;		
-			// })	
-		})()	
-	}
+for(var i = 0; i < 200; i++){
+	(function(){
+		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
+		//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
+		var material	= new THREE.MeshPhongMaterial({
+			color	: 0xffffff,
+			specular: 0xffffff,
+			shininess: 200,
+		});
+		var object3d	= new THREE.Mesh( geometry, material );
+		object3d.scale.set(1,1,1).multiplyScalar(1/2)
+		scene.add( object3d );
+		object3d.position.x	= (Math.random()-0.5)*10
+		object3d.position.y	= (Math.random()-0.5)*5
+		object3d.position.z	= (Math.random()-0.5)*10
+		
+		object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
+		object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
+		object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
+		
+		// onRenderFcts.push(function(delta, now){
+		// 	object3d.rotation.x += 1 * delta;
+		// 	object3d.rotation.y += 0.01;		
+		// })	
+	})()	
+}
 </script>
 </html>
