@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<script src='vendor/three.js/build/three.js'></script>
+<script src='../threex.laserbeam.js'></script>
+<script src='../threex.lasercooked.js'></script>
+<body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
+	var renderer	= new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+	renderer.setClearColor('black',1)
+
+	var onRenderFcts= [];
+	var scene	= new THREE.Scene();
+	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000 );
+	camera.position.z = 10;
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var light	= new THREE.HemisphereLight( 0xfffff0, 0x101020, 0.2 )
+	light.position.set( 0.75, 1, 0.25 )
+	scene.add(light)
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		Camera Controls							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var mouse	= {x : 0, y : 0}
+	document.addEventListener('mousemove', function(event){
+		mouse.x	= (event.clientX / window.innerWidth ) - 0.5
+		mouse.y	= (event.clientY / window.innerHeight) - 0.5
+	}, false)
+	onRenderFcts.push(function(delta, now){
+		camera.position.x += (mouse.x*35 - camera.position.x) * 0.05
+		camera.position.y += (mouse.y*35 - camera.position.y) * 0.05
+		camera.lookAt( scene.position )
+	})
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		add an object and make it move					//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var laserBeam0	= new THREEx.LaserBeam()
+	scene.add(laserBeam0.object3d)
+	// laserBeam.position.x	= 2
+	var laserCooked0= new THREEx.LaserCooked(laserBeam0)
+	onRenderFcts.push(function(delta, now){
+		laserCooked0.update(delta, now)
+	})
+	onRenderFcts.push(function(delta, now){
+		var object3d	= laserBeam0.object3d
+		// object3d.rotation.z	= Math.PI/8
+
+		object3d.rotation.z += 0.4 * delta;
+		object3d.rotation.y += 1 * delta;		
+	})
+
+	var laserBeam2	= new THREEx.LaserBeam()
+	scene.add(laserBeam2.object3d)
+	// laserBeam2.position.x	= 2
+	laserBeam2.object3d.lookAt(new THREE.Vector3(0.1,0,-0.1))
+	// laserBeam2.rotateY(Math.PI)
+	var laserCooked2= new THREEx.LaserCooked(laserBeam2)
+
+	onRenderFcts.push(function(delta, now){
+		if( laserCooked0.lastIntersects.length === 0 )	return
+		var intersect	= laserCooked0.lastIntersects[0]
+		// console.dir(intersect)
+		var position	= intersect.point
+		var object3d	= laserBeam2.object3d
+		object3d.position.copy(position)
+		// reflexion vector: http://www.3dkingdoms.com/weekly/weekly.php?a=2
+		// - R = 2*(V dot N)*N - V
+		// - compute reflexion and do a lookat 
+		var n	= new THREE.Vector3(1,0,0)
+		var n	= intersect.face.normal.clone()
+			.normalize()
+			// .negate();
+
+		var v	= new THREE.Vector3(-1,0,0)
+
+		// get laserBeam matrixWorld
+		laserBeam0.object3d.updateMatrixWorld();
+		var matrixWorld	= laserBeam0.object3d.matrixWorld.clone()
+		// keep only the rotation
+		matrixWorld.setPosition(new THREE.Vector3(0,0,0))		
+		// set the direction
+		var v	= new THREE.Vector3(1,0,0)
+			.applyMatrix4( matrixWorld )
+			.normalize()
+			.negate()
+window.v	= v
+
+		var r	= n.clone().multiplyScalar(v.clone().normalize().dot(n.clone().normalize())*2).sub(v.clone().normalize())
+window.r	= r
+window.laserBeam2	= laserBeam2
+		laserBeam0.object3d.updateMatrixWorld();
+		laserBeam2.object3d.updateMatrixWorld();
+		laserBeam2.object3d.lookAt(new THREE.Vector3(0,0,0))
+		// laserBeam2.object3d.rotateX(-Math.PI/2)
+		// laserBeam2.object3d.rotateZ(-1*Math.PI)
+	})
+
+	onRenderFcts.push(function(delta, now){
+		laserCooked2.update(delta, now)
+	})
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+	;(function(){
+		var geometry	= new THREE.CubeGeometry(1, 1, 1);
+		var material	= new THREE.MeshPhongMaterial({
+			color	: 0xaa8888,
+			specular: 0xffffff,
+			shininess: 200,
+			side	: THREE.BackSide,
+		});
+		var object3d	= new THREE.Mesh( geometry, material )
+		object3d.scale.set(10,5,10)
+		scene.add(object3d)
+	})()
+	
+	for(var i = 0; i < 200; i++){
+		(function(){
+return
+			var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
+			//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
+			var material	= new THREE.MeshPhongMaterial({
+				color	: 0xffffff,
+				specular: 0xffffff,
+				shininess: 200,
+			});
+			var object3d	= new THREE.Mesh( geometry, material );
+			object3d.scale.set(1,1,1).multiplyScalar(1/2)
+			scene.add( object3d );
+			object3d.position.x	= (Math.random()-0.5)*10
+			object3d.position.y	= (Math.random()-0.5)*5
+			object3d.position.z	= (Math.random()-0.5)*10
+			
+			object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
+			
+			// onRenderFcts.push(function(delta, now){
+			// 	object3d.rotation.x += 1 * delta;
+			// 	object3d.rotation.y += 0.01;		
+			// })	
+		})()	
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the scene						//
+	//////////////////////////////////////////////////////////////////////////////////
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );		
+	})
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		loop runner							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var lastTimeMsec= null
+	requestAnimationFrame(function animate(nowMsec){
+		// keep looping
+		requestAnimationFrame( animate );
+		// measure time
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		// call each update function
+		onRenderFcts.forEach(function(updateFn){
+			updateFn(deltaMsec/1000, nowMsec/1000)
+		})
+	})
+</script></body>
