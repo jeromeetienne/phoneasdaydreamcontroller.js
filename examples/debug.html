@@ -23,12 +23,12 @@
 <script>
 var socket = io('http://127.0.0.1:3000');
 document.querySelector('form').addEventListener('submit', function(event){
-        socket.emit('chat message', document.querySelector('#m').value);
+        socket.emit('broadcast', document.querySelector('#m').value);
         document.querySelector('#m').value = ''
         event.preventDefault()
         event.stopPropagation()
 });
-socket.on('chat message', function(msg){
+socket.on('broadcast', function(msg){
         var domElement = document.querySelector('#messages')
         
         var liElement = document.createElement('li')

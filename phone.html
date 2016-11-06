@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <meta charset='utf-8'>
+<title>PhoneAsGamePad : phone page</title>
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no'>
 <meta name='mobile-web-app-capable' content='yes'>
 <meta name='apple-mobile-web-app-capable' content='yes' />
@@ -12,6 +13,7 @@
 body, html, #container {
 	height: 100%;
 	margin: 0;
+	overflow-y: hidden;
 }
 
 #container {
@@ -77,14 +79,14 @@ document.querySelector('#button1').addEventListener('click', function(){
 		type : 'click',
 		target : 'button1',
 	}
-	socket.emit('chat message', JSON.stringify(event))	
+	socket.emit('broadcast', JSON.stringify(event))	
 })
 document.querySelector('#button2').addEventListener('click', function(){
 	var event = {
 		type : 'click',
 		target : 'button2',
 	}
-	socket.emit('chat message', JSON.stringify(event))	
+	socket.emit('broadcast', JSON.stringify(event))	
 })
 
 //////////////////////////////////////////////////////////////////////////////
@@ -100,7 +102,7 @@ function onDeviceOrientation(event) {
 		beta : event.beta,
 		gamma : event.gamma,
 	}
-	socket.emit('chat message', JSON.stringify(event))
+	socket.emit('broadcast', JSON.stringify(event))
 }
 
 </script>

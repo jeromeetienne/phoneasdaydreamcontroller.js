@@ -281,10 +281,10 @@ scene.add(cube);
 <script>
 var socket = io('http://127.0.0.1:3000');
 var first = null
-socket.on('chat message', function(message){
+socket.on('broadcast', function(message){
 	var event = JSON.parse(message)
 	if( event.type === 'deviceOrientation' ){
-		// console.log('chat message', message)
+		// console.log('broadcast', message)
 		if( first === null ){
 			first = {
 				alpha: event.alpha,
@@ -318,16 +318,85 @@ socket.on('chat message', function(message){
 		if( intersecting === undefined )	return
 		console.log('intersecting', intersecting)
 		intersecting.object.parent.remove(intersecting.object);	
+	}else {
+		console.assert(false)
 	}
 })
 
 function setOrientation(object3d, alpha, beta, gamma){
-	object3d.rotation.x =  beta  / 180 * Math.PI
-	object3d.rotation.y =  alpha / 180 * Math.PI
-	object3d.rotation.z = -gamma / 180 * Math.PI
-	object3d.rotation.order = "YXZ"
+	var euler = new THREE.Euler()
+	euler.x =  beta  / 180 * Math.PI
+	euler.y =  alpha / 180 * Math.PI
+	euler.z = -gamma / 180 * Math.PI
+	euler.order = "YXZ"
+	
+	var quaternion = new THREE.Quaternion()
+	quaternion.setFromEuler(euler)
+
+	object3d.quaternion.copy(quaternion)
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
+var gamepad = {
+	'id' : 'PhoneAsGamepad.js controller',
+	'index' : 0,
+	'connected' : true,
+	'mapping' : 'standard',
+	'axes' : [],
+	'buttons' : [{
+		'pressed' : false,
+		'touched' : false,
+		'value' : 0,
+	}, {
+		'pressed' : false,
+		'touched' : false,
+		'value' : 0,		
+	}],
+	// VR extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadpose
+	'pose' : {
+		'hasPosition' : false,
+		'hasRotation' : true,
+		
+		'position' : null,
+		'linearVelocity' : null,
+		'linearAcceleration' : null,
+		
+		'orientation' : [0,0,0,1],
+		'angularVelocity' : null,
+		'angularAcceleration' : null
+	}
+}
+socket.on('broadcast', function(message){
+	var event = JSON.parse(message)
+	if( event.type === 'deviceOrientation' ){
+		function setOrientation(object3d, alpha, beta, gamma){
+			var euler = new THREE.Euler()
+			euler.x =  beta  / 180 * Math.PI
+			euler.y =  alpha / 180 * Math.PI
+			euler.z = -gamma / 180 * Math.PI
+			euler.order = "YXZ"
+			
+			var quaternion = new THREE.Quaternion()
+			quaternion.setFromEuler(euler)
+		}
+	}else if( event.type === 'click' ){
+		if( event.target === 'button1' ){
+			gamepad.buttons[0].pressed = true
+			gamepad.buttons[0].value = 1
+		}else if( event.target === 'button2' ){
+			gamepad.buttons[1].pressed = true
+			gamepad.buttons[1].value = 1
+		}else{
+			console.assert(false)
+		}
+	}else {
+		console.assert(false)
+	}
+})
 
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
