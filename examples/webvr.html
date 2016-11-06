@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+<title>Web VR Boilerplate</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no'>
+<meta name='mobile-web-app-capable' content='yes'>
+<meta name='apple-mobile-web-app-capable' content='yes' />
+<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css'>
+<style>
+html, body {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	color: #fff;
+	margin: 0px;
+	padding: 0;
+	overflow: hidden;
+}
+
+canvas {
+	position: absolute;
+	top: 0;
+}
+#fullScreenContainer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#buttons {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	z-index: 1;
+	/*to prevent mouse selection of the button*/
+	user-select: none;
+	-webkit-user-select: none;
+}
+#buttons i {
+	color: #ccc;
+	font-size: 150%;
+	margin-bottom: 0.4em;
+	margin-right: 0.4em;
+}
+#buttons i:hover {
+	color: #fff;
+	text-shadow: 0px 0px 5px lightblue, 0px 0px 10px lightblue;
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+	<div id='fullScreenContainer'>
+		<div id='buttons'>
+			<i class='fa fa-arrows-alt' id='fullscreenButton'></i>
+			<i class='fa fa-eye' id='vrButton'></i>
+			<i class='fa fa-star' id='resetButton' title='reset position'></i>
+		</div>
+	</div>
+</body>
+
+<script>
+WebVRConfig = {
+	BUFFER_SCALE: 0.5,
+};
+
+document.addEventListener('touchmove', function(event) {
+	event.preventDefault();
+});
+</script>
+
+<!-- three.js library -->
+<script src='vendor/three.js/build/three.js'></script>
+
+<!-- VRControls.js applies the WebVR transformations to a three.js camera object. -->
+<script src='vendor/three.js/examples/js/controls/VRControls.js'></script>
+
+<!-- VREffect.js handles stereo camera setup and rendering.  -->
+<script src='vendor/three.js/examples/js/effects/VREffect.js'></script>
+<!-- <script src='vendor/three.js/examples/js/effects/VREffect-fromweb.js'></script> -->
+
+<!-- A polyfill for the WebVR API.  -->
+<script src='vendor/webvr-polyfill.js'></script>
+
+<script src='vendor/threex.laser/threex.laserbeam.js'></script>
+<script src='vendor/threex.laser/threex.lasercooked.js'></script>
+<script>THREEx.LaserCooked.baseURL	= 'vendor/threex.laser/';</script>
+
+
+<script>
+var onRenderFcts = []
+
+// Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
+// Only enable it if you actually need to.
+var renderer = new THREE.WebGLRenderer({antialias: false});
+renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
+
+// Append the canvas element created by the renderer to fullScreenContainer
+document.querySelector('#fullScreenContainer').appendChild(renderer.domElement);
+
+// Create a three.js scene.
+var scene = new THREE.Scene();
+
+// Create a three.js camera.
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+
+// Apply VR headset positional data to camera.
+var controls = new THREE.VRControls(camera);
+
+// Apply VR stereo rendering to renderer.
+var effect = new THREE.VREffect(renderer);
+effect.setSize(window.innerWidth, window.innerHeight);
+
+// Get the VRDisplay and save it for later.
+var vrDisplay = null;
+navigator.getVRDisplays().then(function(displays) {
+	if (displays.length > 0) {
+		vrDisplay = displays[0];
+	}
+	
+	if( vrDisplay !== null ){
+		if( vrDisplay.capabilities.canPresent !== true ){
+			document.querySelector('#vrButton').style.display = 'none'
+		}
+	}
+});
+
+// Request animation frame loop function
+var lastRender = 0;
+function animate(timestamp) {
+	var delta = Math.min(timestamp - lastRender, 500);
+	lastRender = timestamp;
+	
+	// Update VR headset position and apply to camera.
+	controls.update();
+
+	// call each function for the rendering
+	onRenderFcts.forEach(function(onRenderFct){
+		onRenderFct(delta)
+	})
+	
+	// Render the scene.
+	effect.render(scene, camera);
+	
+	// Keep looping.
+	requestAnimationFrame(animate);
+}
+
+// Kick off animation loop.
+requestAnimationFrame(animate);
+
+//////////////////////////////////////////////////////////////////////////////////
+//		Comments
+//////////////////////////////////////////////////////////////////////////////////
+
+function onResize() {
+	effect.setSize(window.innerWidth, window.innerHeight);
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+}
+
+// Resize the WebGL canvas when we resize and also when we change modes.
+window.addEventListener('resize', onResize);
+window.addEventListener('vrdisplaypresentchange', function onVRDisplayPresentChange() {
+	console.log('onVRDisplayPresentChange');
+	onResize();
+});
+
+// Button click handlers.
+document.querySelector('#fullscreenButton').addEventListener('click', function() {
+	var domElement = document.querySelector('#fullScreenContainer')
+	// var domElement = document.querySelector('canvas')
+	enterFullscreen(domElement);
+});
+document.querySelector('#vrButton').addEventListener('click', function() {
+	vrDisplay.requestPresent([{source: renderer.domElement}]);
+});
+document.querySelector('#resetButton').addEventListener('click', function() {
+	vrDisplay.resetPose();
+});
+
+renderer.domElement.addEventListener('click', function(event){
+	var element = renderer.domElement
+	// check it is the proper click
+	if( event.target !== element )	return
+	if( vrDisplay.displayName !== "Mouse and Keyboard VRDisplay (webvr-polyfill)")	return	
+	// Ask the browser to lock the pointer
+	element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+	if ( /Firefox/i.test( navigator.userAgent ) ) {
+		var fullscreenchange = function ( event ) {
+			if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+				document.removeEventListener( 'fullscreenchange', fullscreenchange );
+				document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+				element.requestPointerLock();
+			}
+		};
+		document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+		document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+		element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+		element.requestFullscreen();
+	} else {
+		element.requestPointerLock();
+	}
+})
+
+function enterFullscreen (element) {
+	if (element.requestFullscreen) {
+		element.requestFullscreen();
+	} else if (element.mozRequestFullScreen) {
+		element.mozRequestFullScreen();
+	} else if (element.webkitRequestFullscreen) {
+		element.webkitRequestFullscreen();
+	} else if (element.msRequestFullscreen) {
+		element.msRequestFullscreen();
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+// Add a repeating grid as a skybox.
+var boxWidth = 10;
+var loader = new THREE.TextureLoader();
+loader.load('images/box.png', function onTextureLoaded(texture) {
+	texture.wrapS = THREE.RepeatWrapping;
+	texture.wrapT = THREE.RepeatWrapping;
+	texture.repeat.set(boxWidth, boxWidth);
+	
+	var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
+	var material = new THREE.MeshPhongMaterial({
+		// map: texture,
+		// color: 0x01BE00,
+		color	: 0xaa8888,
+		specular: 0xffffff,
+		side: THREE.BackSide
+	});
+	
+	var skybox = new THREE.Mesh(geometry, material);
+	scene.add(skybox);
+});
+
+// Create 3D objects.
+var geometry = new THREE.BoxGeometry(0.5*0.2, 0.1*0.2, 1*0.2);
+var material = new THREE.MeshNormalMaterial();
+var cube = new THREE.Mesh(geometry, material);
+cube.position.z = -1
+
+// Add cube mesh to your three.js scene
+scene.add(cube);
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var light	= new THREE.HemisphereLight( 0xfffff0, 0x101020, 0.2 )
+	light.position.set( 0.75, 1, 0.25 )
+	scene.add(light)
+	
+// // Position cube mesh
+// cube.userData.angularSpeed = 0.0006
+// onRenderFcts.push(function(delta){
+// 	cube.rotation.y += delta * cube.userData.angularSpeed;
+// })
+
+</script>
+<script src="../webspeech-commands.js"></script>
+<script>
+;(function(){
+return
+	var webSpeechCommands = new WebSpeechCommands()
+
+	webSpeechCommands.listen(function onResult(event){
+		if( event === null ){
+	                webSpeechCommands.listen(onResult)
+			return
+		}
+		if( event.type === 'error' ){
+			webSpeechCommands.say( 'An error occured, please try again', function(){
+		                webSpeechCommands.listen(onResult)
+		        })		
+			return
+		}
+		
+		
+	        var command = event.results[0][0].transcript
+	        command = command.toLowerCase()
+		console.log('received', command)
+		
+		var aliases = {
+			'hello' : ['hailo'],
+			'reset' : ['risen', 'resort', 'wizard'],
+		}
+				
+	        if( command === 'hello' || aliases['hello'].indexOf(command) !== -1 ){
+	                var text = 'Hello master'
+	        }else if( command === 'how are you' ){
+	                var text = 'Fine, ready to please'
+	        }else if( command === 'open remote expert' ){
+	                var text = 'You are the most expert'
+		}else if( command === 'open gallery' ){
+	                var text = 'Vous etes si beau dans ce mirroir'
+		}else if( command === 'reset' || aliases['reset'].indexOf(command) !== -1  ){
+			vrDisplay.resetPose();
+			var text = 'done, the ui is in front now'
+		}else if( command === 'bigger' ){
+			cube.scale.multiplyScalar(1.2)
+			var text = 'done, the object is bigger'
+		}else if( command === 'smaller' ){
+			cube.scale.multiplyScalar(1/1.2)
+			var text = 'done, the object is smaller'
+		}else if( command === 'stop' ){
+			cube.userData.angularSpeed =0
+			var text = 'done, the object is stopped'
+		}else if( command === 'start' ){
+			cube.userData.angularSpeed = 0.0006
+			var text = 'done, the object is turning'
+	        }else{
+	                var text = command + ' is an unknown command'
+	        }
+	        
+	        webSpeechCommands.say( text, function(){
+	                webSpeechCommands.listen(onResult)
+	        })
+	})
+})()
+</script>
+<script>
+	//////////////////////////////////////////////////////////////////////////////////
+	//		add an object and make it move					//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var laserBeam	= new THREEx.LaserBeam()
+	laserBeam.object3d.rotation.y = Math.PI/2
+	laserBeam.object3d.scale.x = 0.5
+	laserBeam.object3d.scale.z = 0.5
+	laserBeam.object3d.position.z = -0.5*0.2
+	cube.add(laserBeam.object3d)
+	// laserBeam.object3d.position.z	= -2
+	var laserCooked	= new THREEx.LaserCooked(laserBeam)
+	onRenderFcts.push(function(delta, now){
+		laserCooked.update(delta, now)
+	})
+</script>
+
+<script src="http://192.168.0.2:3000/socket.io/socket.io.js"></script>
+<script>
+var socket = io('http://192.168.0.2:3000');
+var first = null
+socket.on('chat message', function(message){
+	var event = JSON.parse(message)
+	if( event.type === 'deviceOrientation' ){
+		// console.log('chat message', message)
+		if( first === null ){
+			first = {
+				alpha: event.alpha,
+				beta: event.beta,
+				gamma: event.gamma
+			}
+			console.log('init first', first)
+		}else{
+			setOrientation(cube, event.alpha-first.alpha, event.beta-first.beta, event.gamma-first.gamma)
+		}
+	}else if( event.type === 'click' && event.target === 'button1' ){
+		console.log('received click', laserCooked.lastIntersects)
+		var intersecting = laserCooked.lastIntersects.find(function(intersect){
+			var object3d = intersect.object
+			if( object3d.geometry === undefined ) return false
+			if( object3d.geometry instanceof THREE.TorusGeometry === false ) return false
+			return true
+		})
+		if( intersecting === undefined )	return
+		console.log('intersecting', intersecting)
+		intersecting.object.material.color.setHSL( Math.random(), 1, 0.5)
+		intersecting.object.scale.multiplyScalar(1.2)
+	}else if( event.type === 'click' && event.target === 'button2' ){
+		console.log('received click', laserCooked.lastIntersects)
+		var intersecting = laserCooked.lastIntersects.find(function(intersect){
+			var object3d = intersect.object
+			if( object3d.geometry === undefined ) return false
+			if( object3d.geometry instanceof THREE.TorusGeometry === false ) return false
+			return true
+		})
+		if( intersecting === undefined )	return
+		console.log('intersecting', intersecting)
+		intersecting.object.parent.remove(intersecting.object);
+		
+	}
+
+	// console.log('chat message', message)
+})
+
+function setOrientation(object3d, alpha, beta, gamma){
+	object3d.rotation.x =  beta  / 180 * Math.PI
+	object3d.rotation.y =  alpha / 180 * Math.PI
+	object3d.rotation.z = -gamma / 180 * Math.PI
+	object3d.rotation.order = "YXZ"
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+	for(var i = 0; i < 200; i++){
+		(function(){
+			var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
+			//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
+			var material	= new THREE.MeshPhongMaterial({
+				color	: 0xffffff,
+				specular: 0xffffff,
+				shininess: 200,
+			});
+			var object3d	= new THREE.Mesh( geometry, material );
+			object3d.scale.set(1,1,1).multiplyScalar(1/2)
+			scene.add( object3d );
+			object3d.position.x	= (Math.random()-0.5)*10
+			object3d.position.y	= (Math.random()-0.5)*5
+			object3d.position.z	= (Math.random()-0.5)*10
+			
+			object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
+			
+			// onRenderFcts.push(function(delta, now){
+			// 	object3d.rotation.x += 1 * delta;
+			// 	object3d.rotation.y += 0.01;		
+			// })	
+		})()	
+	}
+</script>
+</html>
