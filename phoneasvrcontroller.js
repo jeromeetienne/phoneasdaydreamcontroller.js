@@ -1,5 +1,4 @@
 function PhoneAsVRController(){
-	var socket = io('http://127.0.0.1:3000');
 	// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
 	var gamepad = {
 		'id' : 'PhoneAsGamepad.js Controller',
@@ -33,9 +32,9 @@ function PhoneAsVRController(){
 	this.gamepad = gamepad
 
 	var firstAngle = null
-	socket.on('broadcast', function(message){
-	        // console.log('received', message)
-	// return        
+	var socket = io('http://127.0.0.1:3000');
+	this._socket = socket
+	socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
 		if( event.type === 'deviceOrientation' ){
 	                // console.log('broadcast', message)
@@ -80,14 +79,15 @@ function PhoneAsVRController(){
 			}else{
 				console.assert(false)
 			}
-
-		}else {
-			console.assert(false)
 		}
 	})	
 }
 
-;(function(){
+////////////////////////////////////////////////////////////////////////////////
+//          Code Separator
+////////////////////////////////////////////////////////////////////////////////
+
+PhoneAsVRController.overloadGetpadsAPI = function(){
 	var phoneAsVRController = new PhoneAsVRController()
 	navigator.getGamepads = function(){
 		// console.log('getGamepads')
@@ -98,6 +98,5 @@ function PhoneAsVRController(){
 			undefined,
 		]
 		return gamepads
-	}
-	
-})()
+	}	
+}

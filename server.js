@@ -14,6 +14,12 @@ app.get('/phone.html', function(req, res){
 app.get('/phoneasvrcontroller.js', function(req, res){
         res.sendfile('./phoneasvrcontroller.js');
 });
+app.get('/phoneasvrcontrollerextra.js', function(req, res){
+        res.sendfile('./phoneasvrcontrollerextra.js');
+});
+app.get('/webspeech-commands.js', function(req, res){
+        res.sendfile('./examples/vendor/speechapi-experiments/webspeech-commands.js');
+});
 
 
 //////////////////////////////////////////////////////////////////////////////
