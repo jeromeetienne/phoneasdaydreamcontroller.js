@@ -283,16 +283,23 @@ scene.add(cube);
 <script src="js/phoneasvrcontrollerextra.js"></script>
 <script>
 	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
+	
+	onRenderFcts.push(function(){
+		var quaternionFlat = phoneAsVRControllerExtra.gamepad.pose.orientation
+		var quaternion = new THREE.Quaternion().fromArray(quaternionFlat)
+		cube.quaternion.copy(quaternion)
+	})
 
 	phoneAsVRControllerExtra.onVoiceCommand = function(command){
 		console.log('voiceCommand', command)
+		command = command.toLowerCase()
 		if( command === 'hello' ){
 			var text = 'Hello master'
 		}else if( command === 'how are you' ){
 			var text = 'Fine, ready to please'
 		}else if( command === 'open remote expert' ){
 			var text = 'You are the most expert'
-		}else if( command === 'open gallery' ){
+		}else if( command === 'ok jarvis open gallery' ){
 			var text = 'Vous etes si beau dans ce mirroir'
 		}else{
 			var text = command + ' is an unknown command'

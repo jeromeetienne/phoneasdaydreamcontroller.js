@@ -36,6 +36,7 @@ function PhoneAsVRController(){
 	this._socket = socket
 	socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
+// console.log('broadcast', message)
 		if( event.type === 'deviceOrientation' ){
 	                // console.log('broadcast', message)
 			if( firstAngle === null ){
@@ -50,6 +51,7 @@ function PhoneAsVRController(){
 	                        var beta = event.beta-firstAngle.beta
 	                        var gamma = event.gamma-firstAngle.gamma
 			}
+
 			var euler = new THREE.Euler()
 			euler.x =  beta  / 180 * Math.PI
 			euler.y =  alpha / 180 * Math.PI
@@ -59,6 +61,7 @@ function PhoneAsVRController(){
 			var quaternion = new THREE.Quaternion()
 			quaternion.setFromEuler(euler)
 	                quaternion.toArray(gamepad.pose.orientation)
+// console.log('quaternion', gamepad.pose.orientation)
 		}else if( event.type === 'touchstart' ){
 			if( event.target === 'appButton' ){
 				gamepad.buttons[0].pressed = true

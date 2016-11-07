@@ -107,7 +107,7 @@ function onDeviceOrientation(event) {
 		beta : event.beta,
 		gamma : event.gamma,
 	}
-	// socket.emit('broadcast', JSON.stringify(event))
+	socket.emit('broadcast', JSON.stringify(event))
 }
 
 </script>
@@ -120,7 +120,9 @@ function onDeviceOrientation(event) {
 
 var webSpeechCommands = new WebSpeechCommands()
 
-webSpeechCommands.listen(function onResult(event){
+webSpeechCommands.listen(onResultWebSpeech)
+
+function onResultWebSpeech(event){
 	if( event === null ){
 		webSpeechCommands.say( 'An error occured, please try again', function(){
 			webSpeechCommands.listen(onResult)
@@ -131,32 +133,13 @@ webSpeechCommands.listen(function onResult(event){
 	var command = event.results[0][0].transcript
 	command = command.toLowerCase()
 
-	if( command === 'hello' ){
-		sendEvent('voiceCommand', command)
-	}else if( command === 'how are you' ){
-		sendEvent('voiceCommand', command)
-	}else if( command === 'open remote expert' ){
-		sendEvent('voiceCommand', command)
-	}else if( command === 'open gallery' ){
-		sendEvent('voiceCommand', command)
-	}else{
-		var text = command + ' is an unknown command'
-		webSpeechCommands.say( text, function(){
-			webSpeechCommands.listen(onResult)
-		})
+	var event = {
+		type : 'voiceCommand',
+		text : command,
 	}
-	
-	return
-	function sendEvent(type, text){
-		var event = {
-			type : type,
-			text : text,
-		}
-		console.log('emit voice', event)
-		socket.emit('broadcast', JSON.stringify(event))		
-	}
-})
-
+	console.log('emit voice', event)
+	socket.emit('broadcast', JSON.stringify(event))	
+}
 ////////////////////////////////////////////////////////////////////////////////
 //          honor .say
 ////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +149,10 @@ socket.on('broadcast', function(message){
 	if( event.type !== 'say' )	return
 	var text = event.text
 	console.log('received a say message', text)
-	webSpeechCommands.say(text)
+	webSpeechCommands.say(text, function onEnd(){
+		console.log('blabal')
+		webSpeechCommands.listen(onResultWebSpeech)
+	})
 })
 
 </script>
