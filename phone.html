@@ -74,20 +74,26 @@ var socket = io();
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
-document.querySelector('#button1').addEventListener('click', function(){
-	var event = {
-		type : 'click',
-		target : 'button1',
-	}
-	socket.emit('broadcast', JSON.stringify(event))	
+document.querySelector('#button1').addEventListener('touchstart', function(){
+	sendButtonEvent('touchstart', 'button1')
 })
-document.querySelector('#button2').addEventListener('click', function(){
-	var event = {
-		type : 'click',
-		target : 'button2',
-	}
-	socket.emit('broadcast', JSON.stringify(event))	
+document.querySelector('#button1').addEventListener('touchend', function(){
+	sendButtonEvent('touchend', 'button1')
 })
+document.querySelector('#button2').addEventListener('touchstart', function(){
+	sendButtonEvent('touchstart', 'button2')
+})
+document.querySelector('#button2').addEventListener('touchend', function(){
+	sendButtonEvent('touchend', 'button2')
+})
+
+function sendButtonEvent(type, target){
+	var event = {
+		type : type,
+		target : target,
+	}
+	socket.emit('broadcast', JSON.stringify(event))		
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //		forward the device orientation
