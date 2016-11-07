@@ -28,27 +28,27 @@ body, html, #container {
 }
 
 #trackpad {
-	height:70%;
+	height:50%;
 	width:100%;
 	background-color:#009900;
 	margin:auto;
 }
 
 #bottomRow {
-	height:30%;
+	height:50%;
 	width:100%;
 	background-color:#990000;
 	margin:auto;
 }
 
-#button1 {
+#homeButton {
 	float: left;
 	width: 50%;
 	height: 100%;
 	background-color: red;
 }	
 
-#button2 {
+#appButton {
 	float: right;
 	width: 50%;
 	height: 100%;
@@ -57,11 +57,10 @@ body, html, #container {
 
 </style>
 <div id="container">
-	
 	<div id="trackpad">Trackpad</div>    
 	<div id="bottomRow">
-		<div id="button1">Button 1</div>
-		<div id="button2">Button 2</div>
+		<div id="homeButton">Home Button</div>
+		<div id="appButton">Apps Button</div>
 	</div>
 	
 </div>
@@ -74,17 +73,17 @@ var socket = io();
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
-document.querySelector('#button1').addEventListener('touchstart', function(){
-	sendButtonEvent('touchstart', 'button1')
+document.querySelector('#homeButton').addEventListener('touchstart', function(){
+	sendButtonEvent('touchstart', 'homeButton')
 })
-document.querySelector('#button1').addEventListener('touchend', function(){
-	sendButtonEvent('touchend', 'button1')
+document.querySelector('#homeButton').addEventListener('touchend', function(){
+	sendButtonEvent('touchend', 'homeButton')
 })
-document.querySelector('#button2').addEventListener('touchstart', function(){
-	sendButtonEvent('touchstart', 'button2')
+document.querySelector('#appButton').addEventListener('touchstart', function(){
+	sendButtonEvent('touchstart', 'appButton')
 })
-document.querySelector('#button2').addEventListener('touchend', function(){
-	sendButtonEvent('touchend', 'button2')
+document.querySelector('#appButton').addEventListener('touchend', function(){
+	sendButtonEvent('touchend', 'appButton')
 })
 
 function sendButtonEvent(type, target){

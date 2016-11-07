@@ -295,7 +295,7 @@ socket.on('broadcast', function(message){
 		}else{
 			setOrientation(cube, event.alpha-first.alpha, event.beta-first.beta, event.gamma-first.gamma)
 		}
-	}else if( event.type === 'touchstart' && event.target === 'button1' ){
+	}else if( event.type === 'touchstart' && event.target === 'appButton' ){
 		console.log('received touchstart', laserCooked.lastIntersects)
 		var intersecting = laserCooked.lastIntersects.find(function(intersect){
 			var object3d = intersect.object
@@ -307,7 +307,7 @@ socket.on('broadcast', function(message){
 		console.log('intersecting', intersecting)
 		intersecting.object.material.color.setHSL( Math.random(), 1, 0.5)
 		intersecting.object.scale.multiplyScalar(1.2)
-	}else if( event.type === 'touchstart' && event.target === 'button2' ){
+	}else if( event.type === 'touchstart' && event.target === 'homeButton' ){
 		console.log('received touchstart', laserCooked.lastIntersects)
 		var intersecting = laserCooked.lastIntersects.find(function(intersect){
 			var object3d = intersect.object
@@ -382,20 +382,20 @@ socket.on('broadcast', function(message){
 			quaternion.setFromEuler(euler)
 		}
 	}else if( event.type === 'touchstart' ){
-		if( event.target === 'button1' ){
+		if( event.target === 'appButton' ){
 			gamepad.buttons[0].pressed = true
 			gamepad.buttons[0].value = 1
-		}else if( event.target === 'button2' ){
+		}else if( event.target === 'homeButton' ){
 			gamepad.buttons[1].pressed = true
 			gamepad.buttons[1].value = 1
 		}else{
 			console.assert(false)
 		}
 	}else if( event.type === 'touchend' ){
-		if( event.target === 'button1' ){
+		if( event.target === 'appButton' ){
 			gamepad.buttons[0].pressed = false
 			gamepad.buttons[0].value = 0
-		}else if( event.target === 'button2' ){
+		}else if( event.target === 'homeButton' ){
 			gamepad.buttons[1].pressed = false
 			gamepad.buttons[1].value = 0
 		}else{

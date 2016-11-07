@@ -5,5 +5,8 @@
   "dependencies": {
     "express": "^4.10.2",
     "socket.io": "^1.5.1"
+  },
+  "scripts": {
+    "start": "node server.js"
   }
 }
