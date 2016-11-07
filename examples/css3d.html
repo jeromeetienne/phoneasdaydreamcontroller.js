@@ -124,17 +124,17 @@ var onRenderFcts = []
 	}
 </style>
 <script type="text/javascript">
-	var rayImpact = document.createElement('img')
-	rayImpact.src = "images/blue_particle.jpg"
-	rayImpact.style.pointerEvents = 'none'
-	rayImpact.style.position = 'absolute'
-	rayImpact.style.top = '0px'
-	rayImpact.style.left = '0px'
-	rayImpact.style.marginLeft = '-16px'
-	rayImpact.style.marginTop = '-16px'
-	rayImpact.style.width = '32px'
-	rayImpact.style.height = '32px'
-	document.body.appendChild(rayImpact)
+	// var rayImpact = document.createElement('img')
+	// rayImpact.src = "images/blue_particle.jpg"
+	// rayImpact.style.pointerEvents = 'none'
+	// rayImpact.style.position = 'absolute'
+	// rayImpact.style.top = '0px'
+	// rayImpact.style.left = '0px'
+	// rayImpact.style.marginLeft = '-8px'
+	// rayImpact.style.marginTop = '-16px'
+	// rayImpact.style.width = '32px'
+	// rayImpact.style.height = '32px'
+	// document.body.appendChild(rayImpact)
 
 
 
@@ -146,8 +146,8 @@ var onRenderFcts = []
 	var domElementInner = document.createElement( 'div' );
 	domElementInner.dataset.hoverable = true
 	domElementInner.style.position = 'absolute';
-	domElementInner.style.top = '80px';
-	domElementInner.style.left = '80px';
+	// domElementInner.style.top = '80px';
+	// domElementInner.style.left = '80px';
 	domElementInner.style.width = '80px';
 	domElementInner.style.height = '80px';
 	domElementInner.style.backgroundColor = 'blue';
@@ -184,6 +184,7 @@ var onRenderFcts = []
 			.applyMatrix4( matrixWorld )
 			.normalize()
 	
+		// remote any .hovering 
 		var domElements = document.querySelectorAll('.hovering')
 		for(var i = 0; i < domElements.length; i++){
 			domElements[i].classList.remove('hovering')
@@ -191,7 +192,7 @@ var onRenderFcts = []
 		
 		var intersects		= raycaster.intersectObjects( scene.children );
 		if( intersects.length === 0 ){
-			rayImpact.style.display = 'none'
+			// rayImpact.style.display = 'none'
 			// set default length
 			rayCSS3D.updateLength(500)
 			return
@@ -211,9 +212,9 @@ var onRenderFcts = []
 		screenPos.y = Math.round(screenPos.y)
 		// console.log(screenPos.x.toFixed(5), screenPos.y.toFixed(5))
 
-		rayImpact.style.display = 'block'
-		rayImpact.style.top = Math.round(screenPos.y) + 'px'
-		rayImpact.style.left = Math.round(screenPos.x)  + 'px'
+		// rayImpact.style.display = 'block'
+		// rayImpact.style.top = Math.round(screenPos.y) + 'px'
+		// rayImpact.style.left = Math.round(screenPos.x)  + 'px'
 		
 		var elementFromPoint = document.elementFromPoint(screenPos.x, screenPos.y)
 		
