@@ -92,7 +92,6 @@ function PhoneAsVRController(){
 PhoneAsVRController.overloadGetpadsAPI = function(){
 	var phoneAsVRController = new PhoneAsVRController()
 	navigator.getGamepads = function(){
-		// console.log('getGamepads')
         	var gamepads = [ 
 			phoneAsVRController.gamepad,
 			undefined,
