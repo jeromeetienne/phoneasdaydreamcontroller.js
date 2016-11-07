@@ -11,5 +11,7 @@ It is quite early stage, looking forward to have that in the ray-input
 - open ```http:127.0.0.1:8080/examples/webvr.html``` for an example of 3dof controller
 
 # Future
+- pass examples/webvr.js on phoneasvrcontroller.js
+- handle transcript with web speech api
 - add a awakelock - like the one in webvr-polyfill
 - plug it in ray-input

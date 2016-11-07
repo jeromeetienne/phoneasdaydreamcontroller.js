@@ -2,7 +2,7 @@ function PhoneAsVRController(){
 	var socket = io('http://127.0.0.1:3000');
 	// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
 	var gamepad = {
-		'id' : 'PhoneAsGamepad.js controller',
+		'id' : 'PhoneAsGamepad.js Controller',
 		'index' : 0,
 		'connected' : true,
 		'mapping' : 'standard',
