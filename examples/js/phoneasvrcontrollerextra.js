@@ -9,7 +9,6 @@ function PhoneAsVRControllerExtra(){
 		if( event.type !== 'voiceCommand' ) return
 
 		var transcript = event.text
-console.log('receivde voiceCommand', transcript)
 		_this.onVoiceCommand(event.text)
 	})
 }

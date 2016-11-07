@@ -283,31 +283,94 @@ scene.add(cube);
 <script src="js/phoneasvrcontrollerextra.js"></script>
 <script>
 	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
+	// var phoneAsVRControllerExtra = new PhoneAsVRController();
 	
 	onRenderFcts.push(function(){
-		var quaternionFlat = phoneAsVRControllerExtra.gamepad.pose.orientation
-		var quaternion = new THREE.Quaternion().fromArray(quaternionFlat)
-		cube.quaternion.copy(quaternion)
+		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
+		cube.quaternion.fromArray(poseOrientation)
+	})
+	
+	//////////////////////////////////////////////////////////////////////////////
+	//		button0 touchstart
+	//////////////////////////////////////////////////////////////////////////////
+
+	var monitorButton0 = new MonitorButton(0, function onTouchStart(){
+		var intersecting = getObjectIntersectingWithLaser()
+		if( intersecting === null )	return
+		intersecting.object.material.color.setHSL( Math.random(), 1, 0.5)
+		intersecting.object.scale.multiplyScalar(1.2)
+	})
+	onRenderFcts.push(function(){
+		monitorButton0.update()
 	})
 
-	phoneAsVRControllerExtra.onVoiceCommand = function(command){
-		console.log('voiceCommand', command)
-		command = command.toLowerCase()
-		if( command === 'hello' ){
-			var text = 'Hello master'
-		}else if( command === 'how are you' ){
-			var text = 'Fine, ready to please'
-		}else if( command === 'open remote expert' ){
-			var text = 'You are the most expert'
-		}else if( command === 'ok jarvis open gallery' ){
-			var text = 'Vous etes si beau dans ce mirroir'
-		}else{
-			var text = command + ' is an unknown command'
+	//////////////////////////////////////////////////////////////////////////////
+	//		button1 touchstart
+	//////////////////////////////////////////////////////////////////////////////
+	var monitorButton1 = new MonitorButton(1, function onTouchStart(){
+		var intersecting = getObjectIntersectingWithLaser()
+		if( intersecting === null )	return
+		intersecting.object.parent.remove(intersecting.object);				
+	})
+	onRenderFcts.push(function(){
+		monitorButton1.update()
+	})
+
+	
+	/**
+	 * get the object pointed by the laser
+	 */
+	function getObjectIntersectingWithLaser(){
+		// console.log('received touchstart', laserCooked.lastIntersects)
+		var intersecting = laserCooked.lastIntersects.find(function(intersect){
+			var object3d = intersect.object
+			if( object3d.geometry === undefined ) return false
+			if( object3d.geometry instanceof THREE.TorusGeometry === false ) return false
+			return true
+		})
+		if( intersecting === undefined )	return null
+		// console.log('intersecting', intersecting)
+		return intersecting	
+	}
+	
+	function MonitorButton(buttonIndex, onTouchStart, onTouchEnd){
+		// set default value
+		onTouchStart = onTouchStart || function(){}
+		onTouchEnd = onTouchEnd || function(){}
+
+		var wasPressed = false
+		this.update = function(){
+			// check current status
+			var isPressed = phoneAsVRControllerExtra.gamepad.buttons[buttonIndex].pressed
+			// notify caller as needed
+			if( isPressed === true && wasPressed === false){
+				onTouchStart()
+			}else if( isPressed === false && wasPressed === true ){
+				onTouchEnd()
+			}
+			// update wasPressed
+			wasPressed = isPressed
 		}
-		
-		phoneAsVRControllerExtra.say( text )	
 	}
 
+	if( phoneAsVRControllerExtra.onVoiceCommand ){
+		phoneAsVRControllerExtra.onVoiceCommand = function(command){
+			console.log('voiceCommand', command)
+			if( command === 'hello' ){
+				var text = 'Hello master'
+			}else if( command === 'how are you' ){
+				var text = 'Fine, ready to please'
+			}else if( command === 'open remote expert' ){
+				var text = 'You are the most expert'
+			}else if( command === 'ok jarvis open gallery' ){
+				var text = 'Vous etes si beau dans ce mirroir'
+			}else{
+				var text = command + ' is an unknown command'
+			}
+			
+			phoneAsVRControllerExtra.say( text )	
+		}		
+	}
 </script>
 <script>
 //////////////////////////////////////////////////////////////////////////////
