@@ -9,6 +9,7 @@
 			html, body {
 				height: 100%;
 				overflow: hidden;
+				background-color: black;
 			}
 			#blocker {
 				position: absolute;
@@ -116,25 +117,150 @@ var onRenderFcts = []
 			}
 
 		</script>
+<script src="vendor/three.js/examples/js/renderers/Projector.js" charset="utf-8"></script>
+<style media="screen">
+	[data-hoverable='true'].hovering {
+		background-color: red !important;
+	}
+</style>
 <script type="text/javascript">
+	var rayImpact = document.createElement('img')
+	rayImpact.src = "images/blue_particle.jpg"
+	rayImpact.style.pointerEvents = 'none'
+	rayImpact.style.position = 'absolute'
+	rayImpact.style.top = '0px'
+	rayImpact.style.left = '0px'
+	rayImpact.style.marginLeft = '-16px'
+	rayImpact.style.marginTop = '-16px'
+	rayImpact.style.width = '32px'
+	rayImpact.style.height = '32px'
+	document.body.appendChild(rayImpact)
+
+
+
+	var domElement = document.createElement( 'div' );
+	domElement.style.width = '480px';
+	domElement.style.height = '480px';
+	domElement.style.backgroundColor = 'grey';
+
+	var domElementInner = document.createElement( 'div' );
+	domElementInner.dataset.hoverable = true
+	domElementInner.style.position = 'absolute';
+	domElementInner.style.top = '80px';
+	domElementInner.style.left = '80px';
+	domElementInner.style.width = '80px';
+	domElementInner.style.height = '80px';
+	domElementInner.style.backgroundColor = 'blue';
+	domElementInner.innerText = 'button'
+	domElement.appendChild(domElementInner)
+
+	var object = new THREE.CSS3DObject( domElement );
+	object.position.z = -200
+
+
+	var geometry = new THREE.PlaneGeometry(480,480)
+	var mesh = new THREE.Mesh(geometry)
+	mesh.position.copy(object.position)
+	scene.add(mesh)
+
+	// object.rotation.y = Math.PI/2
+	scene.add(object)
+
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+	var raycaster	= new THREE.Raycaster()
+	onRenderFcts.push(function(){
+		var object = rayCSS3D.object3d
+		// get laserBeam matrixWorld
+		object.updateMatrixWorld();
+		var matrixWorld	= object.matrixWorld.clone()
+		// set the origin
+		raycaster.ray.origin.setFromMatrixPosition(matrixWorld)
+		// keep only the roation
+		matrixWorld.setPosition(new THREE.Vector3(0,0,0))		
+		// set the direction
+		raycaster.ray.direction.set(0,0,-1)
+			.applyMatrix4( matrixWorld )
+			.normalize()
 	
-	
-	var div = document.createElement( 'div' );
-	div.style.width = '30px';
-	div.style.height = '480px';
-	div.style.backgroundColor = '#000';
+		var domElements = document.querySelectorAll('.hovering')
+		for(var i = 0; i < domElements.length; i++){
+			domElements[i].classList.remove('hovering')
+		}
+		
+		var intersects		= raycaster.intersectObjects( scene.children );
+		if( intersects.length === 0 ){
+			rayImpact.style.display = 'none'
+			// set default length
+			rayCSS3D.updateLength(500)
+			return
+		}
 
+		var intersect = intersects[0]
+		// update ray length
+		rayCSS3D.updateLength(intersect.distance)
+		
+		// console.log(intersect.point)
+		
+		var projector	= new THREE.Projector();
+		var screenPos	= intersect.point.project( camera );
+		screenPos.x = (screenPos.x/2 + 0.5) * window.innerWidth
+		screenPos.y = (1 - (screenPos.y/2 + 0.5)) * window.innerHeight
+		screenPos.x = Math.round(screenPos.x)
+		screenPos.y = Math.round(screenPos.y)
+		// console.log(screenPos.x.toFixed(5), screenPos.y.toFixed(5))
 
-	var group = new THREE.Group
-	scene.add(group)
-	var object = new THREE.CSS3DObject( div );
-	object.rotateX(Math.PI/2)
-	object.translateY(-240)
+		rayImpact.style.display = 'block'
+		rayImpact.style.top = Math.round(screenPos.y) + 'px'
+		rayImpact.style.left = Math.round(screenPos.x)  + 'px'
+		
+		var elementFromPoint = document.elementFromPoint(screenPos.x, screenPos.y)
+		
+		if( elementFromPoint.dataset.hoverable ){
+			// console.log('elementFromPoint', elementFromPoint)
+			elementFromPoint.classList.add('hovering')
+		}
+	})
 
-	window.object = object
-	group.add(object);
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+	var rayCSS3D = new RayCSS3D
+	scene.add(rayCSS3D.object3d)
 
+	function RayCSS3D(){
+		var group = new THREE.Group
+		this.object3d = group
+				
+		var div1 = document.createElement( 'div1' );
+		div1.style.width = '10px';
+		div1.style.height = '480px';
+		div1.style.backgroundColor = 'lightblue';
+		
+		var object1 = new THREE.CSS3DObject( div1 );
+		object1.rotation.y = Math.PI/2
+
+		var div2 = document.createElement( 'div2' );
+		div2.style.width = '10px';
+		div2.style.height = '480px';
+		div2.style.backgroundColor = 'lightblue';
+		
+		var object2 = new THREE.CSS3DObject( div2 );
+		object2.position.z = -240
+		object2.rotation.x = -Math.PI/2
+		group.add(object2);
+
+		object2.add(object1)
+
+		this.updateLength = function(length){
+			div1.style.height = length + 'px'
+			div2.style.height = length + 'px'
+			object2.position.z = -length/2
+		}
+	}
 </script>
+
 <script src="vendor/speechapi-experiments/webspeech-commands.js"></script>
 <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 <script src="http://127.0.0.1:3000/phoneasvrcontroller.js"></script>
@@ -145,8 +271,7 @@ var onRenderFcts = []
 	
 	onRenderFcts.push(function(){
 		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
-		group.quaternion.fromArray(poseOrientation)
+		rayCSS3D.object3d.quaternion.fromArray(poseOrientation)
 	})
 </script>
-	</body>
-</html>
+</body></html>
