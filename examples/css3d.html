@@ -29,111 +29,128 @@
 		<script src="vendor/three.js/examples/js/renderers/CSS3DObject-raycastsupport.js"></script>
 
 		<div id="container"></div>
-		<div id="blocker"></div>
 
-		<script>
-			var onRenderFcts = []
-			var camera, scene, renderer;
+<script>
+	var onRenderFcts = []
+	var camera, scene, renderer;
 
-			var Element = function ( id, x, y, z, ry ) {
+	init();
+	animate();
 
-				var div = document.createElement( 'div' );
-				div.style.width = '480px';
-				div.style.height = '360px';
-				div.style.backgroundColor = '#000';
+	function init() {
 
-				var iframe = document.createElement( 'iframe' );
-				iframe.style.width = '480px';
-				iframe.style.height = '360px';
-				iframe.style.border = '0px';
-				iframe.src = [ 'https://www.youtube.com/embed/', id, '?rel=0' ].join( '' );
-				div.appendChild( iframe );
+		var container = document.getElementById( 'container' );
 
-				var object = new THREE.CSS3DObject( div );
-				object.position.set( x, y, z );
-				object.rotation.y = ry;
+		camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 0, 0, 750 );
 
-				return object;
+		scene = new THREE.Scene();
 
-			};
+		renderer = new THREE.CSS3DRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.domElement.style.position = 'absolute';
+		renderer.domElement.style.top = 0;
+		container.appendChild( renderer.domElement );
 
-			init();
-			animate();
+		var group = new THREE.Group();
+		// group.add( new Element( 'njCDZWTI-xg', 0, 0, 240, 0 ) );
+		// group.add( new Element( 'HDh4uK9PvJU', 240, 0, 0, Math.PI / 2 ) );
+		// group.add( new Element( 'OX9I1KyNa8M', 0, 0, - 240, Math.PI ) );
+		// group.add( new Element( 'nhORZ6Ep_jE', - 240, 0, 0, - Math.PI / 2 ) );
+		scene.add( group );
 
-			function init() {
+		controls = new THREE.TrackballControls( camera );
+		controls.rotateSpeed = 4;
 
-				var container = document.getElementById( 'container' );
+		window.addEventListener( 'resize', onWindowResize, false );
 
-				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
-				camera.position.set( 0, 0, 750 );
+		// Block iframe events when dragging camera
+		// 
+		// var blocker = document.getElementById( 'blocker' );
+		// blocker.style.display = 'none';
+		// 
+		// document.addEventListener( 'mousedown', function () { blocker.style.display = ''; } );
+		// document.addEventListener( 'mouseup', function () { blocker.style.display = 'none'; } );
 
-				scene = new THREE.Scene();
+	}
 
-				renderer = new THREE.CSS3DRenderer();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.domElement.style.position = 'absolute';
-				renderer.domElement.style.top = 0;
-				container.appendChild( renderer.domElement );
+	function onWindowResize() {
 
-				var group = new THREE.Group();
-				// group.add( new Element( 'njCDZWTI-xg', 0, 0, 240, 0 ) );
-				// group.add( new Element( 'HDh4uK9PvJU', 240, 0, 0, Math.PI / 2 ) );
-				// group.add( new Element( 'OX9I1KyNa8M', 0, 0, - 240, Math.PI ) );
-				// group.add( new Element( 'nhORZ6Ep_jE', - 240, 0, 0, - Math.PI / 2 ) );
-				scene.add( group );
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
 
-				controls = new THREE.TrackballControls( camera );
-				controls.rotateSpeed = 4;
+	}
 
-				window.addEventListener( 'resize', onWindowResize, false );
+	function animate() {
 
-				// Block iframe events when dragging camera
+		requestAnimationFrame( animate );
 
-				var blocker = document.getElementById( 'blocker' );
-				blocker.style.display = 'none';
+		controls.update();
 
-				document.addEventListener( 'mousedown', function () { blocker.style.display = ''; } );
-				document.addEventListener( 'mouseup', function () { blocker.style.display = 'none'; } );
+		// call each function for the rendering
+		onRenderFcts.forEach(function(onRenderFct){
+			onRenderFct()
+		})
+			
+		renderer.render( scene, camera );
 
-			}
+	}
 
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-					// call each function for the rendering
-					onRenderFcts.forEach(function(onRenderFct){
-						onRenderFct()
-					})
-					
-				controls.update();
-				renderer.render( scene, camera );
-
-			}
-
-		</script>
-<script src="vendor/speechapi-experiments/webspeech-commands.js"></script>
+</script>
+<script src="../vendor/speechapi-experiments/webspeech-commands.js"></script>
 <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 <script src="http://127.0.0.1:3000/phoneasvrcontroller.js"></script>
 <script src="js/phoneasvrcontrollerextra.js"></script>
-<script src="js/rayCss3dDisplay.js"></script>
+<script src="js/rayCss3d.js"></script>
 <script src="vendor/three.js/examples/js/renderers/Projector.js" charset="utf-8"></script>
 <script type="text/javascript">
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
-	var rayCSS3D = new RayCSS3D
+	var rayCSS3D = new RayCSS3D()
 	scene.add(rayCSS3D.object3d)
-
+	
+	
 	onRenderFcts.push(function(){
-		rayCSS3D.update()
+		var position = new THREE.Vector3(0,0,-750)
+		camera.updateMatrixWorld(true)
+		camera.localToWorld(position)
+		console.log(position)
+		rayCSS3D.object3d.position.copy(position)
+	})
+
+	var button0WasPressed = false
+	onRenderFcts.push(function(){
+		// test if the button0 is cliking
+		var button0IsPressed = phoneAsVRControllerExtra.gamepad.buttons[0].pressed
+		var clicking = button0WasPressed === false && button0IsPressed === true ? true : false
+		button0WasPressed = button0IsPressed
+
+		rayCSS3D.update(camera, scene.children, clicking)
+	})
+
+
+	var button1WasPressed = false
+	onRenderFcts.push(function(){
+		// test if the button1 is cliking
+		var swipedownIsRequested = phoneAsVRControllerExtra.requestedGestures.swipedown
+		phoneAsVRControllerExtra.requestedGestures.swipedown = false
+		var swipeupIsRequested = phoneAsVRControllerExtra.requestedGestures.swipeup
+		phoneAsVRControllerExtra.requestedGestures.swipeup = false
+
+		if( swipedownIsRequested === false && swipeupIsRequested === false )	return
+
+		var domElement = document.querySelector('ul')
+		var computedStyle = getComputedStyle(domElement)
+		var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
+		lineHeight = lineHeight+2	// +2 is like the border
+		if( swipedownIsRequested === true ){
+			domElement.scrollTop -= lineHeight
+		}else if( swipeupIsRequested === true ){
+			domElement.scrollTop += lineHeight
+		}
+
 	})
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -148,27 +165,27 @@
 		rayCSS3D.setOrientation(quaternion)
 	})
 </script>
-
-<style>
-	[data-hoverable='true'].hovering {
+<!-- /*<style>
+	.container [data-hoverable='true'].hovering {
 		background-color: red !important;
 	}
 </style>
+
 <script>
 	var object = buildSimpleObject()
 	scene.add(object)
-	
+
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
 	function buildSimpleObject(){
 		var domElement = document.createElement( 'div' );
+		domElement.classList.add('container')
 		domElement.style.width = '480px';
 		domElement.style.height = '480px';
 		domElement.style.backgroundColor = 'grey';
 
 		var domElementInner = document.createElement( 'div' );
-		domElementInner.dataset.hoverable = true
 		domElementInner.style.position = 'absolute';
 		// domElementInner.style.top = '80px';
 		// domElementInner.style.left = '80px';
@@ -179,10 +196,90 @@
 		domElementInner.innerText = 'button'
 		domElement.appendChild(domElementInner)
 
+		domElementInner.dataset.hoverable = true
+
 		var object = new THREE.CSS3DObject( domElement );
 		object.position.z = -200
 		return object
-		
 	}
+</script>*/ -->
+<style>
+	.container {
+		background-color: #444;
+	}
+
+	/*.container.hovering {
+		background-color: blue;
+	}*/
+
+	.container ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		text-align: center;
+		line-height: 2em;
+
+		font-size: 200%;
+		font-family: arial;
+		font-weight: bold;
+		
+		height: 100%;
+		overflow-y: scroll;
+	}
+	
+	.container li {
+		border-bottom: 1px solid #ccc;
+	}
+	.container li.hovering {
+		background-color: #aaa;
+	}
+</style>
+<script>
+	var object = buildSimpleObject()
+	scene.add(object)
+
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+	function buildSimpleObject(){
+		var items = [
+			'hello',
+			'world',
+			'one',
+			'two',
+			'three',
+			'four',
+			'five',
+			'six',
+			'seven',
+			'height',
+		]
+		
+		var container = document.createElement( 'div' );
+		container.dataset.hoverable = true
+		container.classList.add('container')
+		container.style.width = '320px';
+		container.style.height = '320px';
+
+		var ulElement = document.createElement('ul')
+		container.appendChild(ulElement)
+		items.forEach(function(item){
+			var liElement = document.createElement('li')
+			ulElement.appendChild(liElement)
+			liElement.innerText = item
+			liElement.dataset.hoverable = true
+			liElement.dataset.clickable = true
+			
+			liElement.addEventListener('click', function(event){
+				console.log('clicked on item', item)
+			})
+		})
+
+		var object = new THREE.CSS3DObject( container );
+		object.position.z = -300
+		return object
+	}
+
+
 </script>
 </body></html>

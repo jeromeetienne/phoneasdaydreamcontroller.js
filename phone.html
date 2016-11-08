@@ -109,10 +109,36 @@ function onDeviceOrientation(event) {
 	}
 	socket.emit('broadcast', JSON.stringify(event))
 }
-
 </script>
 
-<script src="/webspeech-commands.js" charset="utf-8"></script>
+<script src="vendor/hammer.min.js" charset="utf-8"></script>
+<script>
+//////////////////////////////////////////////////////////////////////////////
+//		handle gesture on trackpad
+//////////////////////////////////////////////////////////////////////////////
+var domElement = document.querySelector('#trackpad')
+var hammertime = new Hammer(domElement, {});
+hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+hammertime.on('swipeup', function(event) {
+	var event = {
+		type : 'touchGesture',
+		gesture : 'swipeup',
+	}
+	console.log(event)
+	socket.emit('broadcast', JSON.stringify(event))
+});
+hammertime.on('swipedown', function(event) {
+	var event = {
+		type : 'touchGesture',
+		gesture : 'swipedown',
+	}
+	console.log(event)
+	socket.emit('broadcast', JSON.stringify(event))
+});
+</script>
+
+
+<script src="vendor/speechapi-experiments/webspeech-commands.js" charset="utf-8"></script>
 <script>
 ////////////////////////////////////////////////////////////////////////////////
 //          support for speech recognition

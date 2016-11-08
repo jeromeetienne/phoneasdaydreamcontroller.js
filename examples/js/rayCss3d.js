@@ -37,7 +37,13 @@ function RayCSS3D(){
 	}
 	
 	var raycaster	= new THREE.Raycaster()
-	this.update = function(){
+	this.update = function(camera, objects, clicking){
+		// remote any .hovering 
+		var domElements = document.querySelectorAll('.hovering')
+		for(var i = 0; i < domElements.length; i++){
+			domElements[i].classList.remove('hovering')
+		}
+		
 		var object = _this.object3d
 		// get laserBeam matrixWorld
 		object.updateMatrixWorld();
@@ -51,22 +57,16 @@ function RayCSS3D(){
 			.applyMatrix4( matrixWorld )
 			.normalize()
 	
-		// remote any .hovering 
-		var domElements = document.querySelectorAll('.hovering')
-		for(var i = 0; i < domElements.length; i++){
-			domElements[i].classList.remove('hovering')
-		}
-		
-		var intersects		= raycaster.intersectObjects( scene.children );
+		var intersects		= raycaster.intersectObjects( objects);
 		if( intersects.length === 0 ){
 			// set default length
-			updateLength(500)
+			updateRayLength(500)
 			return
 		}
 
 		var intersect = intersects[0]
 		// update ray length
-		updateLength(intersect.distance)
+		updateRayLength(intersect.distance)
 		
 		// console.log(intersect.point)
 		
@@ -78,12 +78,25 @@ function RayCSS3D(){
 		screenPos.y = Math.round(screenPos.y)
 		
 		var elementFromPoint = document.elementFromPoint(screenPos.x, screenPos.y)
+		console.assert(elementFromPoint !== undefined)
 		
-		if( elementFromPoint.dataset.hoverable ){
-			// console.log('elementFromPoint', elementFromPoint)
-			elementFromPoint.classList.add('hovering')
+		// honor hover
+		for(var domElement = elementFromPoint; domElement && domElement !== document.body; domElement = domElement.parentNode){
+			if( domElement.dataset.hoverable ){
+				domElement.classList.add('hovering')
+			}
 		}
-		
+
+		// honor click
+		if( clicking === true ){
+			var mouseClick = document.createEvent("MouseEvents");
+			mouseClick.initMouseEvent("click", true, true, window, 0, 0, 0, screenPos.x, screenPos.y, false, false, false, false, 0, null);
+			for(var domElement = elementFromPoint; domElement !== undefined && domElement !== document.body; domElement = domElement.parentNode){
+				if( domElement.dataset.clickable ){
+					domElement.dispatchEvent(mouseClick)
+				}
+			}			
+		}
 	}
 	
 	return
@@ -91,7 +104,7 @@ function RayCSS3D(){
 	/**
 	 * update the length of the ray
 	 */
-	function updateLength(length){
+	function updateRayLength(length){
 		div1.style.height = length + 'px'
 		div2.style.height = length + 'px'
 		object2.position.z = -length/2

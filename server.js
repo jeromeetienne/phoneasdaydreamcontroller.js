@@ -17,8 +17,11 @@ app.get('/phoneasvrcontroller.js', function(req, res){
 app.get('/phoneasvrcontrollerextra.js', function(req, res){
         res.sendfile('./examples/js/phoneasvrcontrollerextra.js');
 });
-app.get('/webspeech-commands.js', function(req, res){
-        res.sendfile('./examples/vendor/speechapi-experiments/webspeech-commands.js');
+app.get('/vendor/speechapi-experiments/webspeech-commands.js', function(req, res){
+        res.sendfile('./vendor/speechapi-experiments/webspeech-commands.js');
+});
+app.get('/vendor/hammer.min.js', function(req, res){
+        res.sendfile('./vendor/hammer.min.js');
 });
 
 
