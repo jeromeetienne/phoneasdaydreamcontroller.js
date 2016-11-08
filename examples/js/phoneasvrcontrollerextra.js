@@ -2,35 +2,23 @@ function PhoneAsVRControllerExtra(){
 	var _this = this
 	PhoneAsVRController.call( this );
 	
-	this.onVoiceCommand = function(text){}
-	
-	this._socket.on('broadcast', function(message){   
-		var event = JSON.parse(message)
-		if( event.type !== 'voiceCommand' ) return
-
-		var transcript = event.text
-		_this.onVoiceCommand(event.text)
-	})
-	
-	//////////////////////////////////////////////////////////////////////////////
-	//		honor trackpad gesture
-	//////////////////////////////////////////////////////////////////////////////
-	this.requestedGestures = {
-		swipeup : false,
-		swipedown : false,
+	this.signals = {
+		touchGesture : new signals.Signal(),
+		voiceCommand : new signals.Signal(),
+		touchStart : new signals.Signal(),
+		touchEnd : new signals.Signal(),
 	}
-	this._socket.on('broadcast', function(message){   
-		var event = JSON.parse(message)
-		if( event.type !== 'touchGesture' ) return
-
-		var gesture = event.gesture
-		console.log('gesture', gesture)
-		if( gesture === 'swipeup' ){
-			_this.requestedGestures.swipeup = true
-		}else if( gesture === 'swipedown' ){
-			_this.requestedGestures.swipedown = true
-		}
-	})
+	
+	forwardEvent('touchGesture')
+	
+	function forwardEvent(eventName){
+		_this._socket.on('broadcast', function(message){   
+			var event = JSON.parse(message)
+			if( event.type !== eventName ) return
+		console.log('dispatch', eventName)
+			_this.signals[eventName].dispatch(event)
+		})
+	}
 }
 PhoneAsVRControllerExtra.prototype = Object.create( PhoneAsVRController.prototype );
 PhoneAsVRControllerExtra.prototype.constructor = PhoneAsVRControllerExtra;

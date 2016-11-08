@@ -3,8 +3,8 @@
 <html>
 	<head>
 		<title>three.js css3d - youtube</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 		<style>
 			html, body {
 				height: 100%;
@@ -23,12 +23,12 @@
 		</style>
 	</head>
 	<body>
-		<script src="vendor/three.js/build/three.js"></script>
-		<script src="vendor/three.js/examples/js/controls/TrackballControls.js"></script>
-		<script src="vendor/three.js/examples/js/renderers/CSS3DRenderer.js"></script>
-		<script src="vendor/three.js/examples/js/renderers/CSS3DObject-raycastsupport.js"></script>
+		<script src='vendor/three.js/build/three.js'></script>
+		<script src='vendor/three.js/examples/js/controls/TrackballControls.js'></script>
+		<script src='vendor/three.js/examples/js/renderers/CSS3DRenderer.js'></script>
+		<script src='vendor/three.js/examples/js/renderers/CSS3DObject-raycastsupport.js'></script>
 
-		<div id="container"></div>
+		<div id='container'></div>
 
 <script>
 	var onRenderFcts = []
@@ -52,26 +52,10 @@
 		renderer.domElement.style.top = 0;
 		container.appendChild( renderer.domElement );
 
-		var group = new THREE.Group();
-		// group.add( new Element( 'njCDZWTI-xg', 0, 0, 240, 0 ) );
-		// group.add( new Element( 'HDh4uK9PvJU', 240, 0, 0, Math.PI / 2 ) );
-		// group.add( new Element( 'OX9I1KyNa8M', 0, 0, - 240, Math.PI ) );
-		// group.add( new Element( 'nhORZ6Ep_jE', - 240, 0, 0, - Math.PI / 2 ) );
-		scene.add( group );
-
 		controls = new THREE.TrackballControls( camera );
 		controls.rotateSpeed = 4;
 
 		window.addEventListener( 'resize', onWindowResize, false );
-
-		// Block iframe events when dragging camera
-		// 
-		// var blocker = document.getElementById( 'blocker' );
-		// blocker.style.display = 'none';
-		// 
-		// document.addEventListener( 'mousedown', function () { blocker.style.display = ''; } );
-		// document.addEventListener( 'mouseup', function () { blocker.style.display = 'none'; } );
-
 	}
 
 	function onWindowResize() {
@@ -98,13 +82,27 @@
 	}
 
 </script>
-<script src="../vendor/speechapi-experiments/webspeech-commands.js"></script>
-<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
-<script src="http://127.0.0.1:3000/phoneasvrcontroller.js"></script>
-<script src="js/phoneasvrcontrollerextra.js"></script>
-<script src="js/rayCss3d.js"></script>
-<script src="vendor/three.js/examples/js/renderers/Projector.js" charset="utf-8"></script>
-<script type="text/javascript">
+<script src='../vendor/speechapi-experiments/webspeech-commands.js'></script>
+<script src='http://127.0.0.1:3000/socket.io/socket.io.js'></script>
+<script src='http://127.0.0.1:3000/phoneasvrcontroller.js'></script>
+<script src='js/phoneasvrcontrollerextra.js'></script>
+<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
+
+<script src='js/rayCss3d.js'></script>
+<script src='vendor/three.js/examples/js/renderers/Projector.js' charset='utf-8'></script>
+<script type='text/javascript'>
+
+	//////////////////////////////////////////////////////////////////////////////
+	//		handle phone as controller
+	//////////////////////////////////////////////////////////////////////////////
+	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
+	// var phoneAsVRControllerExtra = new PhoneAsVRController();
+
+	onRenderFcts.push(function(){
+		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
+		var quaternion = new THREE.Quaternion().fromArray(poseOrientation)
+		rayCSS3D.setOrientation(quaternion)
+	})
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
@@ -128,41 +126,58 @@
 
 		rayCSS3D.update(camera, scene.children, clicking)
 	})
-
-
-	var button1WasPressed = false
-	onRenderFcts.push(function(){
-		// test if the button1 is cliking
-		var swipedownIsRequested = phoneAsVRControllerExtra.requestedGestures.swipedown
-		phoneAsVRControllerExtra.requestedGestures.swipedown = false
-		var swipeupIsRequested = phoneAsVRControllerExtra.requestedGestures.swipeup
-		phoneAsVRControllerExtra.requestedGestures.swipeup = false
-
-		if( swipedownIsRequested === false && swipeupIsRequested === false )	return
+	
+	phoneAsVRControllerExtra.signals.touchGesture.add(function(event){
+		if( event.gesture !== 'swipeup' && event.gesture !== 'swipedown' )	return
 
 		var domElement = document.querySelector('ul')
 		var computedStyle = getComputedStyle(domElement)
 		var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
 		lineHeight = lineHeight+2	// +2 is like the border
-		if( swipedownIsRequested === true ){
+		if( event.gesture === 'swipeup' ){
 			domElement.scrollTop -= lineHeight
-		}else if( swipeupIsRequested === true ){
+		}else if( event.gesture === 'swipedown' ){
 			domElement.scrollTop += lineHeight
 		}
-
 	})
 
-	//////////////////////////////////////////////////////////////////////////////
-	//		handle phone as controller
-	//////////////////////////////////////////////////////////////////////////////
-	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
-	// var phoneAsVRControllerExtra = new PhoneAsVRController();
 
-	onRenderFcts.push(function(){
-		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
-		var quaternion = new THREE.Quaternion().fromArray(poseOrientation)
-		rayCSS3D.setOrientation(quaternion)
-	})
+	// var button1WasPressed = false
+	// onRenderFcts.push(function(){
+	// 	// test if the button1 is cliking
+	// 	var swipedownIsRequested = phoneAsVRControllerExtra.requestedGestures.swipedown
+	// 	phoneAsVRControllerExtra.requestedGestures.swipedown = false
+	// 	var swipeupIsRequested = phoneAsVRControllerExtra.requestedGestures.swipeup
+	// 	phoneAsVRControllerExtra.requestedGestures.swipeup = false
+	// 
+	// 	if( swipedownIsRequested === false && swipeupIsRequested === false )	return
+	// 
+	// 	var domElement = document.querySelector('ul')
+	// 	var computedStyle = getComputedStyle(domElement)
+	// 	var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
+	// 	lineHeight = lineHeight+2	// +2 is like the border
+	// 	if( swipedownIsRequested === true ){
+	// 		domElement.scrollTop -= lineHeight
+	// 	}else if( swipeupIsRequested === true ){
+	// 		domElement.scrollTop += lineHeight
+	// 	}
+	// 
+	// })
+	function scrollList(direction){
+			var domElement = document.querySelector('ul')
+			var computedStyle = getComputedStyle(domElement)
+			var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
+			lineHeight = lineHeight+2	// +2 is like the border
+			if( direction === 'down' ){
+				domElement.scrollTop -= lineHeight
+			}else if( direction === 'up' ){
+				domElement.scrollTop += lineHeight
+			}else {
+				console.assert(false)
+			}
+
+	}
+
 </script>
 <!-- /*<style>
 	.container [data-hoverable='true'].hovering {
