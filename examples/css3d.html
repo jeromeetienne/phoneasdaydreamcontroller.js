@@ -111,12 +111,11 @@
 	var rayCSS3D = new RayCSS3D()
 	scene.add(rayCSS3D.object3d)
 	
-	
+	// set the origin of the ray
 	onRenderFcts.push(function(){
-		var position = new THREE.Vector3(0,0,-750)
 		camera.updateMatrixWorld(true)
+		var position = new THREE.Vector3(0,0,-750)
 		camera.localToWorld(position)
-		console.log(position)
 		rayCSS3D.object3d.position.copy(position)
 	})
 
