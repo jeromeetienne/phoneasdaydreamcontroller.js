@@ -27,7 +27,9 @@ app.get('/webspeech-commands.js', function(req, res){
 //////////////////////////////////////////////////////////////////////////////
 io.on('connection', function(socket){
         console.log('a user connected');
+        // TODO here if the connection is coming from a phone, warn the headset by emiting a signal
         socket.on('disconnect', function(){
+                // TODO here if the connection is coming from a phone, warn the headset by emiting a signal
                 console.log('user disconnected');
         });
         socket.on('broadcast', function(msg){
