@@ -23,6 +23,9 @@ app.get('/vendor/speechapi-experiments/webspeech-commands.js', function(req, res
 app.get('/vendor/hammer.min.js', function(req, res){
         res.sendfile('./vendor/hammer.min.js');
 });
+app.get('/vendor/wakelock.js', function(req, res){
+        res.sendfile('./vendor/wakelock.js');
+});
 
 
 //////////////////////////////////////////////////////////////////////////////

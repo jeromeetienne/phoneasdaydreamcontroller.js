@@ -182,5 +182,18 @@ hammertime.on('swipedown', function(event) {
 // })
 
 </script>
-
+<script src="vendor/wakelock.js"></script>
+<script>
+	var wakelock = null
+	document.body.addEventListener('click', function onClick(){
+		document.body.removeEventListener('click', onClick)		
+		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+		if (userAgent.match(/iPhone/i) || userAgent.match(/iPod/i)) {
+			var wakelock = new iOSWakeLock()
+		} else {
+			var wakelock = new AndroidWakeLock()
+		}
+		wakelock.request()		
+	})
+</script>
 </html>
