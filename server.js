@@ -26,7 +26,9 @@ app.get('/vendor/hammer.min.js', function(req, res){
 app.get('/vendor/wakelock.js', function(req, res){
         res.sendfile('./vendor/wakelock.js');
 });
-
+app.get('/examples/images/sprite0.png', function(req, res){
+        res.sendfile('./examples/images/sprite0.png');
+});
 
 //////////////////////////////////////////////////////////////////////////////
 //                handle socket.io

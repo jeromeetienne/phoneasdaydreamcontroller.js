@@ -141,91 +141,25 @@
 		}
 	})
 
-
-	// var button1WasPressed = false
-	// onRenderFcts.push(function(){
-	// 	// test if the button1 is cliking
-	// 	var swipedownIsRequested = phoneAsVRControllerExtra.requestedGestures.swipedown
-	// 	phoneAsVRControllerExtra.requestedGestures.swipedown = false
-	// 	var swipeupIsRequested = phoneAsVRControllerExtra.requestedGestures.swipeup
-	// 	phoneAsVRControllerExtra.requestedGestures.swipeup = false
-	// 
-	// 	if( swipedownIsRequested === false && swipeupIsRequested === false )	return
-	// 
-	// 	var domElement = document.querySelector('ul')
-	// 	var computedStyle = getComputedStyle(domElement)
-	// 	var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
-	// 	lineHeight = lineHeight+2	// +2 is like the border
-	// 	if( swipedownIsRequested === true ){
-	// 		domElement.scrollTop -= lineHeight
-	// 	}else if( swipeupIsRequested === true ){
-	// 		domElement.scrollTop += lineHeight
-	// 	}
-	// 
-	// })
 	function scrollList(direction){
-			var domElement = document.querySelector('ul')
-			var computedStyle = getComputedStyle(domElement)
-			var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
-			lineHeight = lineHeight+2	// +2 is like the border
-			if( direction === 'down' ){
-				domElement.scrollTop -= lineHeight
-			}else if( direction === 'up' ){
-				domElement.scrollTop += lineHeight
-			}else {
-				console.assert(false)
-			}
-
+		var domElement = document.querySelector('ul')
+		var computedStyle = getComputedStyle(domElement)
+		var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
+		lineHeight = lineHeight+2	// +2 is like the border
+		if( direction === 'down' ){
+			domElement.scrollTop -= lineHeight
+		}else if( direction === 'up' ){
+			domElement.scrollTop += lineHeight
+		}else {
+			console.assert(false)
+		}
 	}
 
 </script>
-<!-- /*<style>
-	.container [data-hoverable='true'].hovering {
-		background-color: red !important;
-	}
-</style>
-
-<script>
-	var object = buildSimpleObject()
-	scene.add(object)
-
-	//////////////////////////////////////////////////////////////////////////////
-	//		Code Separator
-	//////////////////////////////////////////////////////////////////////////////
-	function buildSimpleObject(){
-		var domElement = document.createElement( 'div' );
-		domElement.classList.add('container')
-		domElement.style.width = '480px';
-		domElement.style.height = '480px';
-		domElement.style.backgroundColor = 'grey';
-
-		var domElementInner = document.createElement( 'div' );
-		domElementInner.style.position = 'absolute';
-		// domElementInner.style.top = '80px';
-		// domElementInner.style.left = '80px';
-		domElementInner.style.width = '80px';
-		domElementInner.style.height = '80px';
-		domElementInner.style.backgroundColor = 'blue';
-		domElementInner.style.textAlign = 'center';
-		domElementInner.innerText = 'button'
-		domElement.appendChild(domElementInner)
-
-		domElementInner.dataset.hoverable = true
-
-		var object = new THREE.CSS3DObject( domElement );
-		object.position.z = -200
-		return object
-	}
-</script>*/ -->
 <style>
 	.container {
 		background-color: #444;
 	}
-
-	/*.container.hovering {
-		background-color: blue;
-	}*/
-
 	.container ul {
 		margin: 0;
 		padding: 0;
@@ -257,8 +191,6 @@
 	//////////////////////////////////////////////////////////////////////////////
 	function buildSimpleObject(){
 		var items = [
-			'hello',
-			'world',
 			'one',
 			'two',
 			'three',

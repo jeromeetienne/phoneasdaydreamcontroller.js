@@ -28,14 +28,17 @@ body, html, #container {
 }
 
 #trackpad {
-	height:50%;
+	height:60%;
 	width:100%;
-	background-color:#009900;
+	background-color: dimgrey;
 	margin:auto;
+	border-bottom: 1px solid #aaa;
 }
-
+#trackpad.touched {
+	background-color: grey ;
+}
 #bottomRow {
-	height:50%;
+	height:40%;
 	width:100%;
 	background-color:#990000;
 	margin:auto;
@@ -45,14 +48,22 @@ body, html, #container {
 	float: left;
 	width: 50%;
 	height: 100%;
-	background-color: red;
+	background-color: dimgrey;
+	margin-left: -1px;
+	border-right: 1px solid #aaa;
 }	
+#homeButton.touched {
+	background-color: grey ;
+}
 
 #appButton {
 	float: right;
 	width: 50%;
 	height: 100%;
-	background-color: yellow;
+	background-color: dimgrey ;
+}
+#appButton.touched {
+	background-color: grey   ;
 }
 
 </style>
@@ -60,7 +71,7 @@ body, html, #container {
 	<div id="trackpad">Trackpad</div>    
 	<div id="bottomRow">
 		<div id="homeButton">Home Button</div>
-		<div id="appButton">Apps Button</div>
+		<div id="appButton">App Button</div>
 	</div>
 	
 </div>
@@ -74,25 +85,102 @@ var socket = io();
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
 document.querySelector('#homeButton').addEventListener('touchstart', function(){
-	sendButtonEvent('touchstart', 'homeButton')
+	document.querySelector('#homeButton').classList.add('touched')
+	sendButtonsEvent('touchstart', 'homeButton')
 })
 document.querySelector('#homeButton').addEventListener('touchend', function(){
-	sendButtonEvent('touchend', 'homeButton')
+	document.querySelector('#homeButton').classList.remove('touched')
+	sendButtonsEvent('touchend', 'homeButton')
 })
 document.querySelector('#appButton').addEventListener('touchstart', function(){
-	sendButtonEvent('touchstart', 'appButton')
+	document.querySelector('#appButton').classList.add('touched')
+	sendButtonsEvent('touchstart', 'appButton')
 })
 document.querySelector('#appButton').addEventListener('touchend', function(){
-	sendButtonEvent('touchend', 'appButton')
+	document.querySelector('#appButton').classList.remove('touched')
+	sendButtonsEvent('touchend', 'appButton')
 })
 
-function sendButtonEvent(type, target){
+function sendButtonsEvent(type, target){
 	var event = {
 		type : type,
 		target : target,
 	}
 	socket.emit('broadcast', JSON.stringify(event))		
 }
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+document.querySelector('#trackpad').addEventListener('touchstart', function(event){
+	document.querySelector('#trackpad').classList.add('touched')
+	sendTrackpadEvent(event)
+})
+document.querySelector('#trackpad').addEventListener('touchend', function(event){
+	document.querySelector('#trackpad').classList.remove('touched')
+	sendTrackpadEvent(event)
+})
+
+document.querySelector('#trackpad').addEventListener('touchmove', function(event){
+	sendTrackpadEvent(event)
+})
+
+function sendTrackpadEvent(domEvent){	
+	var event = {
+		type : domEvent.type,
+		target : 'trackpad'
+	}
+
+	var touch = domEvent.touches[0]
+	if( touch ){
+		var trackpadElement = document.querySelector('#trackpad')
+		var boundRect = trackpadElement.getBoundingClientRect()
+		event.positionX = (touch.clientX / boundRect.width - 0.5) * 2
+		event.positionY = (touch.clientY / boundRect.height- 0.5) * 2
+	}else{
+		event.positionX = 0
+		event.positionY = 0
+	}
+
+	socket.emit('broadcast', JSON.stringify(event))		
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+var img = document.createElement('img')
+img.src = 'examples/images/sprite0.png'
+img.style.display = 'none'
+img.style.position = 'absolute'
+img.style.width = '30%'
+// img.style.opacity = '1';
+img.style.marginTop = '-15%'
+img.style.marginLeft = '-15%'
+img.style.pointerEvents = 'none'
+document.body.appendChild(img)
+function updateImgPosition(domEvent){
+	var touch = domEvent.touches[0]
+	if( touch ){
+		img.style.left = touch.clientX+'px'
+		img.style.top = touch.clientY+'px'
+		img.style.display = 'block'
+		
+		var trackpadElement = document.querySelector('#trackpad')
+		var boundRect = trackpadElement.getBoundingClientRect()
+		if( touch.clientY > boundRect.height ){
+			img.style.display = 'none'
+		}
+	}else{
+		img.style.display = 'none'
+	}
+	
+}
+document.querySelector('#trackpad').addEventListener('touchstart', updateImgPosition)
+document.querySelector('#trackpad').addEventListener('touchend', updateImgPosition)
+document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosition)
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 //		forward the device orientation
@@ -182,7 +270,11 @@ hammertime.on('swipedown', function(event) {
 // })
 
 </script>
-<script src="vendor/wakelock.js"></script>
+
+
+<!-- wakelock triggers some strange messages in android - like unable to play mp4 ?? -->
+
+<!-- <script src="vendor/wakelock.js"></script>
 <script>
 	var wakelock = null
 	document.body.addEventListener('click', function onClick(){
@@ -195,5 +287,5 @@ hammertime.on('swipedown', function(event) {
 		}
 		wakelock.request()		
 	})
-</script>
+</script> -->
 </html>

@@ -1,0 +1,15 @@
+<script src='http://127.0.0.1:3000/socket.io/socket.io.js'></script>
+<script src='http://127.0.0.1:3000/phoneasvrcontroller.js'></script>
+<script src='vendor/three.js/build/three.js'></script>
+<pre id='output'></pre>
+<script>
+	var phoneAsVRController = new PhoneAsVRController();
+	
+	function dumpGamepad(){
+		var domElement = document.querySelector('#output')
+		var gamepad = phoneAsVRController.gamepad
+		domElement.innerText = JSON.stringify(gamepad, null, '\t')
+		setTimeout(dumpGamepad, 100)
+	}
+	dumpGamepad()
+</script>
