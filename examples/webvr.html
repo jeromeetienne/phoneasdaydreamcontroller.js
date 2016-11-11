@@ -242,14 +242,7 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 	scene.add(skybox);
 });
 
-// Create 3D objects.
-var geometry = new THREE.BoxGeometry(0.5*0.2, 0.1*0.2, 1*0.2);
-var material = new THREE.MeshNormalMaterial();
-var cube = new THREE.Mesh(geometry, material);
-cube.position.z = -1
 
-// Add cube mesh to your three.js scene
-scene.add(cube);
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		comment								//
@@ -260,6 +253,36 @@ scene.add(cube);
 	scene.add(light)
 </script>
 <script>
+
+</script>
+
+<script src="../vendor/speechapi-experiments/webspeech-commands.js"></script>
+<script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
+<script src="http://127.0.0.1:4000/phoneasvrcontroller.js"></script>
+<script src='js/phoneasvrcontrollerextra.js'></script>
+<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
+<script>
+	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
+	// var phoneAsVRControllerExtra = new PhoneAsVRController();
+	
+	////////////////////////////////////////////////////////////////////////////////
+	//          build phone model
+	////////////////////////////////////////////////////////////////////////////////
+	
+	// Create 3D objects.
+	var geometry = new THREE.BoxGeometry(0.5*0.2, 0.1*0.2, 1*0.2);
+	var material = new THREE.MeshNormalMaterial();
+	var phoneModel = new THREE.Mesh(geometry, material);
+	phoneModel.position.z = -1
+
+	// Add phoneModel mesh to your three.js scene
+	scene.add(phoneModel);
+	
+	onRenderFcts.push(function(){
+		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
+		phoneModel.quaternion.fromArray(poseOrientation)
+	})
+	
 	//////////////////////////////////////////////////////////////////////////////////
 	//		add an object and make it move					//
 	//////////////////////////////////////////////////////////////////////////////////
@@ -269,28 +292,12 @@ scene.add(cube);
 	laserBeam.object3d.scale.x = 0.5
 	laserBeam.object3d.scale.z = 0.5
 	laserBeam.object3d.position.z = -0.5*0.2
-	cube.add(laserBeam.object3d)
+	phoneModel.add(laserBeam.object3d)
 	// laserBeam.object3d.position.z	= -2
 	var laserCooked	= new THREEx.LaserCooked(laserBeam)
 	onRenderFcts.push(function(delta, now){
 		laserCooked.update(delta, now)
 	})
-</script>
-
-<script src="../vendor/speechapi-experiments/webspeech-commands.js"></script>
-<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
-<script src="http://127.0.0.1:3000/phoneasvrcontroller.js"></script>
-<script src='js/phoneasvrcontrollerextra.js'></script>
-<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
-<script>
-	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
-	// var phoneAsVRControllerExtra = new PhoneAsVRController();
-	
-	onRenderFcts.push(function(){
-		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
-		cube.quaternion.fromArray(poseOrientation)
-	})
-	
 	//////////////////////////////////////////////////////////////////////////////
 	//		button0 touchstart
 	//////////////////////////////////////////////////////////////////////////////
@@ -353,39 +360,20 @@ scene.add(cube);
 			wasPressed = isPressed
 		}
 	}
-
-	if( phoneAsVRControllerExtra.onVoiceCommand ){
-		phoneAsVRControllerExtra.onVoiceCommand = function(command){
-			console.log('voiceCommand', command)
-			if( command === 'hello' ){
-				var text = 'Hello master'
-			}else if( command === 'how are you' ){
-				var text = 'Fine, ready to please'
-			}else if( command === 'open remote expert' ){
-				var text = 'You are the most expert'
-			}else if( command === 'ok jarvis open gallery' ){
-				var text = 'Vous etes si beau dans ce mirroir'
-			}else{
-				var text = command + ' is an unknown command'
-			}
-			
-			phoneAsVRControllerExtra.say( text )	
-		}		
-	}
 </script>
 <script>
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
-for(var i = 0; i < 200; i++){
-	(function(){
-		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
-		//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
-		var material	= new THREE.MeshPhongMaterial({
-			color	: 0xffffff,
-			specular: 0xffffff,
-			shininess: 200,
-		});
+(function(){
+	var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
+	//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
+	var material	= new THREE.MeshPhongMaterial({
+		color	: 0xffffff,
+		specular: 0xffffff,
+		shininess: 200,
+	});
+	for(var i = 0; i < 20; i++){
 		var object3d	= new THREE.Mesh( geometry, material );
 		object3d.scale.set(1,1,1).multiplyScalar(1/2)
 		scene.add( object3d );
@@ -396,7 +384,7 @@ for(var i = 0; i < 200; i++){
 		object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
 		object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
 		object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
-	})()	
-}
+	}
+})()	
 </script>
 </html>

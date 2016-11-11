@@ -1,14 +1,6 @@
 var THREEx = THREEx || {}
 
 THREEx.LaserCooked	= function(laserBeam){
-	// for update loop
-	var updateFcts	= []
-	this.update	= function(){
-		updateFcts.forEach(function(updateFct){
-			updateFct()	
-		})
-	}
-	
 	var object3d	= laserBeam.object3d
 
 	// build THREE.Sprite for impact
@@ -40,7 +32,7 @@ THREEx.LaserCooked	= function(laserBeam){
 	// TODO assume object3d.position are worldPosition. works IFF attached to scene
 	raycaster.ray.origin.copy(object3d.position)
 
-	updateFcts.push(function(){
+	this.update	= function(){
 		// get laserBeam matrixWorld
 		object3d.updateMatrixWorld();
 		var matrixWorld	= object3d.matrixWorld.clone()
@@ -63,7 +55,7 @@ THREEx.LaserCooked	= function(laserBeam){
 		}
 		// backup last intersects
 		this.lastIntersects	= intersects
-	}.bind(this));
+	};
 }
 
 THREEx.LaserCooked.baseURL	= '../'

@@ -126,7 +126,7 @@ document.querySelector('#trackpad').addEventListener('touchmove', function(event
 	sendTrackpadEvent(event)
 })
 
-function sendTrackpadEvent(domEvent){	
+function sendTrackpadEvent(domEvent){
 	var event = {
 		type : domEvent.type,
 		target : 'trackpad'
@@ -147,7 +147,7 @@ function sendTrackpadEvent(domEvent){
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//		Code Separator
+//		display touch on trackpad
 //////////////////////////////////////////////////////////////////////////////
 var img = document.createElement('img')
 img.src = 'examples/images/sprite0.png'
@@ -182,6 +182,33 @@ document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosit
 
 
 
+////////////////////////////////////////////////////////////////////////////////
+//          Code Separator
+////////////////////////////////////////////////////////////////////////////////
+
+;(function(){
+	var timerId = null
+	document.querySelector('#homeButton').addEventListener('touchstart', function(){
+		if( timerId !== null ) clearTimeout(timerId)
+		timerId = null
+		timerId = setTimeout(function(){
+			if( timerId !== null ) clearTimeout(timerId)
+			timerId = null
+
+			var event = {
+				type : 'deviceOrientationReset'
+			}
+			socket.emit('broadcast', JSON.stringify(event))			
+		}, 1000)
+	})
+	document.querySelector('#homeButton').addEventListener('touchend', function(){
+		if( timerId !== null ) clearTimeout(timerId)
+		timerId = null
+		console.log('touchend')
+	})
+})()
+
+
 //////////////////////////////////////////////////////////////////////////////
 //		forward the device orientation
 //////////////////////////////////////////////////////////////////////////////
@@ -190,85 +217,12 @@ function onDeviceOrientation(event) {
 	// console.log('onDeviceOrientation')
 	var event = {
 		type : 'deviceOrientation',
-		absolute : event.absolute,
 		alpha : event.alpha,
 		beta : event.beta,
 		gamma : event.gamma,
 	}
 	socket.emit('broadcast', JSON.stringify(event))
 }
-</script>
-
-<script src="vendor/hammer.min.js" charset="utf-8"></script>
-<script>
-//////////////////////////////////////////////////////////////////////////////
-//		handle gesture on trackpad
-//////////////////////////////////////////////////////////////////////////////
-var domElement = document.querySelector('#trackpad')
-var hammertime = new Hammer(domElement, {});
-hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-hammertime.on('swipeup', function(event) {
-	var event = {
-		type : 'touchGesture',
-		gesture : 'swipeup',
-	}
-	console.log(event)
-	socket.emit('broadcast', JSON.stringify(event))
-});
-hammertime.on('swipedown', function(event) {
-	var event = {
-		type : 'touchGesture',
-		gesture : 'swipedown',
-	}
-	console.log(event)
-	socket.emit('broadcast', JSON.stringify(event))
-});
-</script>
-
-
-<script src="vendor/speechapi-experiments/webspeech-commands.js" charset="utf-8"></script>
-<script>
-////////////////////////////////////////////////////////////////////////////////
-//          support for speech recognition
-////////////////////////////////////////////////////////////////////////////////
-
-// var webSpeechCommands = new WebSpeechCommands()
-// 
-// webSpeechCommands.listen(onResultWebSpeech)
-// 
-// function onResultWebSpeech(event){
-// 	if( event === null ){
-// 		webSpeechCommands.say( 'An error occured, please try again', function(){
-// 			webSpeechCommands.listen(onResult)
-// 		})		
-// 		return
-// 	}
-// 
-// 	var command = event.results[0][0].transcript
-// 	command = command.toLowerCase()
-// 
-// 	var event = {
-// 		type : 'voiceCommand',
-// 		text : command,
-// 	}
-// 	console.log('emit voice', event)
-// 	socket.emit('broadcast', JSON.stringify(event))	
-// }
-// ////////////////////////////////////////////////////////////////////////////////
-// //          honor .say
-// ////////////////////////////////////////////////////////////////////////////////
-// 
-// socket.on('broadcast', function(message){
-// 	var event = JSON.parse(message)
-// 	if( event.type !== 'say' )	return
-// 	var text = event.text
-// 	console.log('received a say message', text)
-// 	webSpeechCommands.say(text, function onEnd(){
-// 		console.log('blabal')
-// 		webSpeechCommands.listen(onResultWebSpeech)
-// 	})
-// })
-
 </script>
 
 

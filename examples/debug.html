@@ -13,7 +13,7 @@
         #messages li:nth-child(odd) { background: #eee; }
         </style>
 </head>
-<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+<script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
 <body>
         <ul id="messages"></ul>
         <form action="">
@@ -21,7 +21,7 @@
         </form>
 </body>
 <script>
-var socket = io('http://127.0.0.1:3000');
+var socket = io('http://127.0.0.1:4000');
 document.querySelector('form').addEventListener('submit', function(event){
         socket.emit('broadcast', document.querySelector('#m').value);
         document.querySelector('#m').value = ''

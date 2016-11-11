@@ -34,16 +34,26 @@ function PhoneAsVRController(){
 	}
 	this.gamepad = gamepad
 
-	var serverUrl = 'http://127.0.0.1:3000'
+	var serverUrl = 'http://127.0.0.1:4000'
 	var socket = io(serverUrl);
 	this._socket = socket
+	
+	socket.on('connect', function(){
+		console.log('connected phone server')
+	})
+	socket.on('disconnect', function(){
+		console.log('disconnected phone server')
+	})
 
 	var firstAngle = null	
 	socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
 
-		if( event.type === 'deviceOrientation' ){
-	                // console.log('broadcast', message)
+		if( event.type === 'deviceOrientationReset' ){
+			console.log('deviceOrientationReset', message)
+			firstAngle = null
+		}else if( event.type === 'deviceOrientation' ){
+	                // console.log('new deviceOrientation', message)
 			if( firstAngle === null ){
 				firstAngle = {
 					alpha: event.alpha,
