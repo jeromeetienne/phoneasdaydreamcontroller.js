@@ -75,13 +75,13 @@ function PhoneAsVRController(serverUrl){
 			euler.z = -gamma / 180 * Math.PI
 			euler.order = "YXZ"
 			// FIXME here i include the whole three.js for this loosy line... let avoid that ...
-			var quaternion = new THREE.Quaternion().setFromEuler(euler)
+			var phoneQuaternion = new THREE.Quaternion().setFromEuler(euler)
 			
 			if(initCameraQuaternion === null){
 				initCameraQuaternion = camera.quaternion.clone()	
 			}
 			var cameraQuaternion = initCameraQuaternion.clone();
-			cameraQuaternion.multiply( quaternion )
+			cameraQuaternion.multiply( phoneQuaternion )
 			
 	                cameraQuaternion.toArray(gamepad.pose.orientation)
 		}else if( event.type === 'touchstart' ){

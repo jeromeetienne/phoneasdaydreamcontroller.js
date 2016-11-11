@@ -26,6 +26,7 @@ body, html, #container {
 	font-weight: bolder;
 	
 	user-select: none;
+	-webkit-user-select: none;
 }
 
 #trackpad {
@@ -78,10 +79,15 @@ body, html, #container {
 </div>
 
 
-<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
+<script src="/node_modules/socket.io-client/socket.io.js"></script>
 <script>
-var serverUrl = 'http://192.168.0.2:4000'
+var serverUrl = 'http://'+location.hostname+':4000'
 var socket = io(serverUrl);
+
+document.querySelector('body').addEventListener('touchstart', function(event){ event.preventDefault() })
+document.querySelector('body').addEventListener('touchend', function(event){ event.preventDefault() })
+document.querySelector('body').addEventListener('touchmove', function(event){ event.preventDefault() })
+
 
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
@@ -156,7 +162,6 @@ img.src = 'images/sprite0.png'
 img.style.display = 'none'
 img.style.position = 'absolute'
 img.style.width = '30%'
-// img.style.opacity = '1';
 img.style.marginTop = '-15%'
 img.style.marginLeft = '-15%'
 img.style.pointerEvents = 'none'

@@ -14,7 +14,7 @@ io.on('connection', function(socket){
                 console.log('user disconnected');
         });
         socket.on('broadcast', function(msg){
-                console.log('broadcast', msg)
+                // console.log('broadcast', msg)
                 io.emit('broadcast', msg);
         });
 });
