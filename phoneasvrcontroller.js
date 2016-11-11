@@ -34,7 +34,7 @@ function PhoneAsVRController(){
 	}
 	this.gamepad = gamepad
 
-	var serverUrl = 'http://127.0.0.1:4000'
+	var serverUrl = 'http://192.168.0.2:4000'
 	var socket = io(serverUrl);
 	this._socket = socket
 	
@@ -46,12 +46,14 @@ function PhoneAsVRController(){
 	})
 
 	var firstAngle = null	
+	var initCameraQuaternion = null
 	socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
 
 		if( event.type === 'deviceOrientationReset' ){
 			console.log('deviceOrientationReset', message)
 			firstAngle = null
+			initCameraQuaternion = null
 		}else if( event.type === 'deviceOrientation' ){
 	                // console.log('new deviceOrientation', message)
 			if( firstAngle === null ){
@@ -73,7 +75,14 @@ function PhoneAsVRController(){
 			euler.order = "YXZ"
 			// FIXME here i include the whole three.js for this loosy line... let avoid that ...
 			var quaternion = new THREE.Quaternion().setFromEuler(euler)
-	                quaternion.toArray(gamepad.pose.orientation)
+			
+			if(initCameraQuaternion === null){
+				initCameraQuaternion = camera.quaternion.clone()	
+			}
+			var cameraQuaternion = initCameraQuaternion.clone();
+			cameraQuaternion.multiply( quaternion )
+			
+	                cameraQuaternion.toArray(gamepad.pose.orientation)
 		}else if( event.type === 'touchstart' ){
 			if( event.target === 'appButton' ){
 				gamepad.buttons[0].pressed = true

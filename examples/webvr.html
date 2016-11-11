@@ -257,8 +257,8 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 </script>
 
 <script src="../vendor/speechapi-experiments/webspeech-commands.js"></script>
-<script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script>
-<script src="http://127.0.0.1:4000/phoneasvrcontroller.js"></script>
+<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.2:4000/phoneasvrcontroller.js"></script>
 <script src='js/phoneasvrcontrollerextra.js'></script>
 <script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
 <script>
@@ -281,6 +281,11 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 	onRenderFcts.push(function(){
 		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
 		phoneModel.quaternion.fromArray(poseOrientation)
+		camera.updateMatrixWorld(true)
+		
+		var position = new THREE.Vector3(0,0,-1)
+		camera.localToWorld(position)
+		phoneModel.position.copy(position)
 	})
 	
 	//////////////////////////////////////////////////////////////////////////////////
@@ -373,7 +378,7 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 		specular: 0xffffff,
 		shininess: 200,
 	});
-	for(var i = 0; i < 20; i++){
+	for(var i = 0; i < 200; i++){
 		var object3d	= new THREE.Mesh( geometry, material );
 		object3d.scale.set(1,1,1).multiplyScalar(1/2)
 		scene.add( object3d );
