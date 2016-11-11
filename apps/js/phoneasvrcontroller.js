@@ -1,4 +1,4 @@
-function PhoneAsVRController(){
+function PhoneAsVRController(serverUrl){
 	// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
 	var gamepad = {
 		'id' : 'PhoneAsGamepad.js Controller',
@@ -18,6 +18,8 @@ function PhoneAsVRController(){
 			'pressed' : false,
 			'value' : 0,		
 		}],
+		// Hand extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadhand
+		'hand' : 'left',
 		// VR extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadpose
 		'pose' : {
 			'hasPosition' : false,
@@ -34,7 +36,6 @@ function PhoneAsVRController(){
 	}
 	this.gamepad = gamepad
 
-	var serverUrl = 'http://192.168.0.2:4000'
 	var socket = io(serverUrl);
 	this._socket = socket
 	
@@ -124,7 +125,7 @@ function PhoneAsVRController(){
 //          Code Separator
 ////////////////////////////////////////////////////////////////////////////////
 
-PhoneAsVRController.overloadGetpadsAPI = function(){
+PhoneAsVRController.overloadGamepadsAPI = function(){
 	var phoneAsVRController = new PhoneAsVRController()
 	navigator.getGamepads = function(){
         	var gamepads = [ 

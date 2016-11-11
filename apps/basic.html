@@ -1,9 +1,10 @@
 <script src='http://192.168.0.2:4000/socket.io/socket.io.js'></script>
-<script src='http://192.168.0.2:4000/phoneasvrcontroller.js'></script>
+<script src='js/phoneasvrcontroller.js'></script>
 <script src='vendor/three.js/build/three.js'></script>
 <pre id='output'></pre>
 <script>
-	var phoneAsVRController = new PhoneAsVRController();
+	var serverUrl = 'http://192.168.0.2:4000'
+	var phoneAsVRController = new PhoneAsVRController(serverUrl);
 	
 	function dumpGamepad(){
 		var domElement = document.querySelector('#output')

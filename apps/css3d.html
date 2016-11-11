@@ -82,10 +82,8 @@
 	}
 
 </script>
-<script src='../vendor/speechapi-experiments/webspeech-commands.js'></script>
 <script src='http://192.168.0.2:4000/socket.io/socket.io.js'></script>
-<script src='http://192.168.0.2:4000/phoneasvrcontroller.js'></script>
-<script src='js/phoneasvrcontrollerextra.js'></script>
+<script src='js/phoneasvrcontroller.js'></script>
 <script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
 
 <script src='js/rayCss3d.js'></script>
@@ -95,11 +93,11 @@
 	//////////////////////////////////////////////////////////////////////////////
 	//		handle phone as controller
 	//////////////////////////////////////////////////////////////////////////////
-	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
-	// var phoneAsVRControllerExtra = new PhoneAsVRController();
+	var serverUrl = 'http://192.168.0.2:4000'
+	var phoneAsVRController = new PhoneAsVRController(serverUrl);
 
 	onRenderFcts.push(function(){
-		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
+		var poseOrientation = phoneAsVRController.gamepad.pose.orientation
 		var quaternion = new THREE.Quaternion().fromArray(poseOrientation)
 		rayCSS3D.setOrientation(quaternion)
 	})
@@ -112,7 +110,7 @@
 	// set the origin of the ray
 	onRenderFcts.push(function(){
 		camera.updateMatrixWorld(true)
-		var position = new THREE.Vector3(0,0,-750)
+		var position = new THREE.Vector3(200,-200,-750)
 		camera.localToWorld(position)
 		rayCSS3D.object3d.position.copy(position)
 	})
@@ -120,40 +118,40 @@
 	var button0WasPressed = false
 	onRenderFcts.push(function(){
 		// test if the button0 is cliking
-		var button0IsPressed = phoneAsVRControllerExtra.gamepad.buttons[0].pressed
+		var button0IsPressed = phoneAsVRController.gamepad.buttons[0].pressed
 		var clicking = button0WasPressed === false && button0IsPressed === true ? true : false
 		button0WasPressed = button0IsPressed
 
 		rayCSS3D.update(camera, scene.children, clicking)
 	})
 	
-	phoneAsVRControllerExtra.signals.touchGesture.add(function(event){
-		if( event.gesture !== 'swipeup' && event.gesture !== 'swipedown' )	return
-
-		var domElement = document.querySelector('ul')
-		var computedStyle = getComputedStyle(domElement)
-		var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
-		lineHeight = lineHeight+2	// +2 is like the border
-		if( event.gesture === 'swipedown' ){
-			domElement.scrollTop -= lineHeight
-		}else if( event.gesture === 'swipeup' ){
-			domElement.scrollTop += lineHeight
-		}
-	})
-
-	function scrollList(direction){
-		var domElement = document.querySelector('ul')
-		var computedStyle = getComputedStyle(domElement)
-		var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
-		lineHeight = lineHeight+2	// +2 is like the border
-		if( direction === 'down' ){
-			domElement.scrollTop -= lineHeight
-		}else if( direction === 'up' ){
-			domElement.scrollTop += lineHeight
-		}else {
-			console.assert(false)
-		}
-	}
+	// phoneAsVRController.signals.touchGesture.add(function(event){
+	// 	if( event.gesture !== 'swipeup' && event.gesture !== 'swipedown' )	return
+	// 
+	// 	var domElement = document.querySelector('ul')
+	// 	var computedStyle = getComputedStyle(domElement)
+	// 	var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
+	// 	lineHeight = lineHeight+2	// +2 is like the border
+	// 	if( event.gesture === 'swipedown' ){
+	// 		domElement.scrollTop -= lineHeight
+	// 	}else if( event.gesture === 'swipeup' ){
+	// 		domElement.scrollTop += lineHeight
+	// 	}
+	// })
+	// 
+	// function scrollList(direction){
+	// 	var domElement = document.querySelector('ul')
+	// 	var computedStyle = getComputedStyle(domElement)
+	// 	var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
+	// 	lineHeight = lineHeight+2	// +2 is like the border
+	// 	if( direction === 'down' ){
+	// 		domElement.scrollTop -= lineHeight
+	// 	}else if( direction === 'up' ){
+	// 		domElement.scrollTop += lineHeight
+	// 	}else {
+	// 		console.assert(false)
+	// 	}
+	// }
 
 </script>
 <style>

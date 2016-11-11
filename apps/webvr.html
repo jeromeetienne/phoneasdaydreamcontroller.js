@@ -96,6 +96,7 @@ var onRenderFcts = []
 // Only enable it if you actually need to.
 var renderer = new THREE.WebGLRenderer({antialias: false});
 renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
+renderer.setPixelRatio(1/2);
 
 // Append the canvas element created by the renderer to fullScreenContainer
 document.querySelector('#fullScreenContainer').appendChild(renderer.domElement);
@@ -256,14 +257,12 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 
 </script>
 
-<script src="../vendor/speechapi-experiments/webspeech-commands.js"></script>
 <script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
-<script src="http://192.168.0.2:4000/phoneasvrcontroller.js"></script>
-<script src='js/phoneasvrcontrollerextra.js'></script>
+<script src="js/phoneasvrcontroller.js"></script>
 <script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
 <script>
-	var phoneAsVRControllerExtra = new PhoneAsVRControllerExtra();
-	// var phoneAsVRControllerExtra = new PhoneAsVRController();
+	var serverUrl = 'http://192.168.0.2:4000'
+	var phoneAsVRController = new PhoneAsVRController(serverUrl);
 	
 	////////////////////////////////////////////////////////////////////////////////
 	//          build phone model
@@ -279,11 +278,17 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 	scene.add(phoneModel);
 	
 	onRenderFcts.push(function(){
-		var poseOrientation = phoneAsVRControllerExtra.gamepad.pose.orientation
+		var poseOrientation = phoneAsVRController.gamepad.pose.orientation
 		phoneModel.quaternion.fromArray(poseOrientation)
 		camera.updateMatrixWorld(true)
 		
-		var position = new THREE.Vector3(0,0,-1)
+		if( phoneAsVRController.gamepad.hand === 'right' ){
+			var position = new THREE.Vector3(+0.5,-0.5, -1)
+		}else if( phoneAsVRController.gamepad.hand === 'left' ){
+			var position = new THREE.Vector3(-0.5,-0.5, -1)
+		}else {
+			var position = new THREE.Vector3(0.0,-0.5, -1)
+		}
 		camera.localToWorld(position)
 		phoneModel.position.copy(position)
 	})
@@ -354,7 +359,7 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 		var wasPressed = false
 		this.update = function(){
 			// check current status
-			var isPressed = phoneAsVRControllerExtra.gamepad.buttons[buttonIndex].pressed
+			var isPressed = phoneAsVRController.gamepad.buttons[buttonIndex].pressed
 			// notify caller as needed
 			if( isPressed === true && wasPressed === false){
 				onTouchStart()
@@ -371,7 +376,7 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
 (function(){
-	var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15, 32, 16);
+	var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
 	//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
 	var material	= new THREE.MeshPhongMaterial({
 		color	: 0xffffff,

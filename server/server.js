@@ -1,34 +1,7 @@
+
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-//////////////////////////////////////////////////////////////////////////////
-//                export static files
-//////////////////////////////////////////////////////////////////////////////
-app.get('/', function(req, res){
-        res.sendfile('./phone.html');
-});
-app.get('/phone.html', function(req, res){
-        res.sendfile('./phone.html');
-});
-app.get('/phoneasvrcontroller.js', function(req, res){
-        res.sendfile('./phoneasvrcontroller.js');
-});
-app.get('/phoneasvrcontrollerextra.js', function(req, res){
-        res.sendfile('./examples/js/phoneasvrcontrollerextra.js');
-});
-app.get('/vendor/speechapi-experiments/webspeech-commands.js', function(req, res){
-        res.sendfile('./vendor/speechapi-experiments/webspeech-commands.js');
-});
-app.get('/vendor/hammer.min.js', function(req, res){
-        res.sendfile('./vendor/hammer.min.js');
-});
-app.get('/vendor/wakelock.js', function(req, res){
-        res.sendfile('./vendor/wakelock.js');
-});
-app.get('/examples/images/sprite0.png', function(req, res){
-        res.sendfile('./examples/images/sprite0.png');
-});
 
 //////////////////////////////////////////////////////////////////////////////
 //                handle socket.io

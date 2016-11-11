@@ -13,6 +13,7 @@
 body, html, #container {
 	height: 100%;
 	margin: 0;
+	overflow-x: hidden;
 	overflow-y: hidden;
 }
 
@@ -77,9 +78,10 @@ body, html, #container {
 </div>
 
 
-<script src="/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 <script>
-var socket = io();
+var serverUrl = 'http://192.168.0.2:4000'
+var socket = io(serverUrl);
 
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
@@ -150,7 +152,7 @@ function sendTrackpadEvent(domEvent){
 //		display touch on trackpad
 //////////////////////////////////////////////////////////////////////////////
 var img = document.createElement('img')
-img.src = 'examples/images/sprite0.png'
+img.src = 'images/sprite0.png'
 img.style.display = 'none'
 img.style.position = 'absolute'
 img.style.width = '30%'
@@ -240,6 +242,22 @@ function onDeviceOrientation(event) {
 			var wakelock = new AndroidWakeLock()
 		}
 		wakelock.request()		
+	})
+</script> -->
+
+<!-- <script type="text/javascript">
+	document.querySelector('#container').addEventListener('touchstart', function onClick(event){
+		document.querySelector('#container').removeEventListener('touchstart', onClick);
+		var element = document.querySelector('#container')
+		if (element.requestFullscreen) {
+			element.requestFullscreen();
+		} else if (element.mozRequestFullScreen) {
+			element.mozRequestFullScreen();
+		} else if (element.webkitRequestFullscreen) {
+			element.webkitRequestFullscreen();
+		} else if (element.msRequestFullscreen) {
+			element.msRequestFullscreen();
+		}
 	})
 </script> -->
 </html>
