@@ -1,10 +1,6 @@
 - clean the code
 - make it such as you can have 2 joysticks
   - setup in phonecontroller.html
-- remove the need of camera quaternion in phoneasvrcontroller.js
-  - or make it tunable... 
-  - just a callback function in PhoneAsVRController for now
-  - copy this code in all demo
 - on the phone, tell it when it is connected to server, and to apps
 - on the apps, tell it when a new gamepad is connected
   - you can with gamepad api
@@ -20,6 +16,10 @@
 - DONE wakelock in phonecontroller.html ? yes with sleep.js.
 - DONE make var serverUrl = 'http://192.168.0.2:4000'
   - to read the page url to be more dynamic
+- DONE remove the need of camera quaternion in phoneasvrcontroller.js
+  - or make it tunable... 
+  - just a callback function in PhoneAsVRController for now
+  - copy this code in all demo
 
 
 # UI

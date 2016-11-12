@@ -1,4 +1,5 @@
 function PhoneAsVRController(serverUrl){
+	var _this = this
 	// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
 	var gamepad = {
 		'id' : 'PhoneAsGamepad.js Controller',
@@ -49,14 +50,13 @@ function PhoneAsVRController(serverUrl){
 	})
 
 	var originDeviceOrientation = null	
-	var originCameraQuaternion = null
+	this.onDeviceOrientationReset = function(){}
 	socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
 
 		if( event.type === 'deviceOrientationReset' ){
-			console.log('deviceOrientationReset', message)
 			originDeviceOrientation = null
-			originCameraQuaternion = null
+			_this.onDeviceOrientationReset()
 		}else if( event.type === 'deviceOrientation' ){
 	                // console.log('new deviceOrientation', message)
 			if( originDeviceOrientation === null ){
@@ -65,11 +65,6 @@ function PhoneAsVRController(serverUrl){
 					beta: event.beta,
 					gamma: event.gamma
 				}
-			}
-
-			// TODO camera is a global
-			if(originCameraQuaternion === null){
-				originCameraQuaternion = camera.quaternion.clone()	
 			}
 			
 			var alpha = event.alpha - originDeviceOrientation.alpha
@@ -83,9 +78,8 @@ function PhoneAsVRController(serverUrl){
 			deviceEuler.order = "YXZ"
 
 			// FIXME here i include the whole three.js for this loosy line... let avoid that ...
-			var phoneQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
-			var poseOrientation = originCameraQuaternion.clone().multiply( phoneQuaternion )
-	                poseOrientation.toArray(gamepad.pose.orientation)
+			var controllerQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
+	                controllerQuaternion.toArray(gamepad.pose.orientation)
 		}else if( event.type === 'touchstart' ){
 			if( event.target === 'appButton' ){
 				gamepad.buttons[0].pressed = true

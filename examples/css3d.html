@@ -96,10 +96,22 @@
 	var serverUrl = 'http://192.168.0.2:4000'
 	var phoneAsVRController = new PhoneAsVRController(serverUrl);
 
+	// handle originCamera for onDeviceOrientationReset
+	var originCameraQuaternion = null
+	phoneAsVRController.onDeviceOrientationReset = function(){
+		originCameraQuaternion = null
+	}
 	onRenderFcts.push(function(){
-		var poseOrientation = phoneAsVRController.gamepad.pose.orientation
-		var quaternion = new THREE.Quaternion().fromArray(poseOrientation)
-		rayCSS3D.setOrientation(quaternion)
+		// handle originCamera for onDeviceOrientationReset
+		if(originCameraQuaternion === null){
+			originCameraQuaternion = camera.quaternion.clone()	
+		}
+
+		// compute phoneModel from gamepad.pose.orientation
+		var controllerQuaternion = new THREE.Quaternion().fromArray(phoneAsVRController.gamepad.pose.orientation)
+		var poseQuaternion = originCameraQuaternion.clone().multiply( controllerQuaternion )
+
+		rayCSS3D.setOrientation(poseQuaternion)
 	})
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
