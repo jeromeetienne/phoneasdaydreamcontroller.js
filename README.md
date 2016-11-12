@@ -7,13 +7,7 @@ based on https://developers.google.com/vr/unity/controller-basics
 
 # Instruction
 - start the websocket server ```node index.js```
-- enter the url of the server on your phone, e.g. ```http://192.168.0.2:3000```
+- enter the url of the server on your phone, e.g. ```http://192.168.0.2:8080/phonecontroller.html```
   - you will see the gamepad page
 - start a static http server, e.g. ```http-server```
 - open ```http:192.168.0.2:8080/examples/webvr.html``` for an example of 3dof controller
-
-# Future
-- pass examples/webvr.js on phoneasvrcontroller.js
-- handle transcript with web speech api
-- add a awakelock - like the one in webvr-polyfill
-- plug it in ray-input

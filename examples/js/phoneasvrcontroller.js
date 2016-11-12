@@ -36,7 +36,9 @@ function PhoneAsVRController(serverUrl){
 	}
 	this.gamepad = gamepad
 
-	var socket = io(serverUrl);
+	var socket = io(serverUrl, {
+		query : 'origin=app'
+	});
 	this._socket = socket
 	
 	socket.on('connect', function(){
@@ -46,44 +48,44 @@ function PhoneAsVRController(serverUrl){
 		console.log('disconnected phone server')
 	})
 
-	var firstAngle = null	
-	var initCameraQuaternion = null
+	var originDeviceOrientation = null	
+	var originCameraQuaternion = null
 	socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
 
 		if( event.type === 'deviceOrientationReset' ){
 			console.log('deviceOrientationReset', message)
-			firstAngle = null
-			initCameraQuaternion = null
+			originDeviceOrientation = null
+			originCameraQuaternion = null
 		}else if( event.type === 'deviceOrientation' ){
 	                // console.log('new deviceOrientation', message)
-			if( firstAngle === null ){
-				firstAngle = {
+			if( originDeviceOrientation === null ){
+				originDeviceOrientation = {
 					alpha: event.alpha,
 					beta: event.beta,
 					gamma: event.gamma
 				}
 			}
 
-			var alpha = event.alpha - firstAngle.alpha
-                        var beta  = event.beta  - firstAngle.beta
-                        var gamma = event.gamma - firstAngle.gamma
-
-			var euler = new THREE.Euler()
-			euler.x =  beta  / 180 * Math.PI
-			euler.y =  alpha / 180 * Math.PI
-			euler.z = -gamma / 180 * Math.PI
-			euler.order = "YXZ"
-			// FIXME here i include the whole three.js for this loosy line... let avoid that ...
-			var phoneQuaternion = new THREE.Quaternion().setFromEuler(euler)
-			
-			if(initCameraQuaternion === null){
-				initCameraQuaternion = camera.quaternion.clone()	
+			// TODO camera is a global
+			if(originCameraQuaternion === null){
+				originCameraQuaternion = camera.quaternion.clone()	
 			}
-			var cameraQuaternion = initCameraQuaternion.clone();
-			cameraQuaternion.multiply( phoneQuaternion )
 			
-	                cameraQuaternion.toArray(gamepad.pose.orientation)
+			var alpha = event.alpha - originDeviceOrientation.alpha
+                        var beta  = event.beta  - originDeviceOrientation.beta
+                        var gamma = event.gamma - originDeviceOrientation.gamma
+
+			var deviceEuler = new THREE.Euler()
+			deviceEuler.x =  beta  / 180 * Math.PI
+			deviceEuler.y =  alpha / 180 * Math.PI
+			deviceEuler.z = -gamma / 180 * Math.PI
+			deviceEuler.order = "YXZ"
+
+			// FIXME here i include the whole three.js for this loosy line... let avoid that ...
+			var phoneQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
+			var poseOrientation = originCameraQuaternion.clone().multiply( phoneQuaternion )
+	                poseOrientation.toArray(gamepad.pose.orientation)
 		}else if( event.type === 'touchstart' ){
 			if( event.target === 'appButton' ){
 				gamepad.buttons[0].pressed = true

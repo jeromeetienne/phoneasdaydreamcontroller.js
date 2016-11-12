@@ -5,14 +5,21 @@
   - or make it tunable... 
 - on the phone, tell it when it is connected to server, and to apps
 - on the apps, tell it when a new gamepad is connected
+  - you can with gamepad api
 - ray-input 
   - make it with a arm model from ray-input
   - do a pull request for ray-input with left arm
   - thus you contributes and you learn
-- remove express from server
-- wakelock in phonecontroller.html
+- do a UI
+  - what is the mvp ?
 
 
-
+- DONE remove express from server
+- DONE wakelock in phonecontroller.html ? yes with sleep.js.
 - DONE make var serverUrl = 'http://192.168.0.2:4000'
   - to read the page url to be more dynamic
+
+
+# UI
+- tools selections
+  - on the left hand

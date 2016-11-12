@@ -1,9 +1,8 @@
 {
-  "name": "socket-chat-example",
+  "name": "phoneasvrcontroller",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "using your phone as a controller for VR",
   "dependencies": {
-    "express": "^4.10.2",
     "socket.io": "^1.5.1"
   },
   "scripts": {

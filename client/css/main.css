@@ -1,0 +1,83 @@
+body, html, #container, #instructions {
+	height: 100%;
+	margin: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+#container {
+	min-height:100%;
+	
+	color: 'black';
+	text-align:center;
+	font-family:arial;
+	font-weight: bolder;
+	
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+/*******************************************************************************
+	trackpad
+*******************************************************************************/
+
+#trackpad {
+	height:60%;
+	width:100%;
+	background-color: dimgrey;
+	margin:auto;
+	border-bottom: 1px solid #aaa;
+}
+#trackpad.touched {
+	background-color: grey ;
+}
+
+/*******************************************************************************
+	button
+*******************************************************************************/
+
+#bottomRow {
+	height:40%;
+	width:100%;
+	background-color:#990000;
+	margin:auto;
+}
+
+#homeButton {
+	float: left;
+	width: 50%;
+	height: 100%;
+	background-color: dimgrey;
+	margin-left: -1px;
+	border-right: 1px solid #aaa;
+}	
+#homeButton.touched {
+	background-color: grey ;
+}
+
+#appButton {
+	float: right;
+	width: 50%;
+	height: 100%;
+	background-color: dimgrey ;
+}
+#appButton.touched {
+	background-color: grey   ;
+}
+
+/*******************************************************************************
+	instructions screen
+*******************************************************************************/
+
+#instructions {
+	display: none;
+	width: 100%;
+	min-height:100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: rgba(127,127,127,1);
+	
+		text-align:center;
+		font-family:arial;
+}

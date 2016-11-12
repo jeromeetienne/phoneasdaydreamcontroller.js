@@ -9,80 +9,69 @@
 <head>
 	<title>Phone Gamepad</title>
 </head>
-<style>
-body, html, #container {
-	height: 100%;
-	margin: 0;
-	overflow-x: hidden;
-	overflow-y: hidden;
-}
-
-#container {
-	min-height:100%;
-	
-	color: 'black';
-	text-align:center;
-	font-family:arial;
-	font-weight: bolder;
-	
-	user-select: none;
-	-webkit-user-select: none;
-}
-
-#trackpad {
-	height:60%;
-	width:100%;
-	background-color: dimgrey;
-	margin:auto;
-	border-bottom: 1px solid #aaa;
-}
-#trackpad.touched {
-	background-color: grey ;
-}
-#bottomRow {
-	height:40%;
-	width:100%;
-	background-color:#990000;
-	margin:auto;
-}
-
-#homeButton {
-	float: left;
-	width: 50%;
-	height: 100%;
-	background-color: dimgrey;
-	margin-left: -1px;
-	border-right: 1px solid #aaa;
-}	
-#homeButton.touched {
-	background-color: grey ;
-}
-
-#appButton {
-	float: right;
-	width: 50%;
-	height: 100%;
-	background-color: dimgrey ;
-}
-#appButton.touched {
-	background-color: grey   ;
-}
-
-</style>
+<link rel="stylesheet" href="css/main.css" media="screen">
 <div id="container">
 	<div id="trackpad">Trackpad</div>    
 	<div id="bottomRow">
 		<div id="homeButton">Home Button</div>
 		<div id="appButton">App Button</div>
 	</div>
-	
+</div>
+<div id="instructions">
+	<h1>Phone As Vr Controller</h1>
+	<ul>
+		<li>3dof, 1 trackpad, 2 buttons</li>
+		<li>hand : <span class='hand'>right</span></li>
+	</ul>
+	<button type="button">Ok</button>
 </div>
 
+<script>
+function getQueryVariable(variable) {
+	var query = window.location.hash.substring(1);
+	var vars = query.split('&');
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		if (decodeURIComponent(pair[0]) === variable) {
+			if (pair[1] === undefined) return true
+			return decodeURIComponent(pair[1]);
+		}
+	}
+	return undefined
+}
+var queryHand = getQueryVariable('hand')
+
+</script>
+
+<script>
+if( queryHand === undefined ){
+	document.querySelector('#instructions').style.display = 'inherit'
+	document.querySelector('#instructions .hand').addEventListener('touchstart', function(event) {
+		var domElement = event.target
+		if( domElement.innerText === 'right' ){
+			domElement.innerText = 'left'
+		}else{
+			domElement.innerText = 'right'		
+		}
+	});
+	document.querySelector('#instructions button').addEventListener('touchstart', function(event) {
+		document.querySelector('#instructions').style.display = 'none'
+		var queryHand = document.querySelector('#instructions .hand').innerText
+		location.hash = '#hand='+queryHand
+		location.reload()
+	})
+}
+</script>
 
 <script src="/node_modules/socket.io-client/socket.io.js"></script>
 <script>
 var serverUrl = 'http://'+location.hostname+':4000'
-var socket = io(serverUrl);
+var socket = io(serverUrl, { query: "origin=phone&hand=right" });
+
+
+//////////////////////////////////////////////////////////////////////////////
+//		prevent default for touch events
+//////////////////////////////////////////////////////////////////////////////
 
 document.querySelector('body').addEventListener('touchstart', function(event){ event.preventDefault() })
 document.querySelector('body').addEventListener('touchend', function(event){ event.preventDefault() })
@@ -90,7 +79,7 @@ document.querySelector('body').addEventListener('touchmove', function(event){ ev
 
 
 //////////////////////////////////////////////////////////////////////////////
-//		Code Separator
+//		Handle button
 //////////////////////////////////////////////////////////////////////////////
 document.querySelector('#homeButton').addEventListener('touchstart', function(){
 	document.querySelector('#homeButton').classList.add('touched')
@@ -118,7 +107,7 @@ function sendButtonsEvent(type, target){
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//		Code Separator
+//		Handle trackpad
 //////////////////////////////////////////////////////////////////////////////
 
 document.querySelector('#trackpad').addEventListener('touchstart', function(event){
@@ -190,7 +179,7 @@ document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosit
 
 
 ////////////////////////////////////////////////////////////////////////////////
-//          Code Separator
+//          Handle calibration reset
 ////////////////////////////////////////////////////////////////////////////////
 
 ;(function(){
@@ -233,23 +222,22 @@ function onDeviceOrientation(event) {
 </script>
 
 
-<!-- wakelock triggers some strange messages in android - like unable to play mp4 ?? -->
-
-<!-- <script src="vendor/wakelock.js"></script>
+<script src="vendor/nosleep.js"></script>
 <script>
-	var wakelock = null
-	document.body.addEventListener('click', function onClick(){
-		document.body.removeEventListener('click', onClick)		
-		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-		if (userAgent.match(/iPhone/i) || userAgent.match(/iPod/i)) {
-			var wakelock = new iOSWakeLock()
-		} else {
-			var wakelock = new AndroidWakeLock()
-		}
-		wakelock.request()		
-	})
-</script> -->
-
+//////////////////////////////////////////////////////////////////////////////
+//		Handle noSleep
+//////////////////////////////////////////////////////////////////////////////
+;(function(){
+	var noSleep = new NoSleep();
+	
+	// Enable wake lock.
+	// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+	document.addEventListener('touchstart', function enableNoSleep() {
+		noSleep.enable();
+		document.removeEventListener('touchstart', enableNoSleep, false);
+	}, false);
+})()
+</script>
 <!-- <script type="text/javascript">
 	document.querySelector('#container').addEventListener('touchstart', function onClick(event){
 		document.querySelector('#container').removeEventListener('touchstart', onClick);
