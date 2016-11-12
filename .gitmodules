@@ -1,0 +1,3 @@
+[submodule "examples/vendor/threex.domevents"]
+	path = examples/vendor/threex.domevents
+	url = git@github.com:jeromeetienne/threex.domevents.git

@@ -3,6 +3,8 @@
   - setup in phonecontroller.html
 - remove the need of camera quaternion in phoneasvrcontroller.js
   - or make it tunable... 
+  - just a callback function in PhoneAsVRController for now
+  - copy this code in all demo
 - on the phone, tell it when it is connected to server, and to apps
 - on the apps, tell it when a new gamepad is connected
   - you can with gamepad api
