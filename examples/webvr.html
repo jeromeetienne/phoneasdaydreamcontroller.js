@@ -424,4 +424,27 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 	}
 })()	
 </script>
+
+<script src="js/threex.vrmenu.js" charset="utf-8"></script>
+<script>
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+(function(){
+	var menuItems = {
+		'open' : 'Open app',
+		'biggerBrush' : 'Bigger brush',
+		'Wow' : 'Wow',
+		'smallerBrush' : 'Smaller',
+	}
+	var vrMenu = new THREEx.VRMenu(domEvents, menuItems, onSelect)
+	vrMenu.object3d.position.z = -2
+	vrMenu.object3d.scale.multiplyScalar(1/2)
+	scene.add(vrMenu.object3d)
+	
+	function onSelect(itemKey){
+		console.log('selected', itemKey)
+	}
+})()	
+</script>
 </html>

@@ -9,248 +9,44 @@
 <head>
 	<title>Phone Gamepad</title>
 </head>
-<link rel="stylesheet" href="css/main.css" media="screen">
+<link rel="stylesheet" href="css/index.css">
 <div id="container">
-	<div id="trackpad">Trackpad</div>    
-	<div id="bottomRow">
-		<div id="homeButton">Home Button</div>
-		<div id="appButton">App Button</div>
-	</div>
-</div>
-<div id="instructions">
 	<h1>Phone As Vr Controller</h1>
 	<ul>
+		<li>Make your phone acts a daydream controller</li>
 		<li>3dof, 1 trackpad, 2 buttons</li>
-		<li>hand : <span class='hand'>right</span></li>
 	</ul>
-	<button type="button">Ok</button>
+	<input type="button" value="Ok">
+
+	<ul class='options'>
+		<li>Hand : 
+			<span class='hand'><select name="select">
+				<option value="right" selected>right</option> 
+				<option value="left">left</option>
+			</select></span>
+		</li>
+		<li>Gamepad Index : 
+			<span class='gamepadIndex'><select name="select">
+				<option value="0" selected>0</option> 
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select></span>
+		</li>
+	</ul>
 </div>
 
 <script>
-function getQueryVariable(variable) {
-	var query = window.location.hash.substring(1);
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		if (decodeURIComponent(pair[0]) === variable) {
-			if (pair[1] === undefined) return true
-			return decodeURIComponent(pair[1]);
-		}
-	}
-	return undefined
-}
-var queryHand = getQueryVariable('hand')
+	document.querySelector('#container input[type=button]').addEventListener('touchstart', onSubmit)
+	document.querySelector('#container input[type=button]').addEventListener('click', onSubmit)
 
+	function onSubmit(){
+		var handValue = document.querySelector('#container .hand select').value
+		var gamepadIndexValue = document.querySelector('#container .gamepadIndex select').value
+		var url = 'gamepad.html'
+		url += '#hand='+encodeURIComponent(handValue)
+		url += '&gamepadIndex='+encodeURIComponent(gamepadIndexValue)
+		location.href = url
+	}
 </script>
-
-<script>
-if( queryHand === undefined ){
-	document.querySelector('#instructions').style.display = 'inherit'
-	document.querySelector('#instructions .hand').addEventListener('touchstart', function(event) {
-		var domElement = event.target
-		if( domElement.innerText === 'right' ){
-			domElement.innerText = 'left'
-		}else{
-			domElement.innerText = 'right'		
-		}
-	});
-	document.querySelector('#instructions button').addEventListener('touchstart', function(event) {
-		document.querySelector('#instructions').style.display = 'none'
-		var queryHand = document.querySelector('#instructions .hand').innerText
-		location.hash = '#hand='+queryHand
-		location.reload()
-	})
-}
-</script>
-
-<script src="/node_modules/socket.io-client/socket.io.js"></script>
-<script>
-var serverUrl = 'http://'+location.hostname+':4000'
-var socket = io(serverUrl, { query: "origin=phone&hand=right" });
-
-
-//////////////////////////////////////////////////////////////////////////////
-//		prevent default for touch events
-//////////////////////////////////////////////////////////////////////////////
-
-document.querySelector('body').addEventListener('touchstart', function(event){ event.preventDefault() })
-document.querySelector('body').addEventListener('touchend', function(event){ event.preventDefault() })
-document.querySelector('body').addEventListener('touchmove', function(event){ event.preventDefault() })
-
-
-//////////////////////////////////////////////////////////////////////////////
-//		Handle button
-//////////////////////////////////////////////////////////////////////////////
-document.querySelector('#homeButton').addEventListener('touchstart', function(){
-	document.querySelector('#homeButton').classList.add('touched')
-	sendButtonsEvent('touchstart', 'homeButton')
-})
-document.querySelector('#homeButton').addEventListener('touchend', function(){
-	document.querySelector('#homeButton').classList.remove('touched')
-	sendButtonsEvent('touchend', 'homeButton')
-})
-document.querySelector('#appButton').addEventListener('touchstart', function(){
-	document.querySelector('#appButton').classList.add('touched')
-	sendButtonsEvent('touchstart', 'appButton')
-})
-document.querySelector('#appButton').addEventListener('touchend', function(){
-	document.querySelector('#appButton').classList.remove('touched')
-	sendButtonsEvent('touchend', 'appButton')
-})
-
-function sendButtonsEvent(type, target){
-	var event = {
-		type : type,
-		target : target,
-	}
-	socket.emit('broadcast', JSON.stringify(event))		
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//		Handle trackpad
-//////////////////////////////////////////////////////////////////////////////
-
-document.querySelector('#trackpad').addEventListener('touchstart', function(event){
-	document.querySelector('#trackpad').classList.add('touched')
-	sendTrackpadEvent(event)
-})
-document.querySelector('#trackpad').addEventListener('touchend', function(event){
-	document.querySelector('#trackpad').classList.remove('touched')
-	sendTrackpadEvent(event)
-})
-
-document.querySelector('#trackpad').addEventListener('touchmove', function(event){
-	sendTrackpadEvent(event)
-})
-
-function sendTrackpadEvent(domEvent){
-	var event = {
-		type : domEvent.type,
-		target : 'trackpad'
-	}
-
-	var touch = domEvent.touches[0]
-	if( touch ){
-		var trackpadElement = document.querySelector('#trackpad')
-		var boundRect = trackpadElement.getBoundingClientRect()
-		event.positionX = (touch.clientX / boundRect.width - 0.5) * 2
-		event.positionY = (touch.clientY / boundRect.height- 0.5) * 2
-	}else{
-		event.positionX = 0
-		event.positionY = 0
-	}
-
-	socket.emit('broadcast', JSON.stringify(event))		
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//		display touch on trackpad
-//////////////////////////////////////////////////////////////////////////////
-var img = document.createElement('img')
-img.src = 'images/sprite0.png'
-img.style.display = 'none'
-img.style.position = 'absolute'
-img.style.width = '30%'
-img.style.marginTop = '-15%'
-img.style.marginLeft = '-15%'
-img.style.pointerEvents = 'none'
-document.body.appendChild(img)
-function updateImgPosition(domEvent){
-	var touch = domEvent.touches[0]
-	if( touch ){
-		img.style.left = touch.clientX+'px'
-		img.style.top = touch.clientY+'px'
-		img.style.display = 'block'
-		
-		var trackpadElement = document.querySelector('#trackpad')
-		var boundRect = trackpadElement.getBoundingClientRect()
-		if( touch.clientY > boundRect.height ){
-			img.style.display = 'none'
-		}
-	}else{
-		img.style.display = 'none'
-	}
-	
-}
-document.querySelector('#trackpad').addEventListener('touchstart', updateImgPosition)
-document.querySelector('#trackpad').addEventListener('touchend', updateImgPosition)
-document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosition)
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-//          Handle calibration reset
-////////////////////////////////////////////////////////////////////////////////
-
-;(function(){
-	var timerId = null
-	document.querySelector('#homeButton').addEventListener('touchstart', function(){
-		if( timerId !== null ) clearTimeout(timerId)
-		timerId = null
-		timerId = setTimeout(function(){
-			if( timerId !== null ) clearTimeout(timerId)
-			timerId = null
-
-			var event = {
-				type : 'deviceOrientationReset'
-			}
-			socket.emit('broadcast', JSON.stringify(event))			
-		}, 1000)
-	})
-	document.querySelector('#homeButton').addEventListener('touchend', function(){
-		if( timerId !== null ) clearTimeout(timerId)
-		timerId = null
-		console.log('touchend')
-	})
-})()
-
-
-//////////////////////////////////////////////////////////////////////////////
-//		forward the device orientation
-//////////////////////////////////////////////////////////////////////////////
-window.addEventListener("deviceorientation", onDeviceOrientation, true);
-function onDeviceOrientation(event) {
-	// console.log('onDeviceOrientation')
-	var event = {
-		type : 'deviceOrientation',
-		alpha : event.alpha,
-		beta : event.beta,
-		gamma : event.gamma,
-	}
-	socket.emit('broadcast', JSON.stringify(event))
-}
-</script>
-
-
-<script src="vendor/nosleep.js"></script>
-<script>
-//////////////////////////////////////////////////////////////////////////////
-//		Handle noSleep
-//////////////////////////////////////////////////////////////////////////////
-;(function(){
-	var noSleep = new NoSleep();
-	
-	// Enable wake lock.
-	// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
-	document.addEventListener('touchstart', function enableNoSleep() {
-		noSleep.enable();
-		document.removeEventListener('touchstart', enableNoSleep, false);
-	}, false);
-})()
-</script>
-<!-- <script type="text/javascript">
-	document.querySelector('#container').addEventListener('touchstart', function onClick(event){
-		document.querySelector('#container').removeEventListener('touchstart', onClick);
-		var element = document.querySelector('#container')
-		if (element.requestFullscreen) {
-			element.requestFullscreen();
-		} else if (element.mozRequestFullScreen) {
-			element.mozRequestFullScreen();
-		} else if (element.webkitRequestFullscreen) {
-			element.webkitRequestFullscreen();
-		} else if (element.msRequestFullscreen) {
-			element.msRequestFullscreen();
-		}
-	})
-</script> -->
 </html>

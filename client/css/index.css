@@ -1,0 +1,60 @@
+body, html, #container {
+	height: 100%;
+	margin: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+#container {
+	width: 100%;
+	min-height:100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	/*background-color: rgba(127,127,127,1);*/
+	background: #495C70;
+	text-align:center;
+	font-family:arial;
+	
+	color: #A8BACE;
+}
+
+#container ul {
+	list-style-type: none;
+}
+
+#container ul.options {
+
+    position: absolute;
+    bottom: 0px;
+    	
+	font-size: 200%;
+	text-align: left;
+}
+
+#container input[type=button] {
+	margin-top: 2em;
+	font-family: arial;
+	font-size: 400%;
+
+	background: #576E86;
+	border: none;
+	padding: 8px 10px 8px 10px;
+	border-radius: 5px;
+	color: #A8BACE;
+}
+#container input[type=button]:hover{
+	background: #394D61;
+}
+
+#container select {
+	margin: 10px;
+	padding: 10px;
+	border: 1px solid #576E86;
+	background: transparent;
+	font-size: 100%;
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+    	appearance: none;
+}
