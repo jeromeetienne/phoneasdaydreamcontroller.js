@@ -17,10 +17,19 @@ PhoneAsVRController.Context = function(serverUrl){
 	this._socket.on('phoneconnected', function(message){
 		// var event = JSON.parse(message)
 		console.log('phoneconnected', message)
+		
+		_this._gamepads[message.gamepadIndex] =  new PhoneAsVRController.Gamepad(_this, {
+			hand : message.hand,
+			gamepadIndex: message.gamepadIndex
+		})
 	})
 	this._socket.on('phonedisconnected', function(message){
 		// var event = JSON.parse(message)
 		console.log('phonedisconnected', message)
+
+		var gamepad = _this._gamepads[message.gamepadIndex]
+		gamepad.dispose()
+		delete _this._gamepads[message.gamepadIndex]
 	})
 
 	this._gamepads = [
@@ -30,7 +39,10 @@ PhoneAsVRController.Context = function(serverUrl){
 		undefined,
 	]
 
-	this._gamepads[0] =  new PhoneAsVRController.Gamepad(this, 0)
+	this._gamepads[0] =  new PhoneAsVRController.Gamepad(this, {
+		hand : 'right',
+		gamepadIndex: 0
+	})
 
 	// FIXME remote that
 	this.gamepad = this._gamepads[0].gamepad

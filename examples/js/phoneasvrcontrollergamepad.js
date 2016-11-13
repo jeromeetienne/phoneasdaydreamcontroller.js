@@ -1,20 +1,31 @@
 var PhoneAsVRController = PhoneAsVRController || {}
 
-PhoneAsVRController.Gamepad = function(context, gamepadIndex){
+PhoneAsVRController.Gamepad = function(context, phoneParameters){
 	var _this = this
 
-	var gamepad = JSON.parse(JSON.stringify(PhoneAsVRController.Gamepad._gamepadTemplate))
-	this.gamepad = gamepad
+	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsVRController.Gamepad._gamepadTemplate))
+	this.gamepad.index = phoneParameters.gamepadIndex
+	this.gamepad.hand = phoneParameters.hand
+	var gamepad = this.gamepad
 
 
 	var originDeviceOrientation = null
 	this.onDeviceOrientationReset = function(){}
-	context._socket.on('broadcast', function(message){   
+	context._socket.on('broadcast', onBroadcast)
+	
+
+	
+	this.dispose = function(){
+		context._socket.removeAllListeners('broadcast')
+	}
+	return
+	
+	function onBroadcast(message){   
 		var event = JSON.parse(message)
 		
 		// console.log(event.gamepadIndex, gamepadIndex )
 		
-		if( event.gamepadIndex !== gamepadIndex )	return
+		if( event.gamepadIndex !== phoneParameters.gamepadIndex )	return
 		
 		if( event.type === 'deviceOrientationReset' ){
 			originDeviceOrientation = null
@@ -76,7 +87,7 @@ PhoneAsVRController.Gamepad = function(context, gamepadIndex){
 				event.positionY
 			]
 		}
-	})	
+	}
 }
 
 
