@@ -16,7 +16,7 @@ io.on('connection', function(socket){
         var query = require('querystring').parse(parsedUrl.query)
         var parameters = {
                 hand : query.hand,
-                gamepadIndex : query.gamepadIndex,
+                gamepadIndex : query.gamepadIndex ? parseInt(query.gamepadIndex,10) : undefined,
         }
 
         if( query.origin === 'app' ){

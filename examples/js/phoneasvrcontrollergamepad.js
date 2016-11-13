@@ -12,7 +12,7 @@ PhoneAsVRController.Gamepad = function(context, gamepadIndex){
 	context._socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
 		
-		console.log(event.gamepadIndex, gamepadIndex )
+		// console.log(event.gamepadIndex, gamepadIndex )
 		
 		if( event.gamepadIndex !== gamepadIndex )	return
 		
