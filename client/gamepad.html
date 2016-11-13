@@ -32,7 +32,7 @@ function getQueryVariable(variable) {
 }
 var queryParameters = {
 	hand : getQueryVariable('hand'),
-	gamepadIndex : getQueryVariable('gamepadIndex')
+	gamepadIndex : getQueryVariable('gamepadIndex') ? parseInt(getQueryVariable('gamepadIndex'),10) : undefined,
 }
 
 var hasParameters = (queryParameters.hand === undefined || queryParameters.gamepadIndex === undefined) ? false : true
@@ -49,6 +49,16 @@ var socket = io(serverUrl, {
 		+ "&hand=" + encodeURIComponent(queryParameters.hand)
 		+ "&gamepadIndex=" + encodeURIComponent(queryParameters.gamepadIndex)
 });
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+socket.on('appconnected', function(){
+	console.log('app connected')
+})
+socket.on('appdisconnected', function(){
+	console.log('app disconnected')
+})
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -83,9 +93,11 @@ document.querySelector('#appButton').addEventListener('touchend', function(){
 function sendButtonsEvent(type, target){
 	var event = {
 		type : type,
+		gamepadIndex: queryParameters.gamepadIndex,
+		// data properties
 		target : target,
 	}
-	socket.emit('broadcast', JSON.stringify(event))		
+	socket.emit('forwardToApp', JSON.stringify(event))		
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -108,6 +120,8 @@ document.querySelector('#trackpad').addEventListener('touchmove', function(event
 function sendTrackpadEvent(domEvent){
 	var event = {
 		type : domEvent.type,
+		gamepadIndex: queryParameters.gamepadIndex,
+		// data properties
 		target : 'trackpad'
 	}
 
@@ -122,7 +136,7 @@ function sendTrackpadEvent(domEvent){
 		event.positionY = 0
 	}
 
-	socket.emit('broadcast', JSON.stringify(event))		
+	socket.emit('forwardToApp', JSON.stringify(event))		
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -174,9 +188,10 @@ document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosit
 			timerId = null
 
 			var event = {
-				type : 'deviceOrientationReset'
+				type : 'deviceOrientationReset',
+				gamepadIndex: queryParameters.gamepadIndex,
 			}
-			socket.emit('broadcast', JSON.stringify(event))			
+			socket.emit('forwardToApp', JSON.stringify(event))			
 		}, 1000)
 	})
 	document.querySelector('#homeButton').addEventListener('touchend', function(){
@@ -195,11 +210,13 @@ function onDeviceOrientation(event) {
 	// console.log('onDeviceOrientation')
 	var event = {
 		type : 'deviceOrientation',
+		gamepadIndex: queryParameters.gamepadIndex,
+		// data properties
 		alpha : event.alpha,
 		beta : event.beta,
 		gamma : event.gamma,
 	}
-	socket.emit('broadcast', JSON.stringify(event))
+	socket.emit('forwardToApp', JSON.stringify(event))
 }
 </script>
 

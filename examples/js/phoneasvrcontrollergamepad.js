@@ -1,59 +1,21 @@
-function PhoneAsVRController(serverUrl){
+var PhoneAsVRController = PhoneAsVRController || {}
+
+PhoneAsVRController.Gamepad = function(context, gamepadIndex){
 	var _this = this
-	// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
-	var gamepad = {
-		'id' : 'PhoneAsGamepad.js Controller',
-		'index' : 0,
-		'connected' : true,
-		'mapping' : 'standard',
-		'axes' : [
-			[0,0]
-		],
-		'buttons' : [{
-			'pressed' : false,
-			'value' : 0,
-		}, {
-			'pressed' : false,
-			'value' : 0,		
-		}, {
-			'pressed' : false,
-			'value' : 0,		
-		}],
-		// Hand extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadhand
-		'hand' : 'left',
-		// VR extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadpose
-		'pose' : {
-			'hasPosition' : false,
-			'hasOrientation' : true,
-			
-			'position' : null,
-			'linearVelocity' : null,
-			'linearAcceleration' : null,
-			
-			'orientation' : [0,0,0,1],
-			'angularVelocity' : null,
-			'angularAcceleration' : null
-		}
-	}
+
+	var gamepad = JSON.parse(JSON.stringify(PhoneAsVRController.Gamepad._gamepadTemplate))
 	this.gamepad = gamepad
 
-	var socket = io(serverUrl, {
-		query : 'origin=app'
-	});
-	this._socket = socket
-	
-	socket.on('connect', function(){
-		console.log('connected phone server')
-	})
-	socket.on('disconnect', function(){
-		console.log('disconnected phone server')
-	})
 
-	var originDeviceOrientation = null	
+	var originDeviceOrientation = null
 	this.onDeviceOrientationReset = function(){}
-	socket.on('broadcast', function(message){   
+	context._socket.on('broadcast', function(message){   
 		var event = JSON.parse(message)
-
+		
+		console.log(event.gamepadIndex, gamepadIndex )
+		
+		if( event.gamepadIndex !== gamepadIndex )	return
+		
 		if( event.type === 'deviceOrientationReset' ){
 			originDeviceOrientation = null
 			_this.onDeviceOrientationReset()
@@ -117,19 +79,45 @@ function PhoneAsVRController(serverUrl){
 	})	
 }
 
-////////////////////////////////////////////////////////////////////////////////
-//          Code Separator
-////////////////////////////////////////////////////////////////////////////////
 
-PhoneAsVRController.overloadGamepadsAPI = function(){
-	var phoneAsVRController = new PhoneAsVRController()
-	navigator.getGamepads = function(){
-        	var gamepads = [ 
-			phoneAsVRController.gamepad,
-			undefined,
-			undefined,
-			undefined,
-		]
-		return gamepads
-	}	
+
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
+PhoneAsVRController.Gamepad._gamepadTemplate = {
+	'id' : 'PhoneAsGamepad.js Controller',
+	'index' : 0,
+	'connected' : true,
+	'mapping' : 'standard',
+	'axes' : [
+		[0,0]
+	],
+	'buttons' : [{
+		'pressed' : false,
+		'value' : 0,
+	}, {
+		'pressed' : false,
+		'value' : 0,		
+	}, {
+		'pressed' : false,
+		'value' : 0,		
+	}],
+	// Hand extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadhand
+	'hand' : 'left',
+	// VR extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadpose
+	'pose' : {
+		'hasPosition' : false,
+		'hasOrientation' : true,
+		
+		'position' : null,
+		'linearVelocity' : null,
+		'linearAcceleration' : null,
+		
+		'orientation' : [0,0,0,1],
+		'angularVelocity' : null,
+		'angularAcceleration' : null
+	}
 }

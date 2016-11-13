@@ -232,7 +232,7 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 	
 	var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
 	var material = new THREE.MeshPhongMaterial({
-		// map: texture,
+		map: texture,
 		// color: 0x01BE00,
 		color	: 0xaa8888,
 		specular: 0xffffff,
@@ -264,11 +264,12 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 </script>
 
 <script src="/node_modules/socket.io-client/socket.io.js"></script>
-<script src="js/phoneasvrcontroller.js"></script>
+<script src="js/phoneasvrcontrollercontext.js"></script>
+<script src="js/phoneasvrcontrollergamepad.js"></script>
 <script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
 <script>
 	var serverUrl = 'http://192.168.0.2:4000'
-	var phoneAsVRController = new PhoneAsVRController(serverUrl);
+	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
 	
 	////////////////////////////////////////////////////////////////////////////////
 	//          build phone model
@@ -282,11 +283,10 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 
 	// Add phoneModel mesh to your three.js scene
 	scene.add(phoneModel);
-
 		
 	// handle originCamera for onDeviceOrientationReset
 	var originCameraQuaternion = null
-	phoneAsVRController.onDeviceOrientationReset = function(){
+	phoneAsVRController._gamepads[0].onDeviceOrientationReset = function(){
 		originCameraQuaternion = null
 	}
 	onRenderFcts.push(function(){
@@ -326,70 +326,54 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 	// laserBeam.object3d.position.z	= -2
 	var laserCooked	= new THREEx.LaserCooked(laserBeam)
 	onRenderFcts.push(function(delta, now){
-		laserCooked.update(delta, now)
+		laserCooked.update(scene.children)
 	})
-	//////////////////////////////////////////////////////////////////////////////
-	//		button0 touchstart
-	//////////////////////////////////////////////////////////////////////////////
 
-	var monitorButton0 = new MonitorButton(0, function onTouchStart(){
-		var intersecting = getObjectIntersectingWithLaser()
-		if( intersecting === null )	return
-		intersecting.object.material.color.setHSL( Math.random(), 1, 0.5)
-		intersecting.object.scale.multiplyScalar(1.2)
-	})
+	var wasPressed = false
 	onRenderFcts.push(function(){
-		monitorButton0.update()
-	})
+		
+		var object3d = laserBeam.object3d
+		var raycaster	= new THREE.Raycaster()
 
-	//////////////////////////////////////////////////////////////////////////////
-	//		button1 touchstart
-	//////////////////////////////////////////////////////////////////////////////
-	var monitorButton1 = new MonitorButton(1, function onTouchStart(){
-		var intersecting = getObjectIntersectingWithLaser()
-		if( intersecting === null )	return
-		intersecting.object.parent.remove(intersecting.object);				
+		// get laserBeam matrixWorld
+		object3d.updateMatrixWorld();
+		var matrixWorld	= object3d.matrixWorld.clone()
+		// set the origin
+		raycaster.ray.origin.setFromMatrixPosition(matrixWorld)
+		// keep only the roation
+		matrixWorld.setPosition(new THREE.Vector3(0,0,0))		
+		// set the direction
+		// TODO use instead .setFromRotationMatrix ???
+		raycaster.ray.direction.set(1,0,0)
+			.applyMatrix4( matrixWorld )
+			.normalize()
+		// 
+		// var intersectMove = domEvents._onMoveRaycaster('mousemove', raycaster, null)
+		// var intersectOver = domEvents._onMoveRaycaster('mouseover', raycaster, null)
+		// var intersectOut = domEvents._onMoveRaycaster('mouseout', raycaster, null)
+		// 
+		// var isPressed = phoneAsVRController.gamepad.buttons[0].pressed
+		// // notify caller as needed
+		// if( isPressed === true && wasPressed === false){
+		// 	var intersectDown = domEvents._onEventRaycaster('mousedown', raycaster, null)
+		// }else if( isPressed === false && wasPressed === true ){
+		// 	var intersectUp = domEvents._onEventRaycaster('mouseup', raycaster, null)
+		// 	var intersectClick = domEvents._onEventRaycaster('click', raycaster, null)
+		// 	console.log('intersectClick', intersectClick.distance)
+		// }
+		// // update wasPressed
+		// wasPressed = isPressed
+		// 
+		// var minLength = 500
+		// if( intersectMove && minLength > intersectMove.distance )	minLength = intersectMove.distance
+		// if( intersectOver && minLength > intersectOver.distance )	minLength = intersectOver.distance
+		// if( intersectOut && minLength > intersectOut.distance )		minLength = intersectOut.distance
+		// if( intersectDown && minLength > intersectDown.distance )	minLength = intersectDown.distance
+		// if( intersectUp && minLength > intersectUp.distance )		minLength = intersectUp.distance
+		// if( intersectClick && minLength > intersectClick.distance )	minLength = intersectClick.distance
+		// laserBeam.setLength(minLength)
+		
 	})
-	onRenderFcts.push(function(){
-		monitorButton1.update()
-	})
-
-	
-	/**
-	 * get the object pointed by the laser
-	 */
-	function getObjectIntersectingWithLaser(){
-		// console.log('received touchstart', laserCooked.lastIntersects)
-		var intersecting = laserCooked.lastIntersects.find(function(intersect){
-			var object3d = intersect.object
-			if( object3d.geometry === undefined ) return false
-			if( object3d.geometry instanceof THREE.TorusGeometry === false ) return false
-			return true
-		})
-		if( intersecting === undefined )	return null
-		// console.log('intersecting', intersecting)
-		return intersecting	
-	}
-	
-	function MonitorButton(buttonIndex, onTouchStart, onTouchEnd){
-		// set default value
-		onTouchStart = onTouchStart || function(){}
-		onTouchEnd = onTouchEnd || function(){}
-
-		var wasPressed = false
-		this.update = function(){
-			// check current status
-			var isPressed = phoneAsVRController.gamepad.buttons[buttonIndex].pressed
-			// notify caller as needed
-			if( isPressed === true && wasPressed === false){
-				onTouchStart()
-			}else if( isPressed === false && wasPressed === true ){
-				onTouchEnd()
-			}
-			// update wasPressed
-			wasPressed = isPressed
-		}
-	}
 </script>
 <script>
 //////////////////////////////////////////////////////////////////////////////
@@ -414,13 +398,10 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 		object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
 		object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
 		object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
-
+		
 		domEvents.addEventListener(object3d, 'click', function(event){
-			console.log('you clicked on mesh', event)
-			var object3d = event.target
 			object3d.parent.remove(object3d)
-		}, false)
-
+		}, false)		
 	}
 })()	
 </script>
@@ -445,6 +426,6 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 	function onSelect(itemKey){
 		console.log('selected', itemKey)
 	}
-})()	
+})()
 </script>
 </html>

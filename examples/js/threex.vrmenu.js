@@ -12,10 +12,21 @@ THREEx.VRMenu = function(domEvents, items, onSelect){
 		var cache = _this._buildItemCache()
 		object3d.add(cache)
 		
+		domEvents.addEventListener(cache, 'mouseover', function(event){
+			cache.material.color.set('cyan')
+		}, false)
+		domEvents.addEventListener(cache, 'mouseout', function(event){
+			cache.material.color.set('black')
+		}, false)
+		domEvents.addEventListener(cache, 'mousedown', function(event){
+			cache.material.color.set('pink')
+		}, false)
+		domEvents.addEventListener(cache, 'mouseup', function(event){
+			cache.material.color.set('cyan')
+		}, false)
 		domEvents.addEventListener(cache, 'click', function(event){
-			console.log('you clicked on mesh', itemKey)
 			onSelect && onSelect(itemKey)
-		}, false)		
+		}, false)
 
 		_this.object3d.add(object3d)
 	})

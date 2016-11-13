@@ -45,7 +45,7 @@
 	// laserBeam.object3d.position.x	= 2
 	var laserCooked	= new THREEx.LaserCooked(laserBeam)
 	onRenderFcts.push(function(delta, now){
-		laserCooked.update(delta, now)
+		laserCooked.update(scene.children)
 	})
 
 	onRenderFcts.push(function(delta, now){

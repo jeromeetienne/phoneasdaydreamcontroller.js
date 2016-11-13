@@ -25,14 +25,13 @@ THREEx.LaserCooked	= function(laserBeam){
 	this.light	= light
 	sprite.add(light)
 
-	// to exports last intersects
-	this.lastIntersects	= []
-
 	var raycaster	= new THREE.Raycaster()
 	// TODO assume object3d.position are worldPosition. works IFF attached to scene
 	raycaster.ray.origin.copy(object3d.position)
 
-	this.update	= function(){
+
+
+	this.update	= function(objects){
 		// get laserBeam matrixWorld
 		object3d.updateMatrixWorld();
 		var matrixWorld	= object3d.matrixWorld.clone()
@@ -45,16 +44,14 @@ THREEx.LaserCooked	= function(laserBeam){
 			.applyMatrix4( matrixWorld )
 			.normalize()
 
-		var intersects		= raycaster.intersectObjects( scene.children );
+		var intersects		= raycaster.intersectObjects( objects );
 		if( intersects.length > 0 ){
 			var position	= intersects[0].point
 			var distance	= position.distanceTo(raycaster.ray.origin)
-			object3d.scale.x	= distance
+			laserBeam.setLength(distance)
 		}else{
-			object3d.scale.x	= 10			
+			laserBeam.setLength(10)
 		}
-		// backup last intersects
-		this.lastIntersects	= intersects
 	};
 }
 
