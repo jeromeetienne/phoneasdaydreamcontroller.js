@@ -84,11 +84,6 @@ document.addEventListener('touchmove', function(event) {
 <!-- A polyfill for the WebVR API.  -->
 <script src='vendor/webvr-polyfill.js'></script>
 
-<script src='vendor/threex.laser/threex.laserbeam.js'></script>
-<script src='vendor/threex.laser/threex.lasercooked.js'></script>
-<script>THREEx.LaserCooked.baseURL	= 'vendor/threex.laser/';</script>
-
-
 <script>
 var onRenderFcts = []
 
@@ -217,34 +212,74 @@ function enterFullscreen (element) {
 		element.msRequestFullscreen();
 	}
 }
+</script>
 
-//////////////////////////////////////////////////////////////////////////////
-//		Code Separator
-//////////////////////////////////////////////////////////////////////////////
+<script src='vendor/threex.laser/threex.laserbeam.js'></script>
+<script src='vendor/threex.laser/threex.lasercooked.js'></script>
+<script>THREEx.LaserCooked.baseURL	= 'vendor/threex.laser/';</script>
 
-// Add a repeating grid as a skybox.
-var boxWidth = 10;
-var loader = new THREE.TextureLoader();
-loader.load('images/box.png', function onTextureLoaded(texture) {
-	texture.wrapS = THREE.RepeatWrapping;
-	texture.wrapT = THREE.RepeatWrapping;
-	texture.repeat.set(boxWidth, boxWidth);
-	
-	var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
-	var material = new THREE.MeshPhongMaterial({
-		map: texture,
-		// color: 0x01BE00,
-		color	: 0xaa8888,
-		specular: 0xffffff,
-		side: THREE.BackSide
+
+<script src="vendor/threex.domevents/threex.domevents.js"></script>
+<script>
+var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
+
+</script>
+<script>
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+	(function(){
+		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
+		//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
+		var material	= new THREE.MeshPhongMaterial({
+			color	: 0xffffff,
+			specular: 0xffffff,
+			shininess: 200,
+		});
+		for(var i = 0; i < 200; i++){
+			var object3d	= new THREE.Mesh( geometry, material );
+			object3d.scale.set(1,1,1).multiplyScalar(1/2)
+			scene.add( object3d );
+			object3d.position.x	= (Math.random()-0.5)*10
+			object3d.position.y	= (Math.random()-0.5)*5
+			object3d.position.z	= (Math.random()-0.5)*10
+			
+			object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
+			
+			domEvents.addEventListener(object3d, 'click', function(event){
+				object3d.parent.remove(object3d)
+			}, false)		
+		}
+	})()	
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+
+	// Add a repeating grid as a skybox.
+	var boxWidth = 10;
+	var loader = new THREE.TextureLoader();
+	loader.load('images/box.png', function onTextureLoaded(texture) {
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set(boxWidth, boxWidth);
+		
+		var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
+		var material = new THREE.MeshPhongMaterial({
+			map: texture,
+			// color: 0x01BE00,
+			color	: 0xaa8888,
+			specular: 0xffffff,
+			side: THREE.BackSide
+		});
+		
+		var skybox = new THREE.Mesh(geometry, material);
+		scene.add(skybox);
+
+
+
 	});
-	
-	var skybox = new THREE.Mesh(geometry, material);
-	scene.add(skybox);
-
-
-
-});
 
 
 
@@ -256,156 +291,83 @@ loader.load('images/box.png', function onTextureLoaded(texture) {
 	light.position.set( 0.75, 1, 0.25 )
 	scene.add(light)
 </script>
-examples/vendor/threex.domevents/threex.domevents.js
-<script src="vendor/threex.domevents/threex.domevents.js"></script>
-<script>
-var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 
-</script>
 
+<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
 <script src="/node_modules/socket.io-client/socket.io.js"></script>
 <script src="js/phoneasvrcontrollercontext.js"></script>
 <script src="js/phoneasvrcontrollergamepad.js"></script>
-<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
+<script src="js/threex.daydreamcontroller.js"></script>
+<script src="js/threex.gamepadsignals.js"></script>
 <script>
 	var serverUrl = 'http://192.168.0.2:4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
 	
-	////////////////////////////////////////////////////////////////////////////////
-	//          build phone model
-	////////////////////////////////////////////////////////////////////////////////
-	
-	// Create 3D objects.
-	var geometry = new THREE.BoxGeometry(0.5*0.2, 0.1*0.2, 1*0.2);
-	var material = new THREE.MeshNormalMaterial();
-	var phoneModel = new THREE.Mesh(geometry, material);
-	phoneModel.position.z = -1
 
-	// Add phoneModel mesh to your three.js scene
-	scene.add(phoneModel);
-		
-	// handle originCamera for onDeviceOrientationReset
-	var originCameraQuaternion = null
-	phoneAsVRController._gamepads[0].onDeviceOrientationReset = function(){
-		originCameraQuaternion = null
+	function getGamepad(hand){
+		// var gamepads = navigator.getGamepads()
+		var gamepads = phoneAsVRController.getGamepads()
+		for(var i = 0; i < gamepads.length; i++){
+			var gamepad = gamepads[i]
+			if( gamepad === undefined )	continue
+			if( gamepad.gamepad.hand !== hand )	continue
+			return gamepad.gamepad
+		}
+		return null
 	}
-	onRenderFcts.push(function(){
-		// handle originCamera for onDeviceOrientationReset
-		if(originCameraQuaternion === null){
-			originCameraQuaternion = camera.quaternion.clone()	
-		}
-
-		// compute phoneModel from gamepad.pose.orientation
-		var controllerQuaternion = new THREE.Quaternion().fromArray(phoneAsVRController.gamepad.pose.orientation)
-		var poseQuaternion = originCameraQuaternion.clone().multiply( controllerQuaternion )
-		phoneModel.quaternion.copy(poseQuaternion)
-
-		
-		if( phoneAsVRController.gamepad.hand === 'right' ){
-			var position = new THREE.Vector3(+0.5,-0.5, -1)
-		}else if( phoneAsVRController.gamepad.hand === 'left' ){
-			var position = new THREE.Vector3(-0.5,-0.5, -1)
-		}else {
-			var position = new THREE.Vector3(0.0,-0.5, -1)
-		}
-		camera.updateMatrixWorld(true)
-		camera.localToWorld(position)
-		phoneModel.position.copy(position)
-	})
 	
-	//////////////////////////////////////////////////////////////////////////////////
-	//		add an object and make it move					//
-	//////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+;(function(){
+	createController('right')
+	createController('left')
 
-	var laserBeam	= new THREEx.LaserBeam()
-	laserBeam.object3d.rotation.y = Math.PI/2
-	laserBeam.object3d.scale.x = 0.5
-	laserBeam.object3d.scale.z = 0.5
-	laserBeam.object3d.position.z = -0.5*0.2
-	phoneModel.add(laserBeam.object3d)
-	// laserBeam.object3d.position.z	= -2
-	var laserCooked	= new THREEx.LaserCooked(laserBeam)
-	onRenderFcts.push(function(delta, now){
-		laserCooked.update(scene.children)
-	})
+	function createController(hand){
+		var controllerRight = new THREEx.DaydreamController()
+		scene.add(controllerRight.object3d)
+		var gamepadSignals = new THREEx.GamepadSignals()
 
-	var wasPressed = false
-	onRenderFcts.push(function(){
-		
-		var object3d = laserBeam.object3d
-		var raycaster	= new THREE.Raycaster()
 
-		// get laserBeam matrixWorld
-		object3d.updateMatrixWorld();
-		var matrixWorld	= object3d.matrixWorld.clone()
-		// set the origin
-		raycaster.ray.origin.setFromMatrixPosition(matrixWorld)
-		// keep only the roation
-		matrixWorld.setPosition(new THREE.Vector3(0,0,0))		
-		// set the direction
-		// TODO use instead .setFromRotationMatrix ???
-		raycaster.ray.direction.set(1,0,0)
-			.applyMatrix4( matrixWorld )
-			.normalize()
-		// 
-		// var intersectMove = domEvents._onMoveRaycaster('mousemove', raycaster, null)
-		// var intersectOver = domEvents._onMoveRaycaster('mouseover', raycaster, null)
-		// var intersectOut = domEvents._onMoveRaycaster('mouseout', raycaster, null)
-		// 
-		// var isPressed = phoneAsVRController.gamepad.buttons[0].pressed
-		// // notify caller as needed
-		// if( isPressed === true && wasPressed === false){
-		// 	var intersectDown = domEvents._onEventRaycaster('mousedown', raycaster, null)
-		// }else if( isPressed === false && wasPressed === true ){
-		// 	var intersectUp = domEvents._onEventRaycaster('mouseup', raycaster, null)
-		// 	var intersectClick = domEvents._onEventRaycaster('click', raycaster, null)
-		// 	console.log('intersectClick', intersectClick.distance)
-		// }
-		// // update wasPressed
-		// wasPressed = isPressed
-		// 
-		// var minLength = 500
-		// if( intersectMove && minLength > intersectMove.distance )	minLength = intersectMove.distance
-		// if( intersectOver && minLength > intersectOver.distance )	minLength = intersectOver.distance
-		// if( intersectOut && minLength > intersectOut.distance )		minLength = intersectOut.distance
-		// if( intersectDown && minLength > intersectDown.distance )	minLength = intersectDown.distance
-		// if( intersectUp && minLength > intersectUp.distance )		minLength = intersectUp.distance
-		// if( intersectClick && minLength > intersectClick.distance )	minLength = intersectClick.distance
-		// laserBeam.setLength(minLength)
+		onRenderFcts.push(function(){
+			var gamepad = getGamepad(hand)
+			if( gamepad === null )	return
+			controllerRight.updatePosition(camera, gamepad)
+
+			gamepadSignals.update(gamepad)
+			
+			var raycaster = controllerRight.getRaycaster()
+			
+			// get clickableObjects
+			var clickableObjects = []
+			scene.traverse(function(object3d){
+				if( object3d.geometry instanceof THREE.TorusGeometry ){
+					clickableObjects.push(object3d)
+				}
+			})
+			// compute intersects
+			var intersects		= raycaster.intersectObjects( clickableObjects );
+			
+			// set laser beam length according to intersects
+			if( intersects.length > 0 ){
+				var position	= intersects[0].point
+				var distance	= position.distanceTo(raycaster.ray.origin)
+				controllerRight._laserBeam.setLength(distance)
+			}else{
+				controllerRight._laserBeam.setLength(10)
+			}
+		})
 		
-	})
-</script>
-<script>
-//////////////////////////////////////////////////////////////////////////////
-//		Code Separator
-//////////////////////////////////////////////////////////////////////////////
-(function(){
-	var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
-	//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
-	var material	= new THREE.MeshPhongMaterial({
-		color	: 0xffffff,
-		specular: 0xffffff,
-		shininess: 200,
-	});
-	for(var i = 0; i < 200; i++){
-		var object3d	= new THREE.Mesh( geometry, material );
-		object3d.scale.set(1,1,1).multiplyScalar(1/2)
-		scene.add( object3d );
-		object3d.position.x	= (Math.random()-0.5)*10
-		object3d.position.y	= (Math.random()-0.5)*5
-		object3d.position.z	= (Math.random()-0.5)*10
+		gamepadSignals.signals.touchStart.add(function(buttonIndex){
+			console.log('touchStart', buttonIndex)
+		})
+		gamepadSignals.signals.touchEnd.add(function(buttonIndex){
+			console.log('touchEnd', buttonIndex)
+		})
 		
-		object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
-		object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
-		object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
-		
-		domEvents.addEventListener(object3d, 'click', function(event){
-			object3d.parent.remove(object3d)
-		}, false)		
 	}
 })()	
 </script>
-
 <script src="js/threex.vrmenu.js" charset="utf-8"></script>
 <script>
 //////////////////////////////////////////////////////////////////////////////

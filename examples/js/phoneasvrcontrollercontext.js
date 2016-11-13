@@ -32,36 +32,44 @@ PhoneAsVRController.Context = function(serverUrl){
 		delete _this._gamepads[message.gamepadIndex]
 	})
 
-	this._gamepads = [
-		undefined,
-		undefined,
-		undefined,
-		undefined,
-	]
+	this._gamepads = []
 
-	this._gamepads[0] =  new PhoneAsVRController.Gamepad(this, {
-		hand : 'right',
-		gamepadIndex: 0
-	})
+	this.getGamepads = function(){
+		var gamepads = [
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+		]
+		_this._gamepads.forEach(function(gamepad){
+			gamepads[gamepad.gamepad.index] = _this._gamepads[gamepad.gamepad.index]
+		})
+		return _this._gamepads
+	}
+
+	// this._gamepads[0] =  new PhoneAsVRController.Gamepad(this, {
+	// 	hand : 'right',
+	// 	gamepadIndex: 0
+	// })
 
 	// FIXME remote that
-	this.gamepad = this._gamepads[0].gamepad
+	// this.gamepad = this._gamepads[0].gamepad
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 //          Code Separator
 ////////////////////////////////////////////////////////////////////////////////
-
-PhoneAsVRController.overloadGamepadsAPI = function(){
-	var phoneAsVRController = new PhoneAsVRController()
-	navigator.getGamepads = function(){
-        	var gamepads = [ 
-			phoneAsVRController.gamepad,
-			undefined,
-			undefined,
-			undefined,
-		]
-		return gamepads
-	}	
-}
+// 
+// PhoneAsVRController.overloadGamepadsAPI = function(){
+// 	var phoneAsVRController = new PhoneAsVRController()
+// 	navigator.getGamepads = function(){
+//         	var gamepads = [ 
+// 			phoneAsVRController.gamepad,
+// 			undefined,
+// 			undefined,
+// 			undefined,
+// 		]
+// 		return gamepads
+// 	}	
+// }
