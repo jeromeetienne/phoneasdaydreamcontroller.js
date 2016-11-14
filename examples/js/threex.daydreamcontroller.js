@@ -50,17 +50,15 @@ THREEx.DaydreamController.prototype.updatePosition = function(camera, gamepad){
 
 	// handle originCamera for onDeviceOrientationReset
 	if(_this._originCameraQuaternion === null){
-		_this._originCameraQuaternion = camera.quaternion.clone()	
+		_this._originCameraQuaternion = camera.quaternion.clone()
 	}
 
-	var phoneModel = _this._phoneModel
-
-	// compute phoneModel from gamepad.pose.orientation
+	// compute quaternion from gamepad.pose.orientation
 	var controllerQuaternion = new THREE.Quaternion().fromArray(gamepad.pose.orientation)
 	var poseQuaternion = _this._originCameraQuaternion.clone().multiply( controllerQuaternion )
 	_this.object3d.quaternion.copy(poseQuaternion)
 
-	
+	// set position according to gamepad.hand
 	if( gamepad.hand === 'right' ){
 		var position = new THREE.Vector3(+0.5,-0.5, -1)
 	}else if( gamepad.hand === 'left' ){
@@ -68,6 +66,7 @@ THREEx.DaydreamController.prototype.updatePosition = function(camera, gamepad){
 	}else {
 		var position = new THREE.Vector3(0.0,-0.5, -1)
 	}
+	// set position in world space
 	camera.updateMatrixWorld(true)
 	camera.localToWorld(position)
 	_this.object3d.position.copy(position)

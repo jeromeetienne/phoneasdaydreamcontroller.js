@@ -1,6 +1,6 @@
 var PhoneAsVRController = PhoneAsVRController || {}
 
-PhoneAsVRController.Context = function(serverUrl){
+PhoneAsVRController.Context = function(serverUrl, camera){
 	var _this = this
 
 	this._socket = io(serverUrl, {
@@ -18,7 +18,13 @@ PhoneAsVRController.Context = function(serverUrl){
 		// var event = JSON.parse(message)
 		console.log('phoneconnected', message)
 		
-		_this._gamepads[message.gamepadIndex] =  new PhoneAsVRController.Gamepad(_this, {
+		if( _this._phones[message.gamepadIndex] !== undefined ){
+			console.warn('received a phone connected at index', message.gamepadIndex, 'but already got a phone at this index')
+			var phone = _this._phones[message.gamepadIndex]
+			phone.dispose()
+		}
+		
+		_this._phones[message.gamepadIndex] =  new PhoneAsVRController.Phone(_this._socket, {
 			hand : message.hand,
 			gamepadIndex: message.gamepadIndex
 		})
@@ -27,12 +33,16 @@ PhoneAsVRController.Context = function(serverUrl){
 		// var event = JSON.parse(message)
 		console.log('phonedisconnected', message)
 
-		var gamepad = _this._gamepads[message.gamepadIndex]
-		gamepad.dispose()
-		delete _this._gamepads[message.gamepadIndex]
+		if( _this._phones[message.gamepadIndex] === undefined ){
+			console.warn('received a phone disconnected at index', message.gamepadIndex, 'but already got no phone there')
+			return
+		}
+		var phone = _this._phones[message.gamepadIndex]
+		phone.dispose()
+		delete _this._phones[message.gamepadIndex]
 	})
 
-	this._gamepads = []
+	this._phones = []
 
 	this.getGamepads = function(){
 		var gamepads = [
@@ -41,35 +51,10 @@ PhoneAsVRController.Context = function(serverUrl){
 			undefined,
 			undefined,
 		]
-		_this._gamepads.forEach(function(gamepad){
-			gamepads[gamepad.gamepad.index] = _this._gamepads[gamepad.gamepad.index]
+		_this._phones.forEach(function(phone){
+			var index = phone.gamepad.index
+			gamepads[index] = _this._phones[index].gamepad
 		})
-		return _this._gamepads
+		return gamepads
 	}
-
-	// this._gamepads[0] =  new PhoneAsVRController.Gamepad(this, {
-	// 	hand : 'right',
-	// 	gamepadIndex: 0
-	// })
-
-	// FIXME remote that
-	// this.gamepad = this._gamepads[0].gamepad
 }
-
-
-////////////////////////////////////////////////////////////////////////////////
-//          Code Separator
-////////////////////////////////////////////////////////////////////////////////
-// 
-// PhoneAsVRController.overloadGamepadsAPI = function(){
-// 	var phoneAsVRController = new PhoneAsVRController()
-// 	navigator.getGamepads = function(){
-//         	var gamepads = [ 
-// 			phoneAsVRController.gamepad,
-// 			undefined,
-// 			undefined,
-// 			undefined,
-// 		]
-// 		return gamepads
-// 	}	
-// }

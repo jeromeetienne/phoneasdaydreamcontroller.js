@@ -192,7 +192,7 @@ document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosit
 				gamepadIndex: queryParameters.gamepadIndex,
 			}
 			socket.emit('forwardToApp', JSON.stringify(event))			
-		}, 1000)
+		}, 1000*0.5)
 	})
 	document.querySelector('#homeButton').addEventListener('touchend', function(){
 		if( timerId !== null ) clearTimeout(timerId)

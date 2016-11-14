@@ -1,6 +1,7 @@
 - clean the code
 - make it such as you can have 2 joysticks
   - setup in phonecontroller.html
+- issue with the controller reset
 - ray-input 
   - make it with a arm model from ray-input
   - do a pull request for ray-input with left arm

@@ -1,0 +1,129 @@
+var PhoneAsVRController = PhoneAsVRController || {}
+
+PhoneAsVRController.Phone = function(socket, phoneParameters){
+	var _this = this
+
+	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsVRController.Phone._gamepadTemplate))
+	this.gamepad.index = phoneParameters.gamepadIndex
+	this.gamepad.hand = phoneParameters.hand
+	var gamepad = this.gamepad
+
+
+	var lastDeviceOrientationEvent = null
+	var originDeviceOrientation = null
+	this.gamepad.onDeviceOrientationReset = function(){}
+	socket.on('broadcast', onBroadcast)
+
+	var buttonNames = ['appButton', 'homeButton', 'trackpad']
+
+	
+	this.dispose = function(){
+		socket.removeAllListeners('broadcast')
+	}
+	return
+	
+	function onBroadcast(message){   
+		var event = JSON.parse(message)
+		
+		// console.log(event.gamepadIndex, gamepadIndex )
+		
+		if( event.gamepadIndex !== phoneParameters.gamepadIndex )	return
+		
+		if( event.type === 'deviceOrientationReset' ){
+			originDeviceOrientation = null
+			_this.gamepad.onDeviceOrientationReset()
+			if( lastDeviceOrientationEvent ){
+				onDeviceOrientation(lastDeviceOrientationEvent)
+			}
+		}else if( event.type === 'deviceOrientation' ){
+			onDeviceOrientation(event)
+		}else if( event.type === 'touchstart' ){
+			var index = buttonNames.indexOf(event.target)
+			console.assert( index !== -1 )
+			gamepad.buttons[index].pressed = true
+			gamepad.buttons[index].value = 1
+		}else if( event.type === 'touchend' ){
+			var index = buttonNames.indexOf(event.target)
+			console.assert( index !== -1 )
+			gamepad.buttons[index].pressed = false
+			gamepad.buttons[index].value = 0
+		}
+		// update axes[0] with trackpad
+		if( event.target === 'trackpad' && ['touchstart', 'touchmove', 'touchend'].indexOf(event.type) !== -1 ){
+			gamepad.axes[0] = [
+				event.positionX,
+				event.positionY
+			]
+		}
+	}
+
+	function onDeviceOrientation(event){
+		lastDeviceOrientationEvent = event
+
+                // console.log('new deviceOrientation', message)
+		if( originDeviceOrientation === null ){
+			originDeviceOrientation = {
+				alpha: event.alpha,
+				beta: event.beta,
+				gamma: event.gamma
+			}
+		}
+		
+		var alpha = event.alpha - originDeviceOrientation.alpha
+                var beta  = event.beta  - originDeviceOrientation.beta
+                var gamma = event.gamma - originDeviceOrientation.gamma
+
+		var deviceEuler = new THREE.Euler()
+		deviceEuler.x =  beta  / 180 * Math.PI
+		deviceEuler.y =  alpha / 180 * Math.PI
+		deviceEuler.z = -gamma / 180 * Math.PI
+		deviceEuler.order = "YXZ"
+
+		// FIXME here i include the whole three.js for this loosy line... let avoid that ...
+		var controllerQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
+                controllerQuaternion.toArray(gamepad.pose.orientation)		
+	}
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+// general spec for Gamepad API - https://www.w3.org/TR/gamepad/
+PhoneAsVRController.Phone._gamepadTemplate = {
+	'id' : 'PhoneAsGamepad.js Controller',
+	'index' : 0,
+	'connected' : true,
+	'mapping' : 'standard',
+	'axes' : [
+		[0,0]
+	],
+	'buttons' : [{
+		'pressed' : false,
+		'value' : 0,
+	}, {
+		'pressed' : false,
+		'value' : 0,		
+	}, {
+		'pressed' : false,
+		'value' : 0,		
+	}],
+	// Hand extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadhand
+	'hand' : 'left',
+	// VR extension - https://w3c.github.io/gamepad/extensions.html#dom-gamepadpose
+	'pose' : {
+		'hasPosition' : false,
+		'hasOrientation' : true,
+		
+		'position' : null,
+		'linearVelocity' : null,
+		'linearAcceleration' : null,
+		
+		'orientation' : [0,0,0,1],
+		'angularVelocity' : null,
+		'angularAcceleration' : null
+	}
+}

@@ -35,7 +35,7 @@ function onConnectionAppSocket(socket, parameters){
 
         if( io.sockets.adapter.rooms['app'] && io.sockets.adapter.rooms['app'].length > 0 ){
                 console.warn('received a new appSocket but already had a appSocket')
-                socket.close()
+                socket.client.close()
                 return
         }
 
@@ -73,7 +73,7 @@ function onConnectionPhoneSocket(socket, parameters){
 
         // console.log('request', socket.request)
         socket.on('disconnect', function(){
-                console.log('user disconnected', phone.parameters);
+                console.log('phone disconnected', phone.parameters);
                 io.to('app').emit('phonedisconnected', phone.parameters);
                 delete phones[socket.id] 
         });
