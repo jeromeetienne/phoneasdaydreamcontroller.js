@@ -18,6 +18,7 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 
 	
 	this.dispose = function(){
+		console.log('dispose of phone', _this.gamepad.index)
 		socket.removeAllListeners('broadcast')
 	}
 	return
@@ -38,6 +39,7 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 		}else if( event.type === 'deviceOrientation' ){
 			onDeviceOrientation(event)
 		}else if( event.type === 'touchstart' ){
+			console.log('new touchstart', _this.gamepad.index)
 			var index = buttonNames.indexOf(event.target)
 			console.assert( index !== -1 )
 			gamepad.buttons[index].pressed = true
@@ -60,7 +62,7 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 	function onDeviceOrientation(event){
 		lastDeviceOrientationEvent = event
 
-                // console.log('new deviceOrientation', message)
+                // console.log('new deviceOrientation', _this.gamepad.index, event)
 		if( originDeviceOrientation === null ){
 			originDeviceOrientation = {
 				alpha: event.alpha,
