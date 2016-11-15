@@ -281,8 +281,6 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 
 	});
 
-
-
 	//////////////////////////////////////////////////////////////////////////////////
 	//		comment								//
 	//////////////////////////////////////////////////////////////////////////////////
@@ -299,8 +297,9 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 <script src="js/phoneasvrcontrollerphone.js"></script>
 <script src="js/threex.daydreamcontroller.js"></script>
 <script src="js/threex.gamepadsignals.js"></script>
+<script src="js/threex.vrmenu.js"></script>
 <script>
-	var serverUrl = 'http://192.168.0.2:4000'
+	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
 	
 
@@ -321,7 +320,7 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 	//////////////////////////////////////////////////////////////////////////////
 ;(function(){
 	createController('right')
-	createController('left')
+	// createController('left')
 
 	function createController(hand){
 		var controllerRight = new THREEx.DaydreamController()
@@ -364,30 +363,52 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 			if( intersects.length === 0 )	return
 			var object3d = intersects[0].object
 			object3d.scale.multiplyScalar(1.2)
-		})		
+		})
+		
+
+		////////////////////////////////////////////////////////////////////////////////
+		//          Handle calibration reset
+		////////////////////////////////////////////////////////////////////////////////
+
+	;(function(){
+		var timerId = null
+		gamepadSignals.signals.touchStart.add(function(buttonIndex){
+			if( buttonIndex !== 2 )	return	
+			stopTimerIfNeeded()	
+			timerId = setTimeout(function(){
+				stopTimerIfNeeded()	
+				vrMenu.object3d.visible = vrMenu.object3d.visible === true ? false : true
+			}, 1000*0.5)
+		})
+		gamepadSignals.signals.touchEnd.add(function(buttonIndex){
+			if( buttonIndex !== 2 )	return	
+			stopTimerIfNeeded()
+		})
+		function stopTimerIfNeeded(){
+			if( timerId !== null ) clearTimeout(timerId)
+			timerId = null			
+		}
+	})()
+
+		//////////////////////////////////////////////////////////////////////////////
+		//		create memu
+		//////////////////////////////////////////////////////////////////////////////
+		
+		var vrMenu = new THREEx.VRMenu(domEvents, {
+			'open' : 'Open app',
+			'biggerBrush' : 'Bigger brush',
+			'Wow' : 'Wow',
+			'smallerBrush' : 'Smaller',
+		}, onSelect)
+		vrMenu.object3d.position.z = -2
+		vrMenu.object3d.scale.multiplyScalar(1/2)
+		vrMenu.object3d.visible = false
+		scene.add(vrMenu.object3d)
+		
+		function onSelect(itemKey){
+			console.log('selected', itemKey)
+		}
 	}
 })()	
-</script>
-<script src="js/threex.vrmenu.js" charset="utf-8"></script>
-<script>
-//////////////////////////////////////////////////////////////////////////////
-//		Code Separator
-//////////////////////////////////////////////////////////////////////////////
-(function(){
-	var menuItems = {
-		'open' : 'Open app',
-		'biggerBrush' : 'Bigger brush',
-		'Wow' : 'Wow',
-		'smallerBrush' : 'Smaller',
-	}
-	var vrMenu = new THREEx.VRMenu(domEvents, menuItems, onSelect)
-	vrMenu.object3d.position.z = -2
-	vrMenu.object3d.scale.multiplyScalar(1/2)
-	scene.add(vrMenu.object3d)
-	
-	function onSelect(itemKey){
-		console.log('selected', itemKey)
-	}
-})()
 </script>
 </html>

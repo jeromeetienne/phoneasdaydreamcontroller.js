@@ -11,8 +11,8 @@ THREEx.LaserCooked	= function(laserBeam){
 		blending	: THREE.AdditiveBlending,
 	})
 	var sprite	= new THREE.Sprite(material)
-	sprite.scale.x = 0.5
-	sprite.scale.y = 2;
+	sprite.scale.x = 1
+	sprite.scale.y = 1;
 
 	sprite.position.x	= 1-0.01
 	object3d.add(sprite)

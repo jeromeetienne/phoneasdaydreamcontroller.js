@@ -181,24 +181,22 @@ document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosit
 ;(function(){
 	var timerId = null
 	document.querySelector('#homeButton').addEventListener('touchstart', function(){
-		if( timerId !== null ) clearTimeout(timerId)
-		timerId = null
+		stopTimerIfNeeded()
 		timerId = setTimeout(function(){
-			if( timerId !== null ) clearTimeout(timerId)
-			timerId = null
-
-			var event = {
+			stopTimerIfNeeded()
+			socket.emit('forwardToApp', JSON.stringify({
 				type : 'deviceOrientationReset',
 				gamepadIndex: queryParameters.gamepadIndex,
-			}
-			socket.emit('forwardToApp', JSON.stringify(event))			
+			}))			
 		}, 1000*0.5)
 	})
 	document.querySelector('#homeButton').addEventListener('touchend', function(){
-		if( timerId !== null ) clearTimeout(timerId)
-		timerId = null
-		console.log('touchend')
+		stopTimerIfNeeded()
 	})
+	function stopTimerIfNeeded(){
+		if( timerId !== null ) clearTimeout(timerId)
+		timerId = null	
+	}
 })()
 
 

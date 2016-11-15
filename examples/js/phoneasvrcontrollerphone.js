@@ -39,8 +39,8 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 		}else if( event.type === 'deviceOrientation' ){
 			onDeviceOrientation(event)
 		}else if( event.type === 'touchstart' ){
-			console.log('new touchstart', _this.gamepad.index)
 			var index = buttonNames.indexOf(event.target)
+			// console.log('new touchstart gamepadindex', _this.gamepad.index, 'button', index)
 			console.assert( index !== -1 )
 			gamepad.buttons[index].pressed = true
 			gamepad.buttons[index].value = 1
