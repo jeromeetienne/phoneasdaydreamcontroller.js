@@ -1,42 +1,27 @@
 var THREEx = THREEx || {}
 
-THREEx.VRMenu = function(domEvents, items, onSelect){
+THREEx.VRMenu = function(items){
 	var _this = this
 	this.object3d = new THREE.Group
+	
 
 	Object.keys(items).forEach(function(itemKey, index){
 		var itemValue = items[itemKey]
-		var object3d = _this._buildItemObject3d(itemKey, itemValue)
-		object3d.position.y = - index * object3d.geometry.parameters.height
+		var itemFront = _this._buildItemFront(itemKey, itemValue)
+		itemFront.position.y = - index * itemFront.geometry.parameters.height
 
-		var cache = _this._buildItemCache()
-		object3d.add(cache)
-		
-		domEvents.addEventListener(cache, 'mouseover', function(event){
-			cache.material.color.set('cyan')
-		}, false)
-		domEvents.addEventListener(cache, 'mouseout', function(event){
-			cache.material.color.set('black')
-		}, false)
-		domEvents.addEventListener(cache, 'mousedown', function(event){
-			cache.material.color.set('pink')
-		}, false)
-		domEvents.addEventListener(cache, 'mouseup', function(event){
-			cache.material.color.set('cyan')
-		}, false)
-		domEvents.addEventListener(cache, 'click', function(event){
-			onSelect && onSelect(itemKey)
-		}, false)
+		var itemBack = _this._buildItemBack(itemKey)
+		itemFront.add(itemBack)
 
-		_this.object3d.add(object3d)
+		_this.object3d.add(itemFront)
 	})
 }
 
 /**
- * [_buildItemCache description]
+ * [_buildItemBack description]
  * @return {[type]} [description]
  */
-THREEx.VRMenu.prototype._buildItemCache = function () {
+THREEx.VRMenu.prototype._buildItemBack = function (itemKey) {
 	var canvas = document.createElement('canvas')
 	canvas.width = 256
 	canvas.height = 64;
@@ -53,9 +38,11 @@ THREEx.VRMenu.prototype._buildItemCache = function () {
 		opacity: .5,
 		transparent : true,
 	})
-	var geometry = new THREE.PlaneGeometry( 2, 0.5 );
+	var geometry = new THREE.PlaneBufferGeometry( 2, 0.5 );
 	var mesh = new THREE.Mesh( geometry, material );
+	mesh.name = 'itemBack'
 	mesh.position.z += -.1
+	mesh.userData.vrMenuItemKey = itemKey
 
 	return mesh
 };
@@ -66,7 +53,7 @@ THREEx.VRMenu.prototype._buildItemCache = function () {
  * @param {[type]} itemValue [description]
  * @return {[type]} [description]
  */
-THREEx.VRMenu.prototype._buildItemObject3d = function (itemKey, itemValue) {
+THREEx.VRMenu.prototype._buildItemFront = function (itemKey, itemValue) {
 	var canvas = document.createElement('canvas')
 	canvas.width = 256
 	canvas.height = 64;
@@ -88,8 +75,10 @@ THREEx.VRMenu.prototype._buildItemObject3d = function (itemKey, itemValue) {
 		map: texture,
 		transparent : true,
 	})
-	var geometry = new THREE.PlaneGeometry( 2, 0.5 );
+	var geometry = new THREE.PlaneBufferGeometry( 2, 0.5 );
 	var mesh = new THREE.Mesh( geometry, material );
+	mesh.name = 'itemFront'
+	mesh.userData.vrMenuItemKey = itemKey
 
 	return mesh
 };
