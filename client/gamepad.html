@@ -11,7 +11,9 @@
 </head>
 <link rel="stylesheet" href="css/gamepad.css">
 <div id="container">
-	<div id="trackpad">Trackpad</div>    
+	<div id="trackpad">Trackpad
+		<img src="images/fullscreen.png" alt="" />
+	</div>    
 	<div id="bottomRow">
 		<div id="homeButton">Home Button</div>
 		<div id="appButton">App Button</div>
@@ -240,21 +242,27 @@ function onDeviceOrientation(event) {
 //		Handle fullscreen
 //////////////////////////////////////////////////////////////////////////////
 ;(function(){
-return
+// return
 	// FIXME find a good way to start it
-	document.querySelector('#container').addEventListener('touchstart', function onClick(event){
-		document.querySelector('#container').removeEventListener('touchstart', onClick);
-		var element = document.querySelector('#container')
-		if (element.requestFullscreen) {
-			element.requestFullscreen();
-		} else if (element.mozRequestFullScreen) {
-			element.mozRequestFullScreen();
-		} else if (element.webkitRequestFullscreen) {
-			element.webkitRequestFullscreen();
-		} else if (element.msRequestFullscreen) {
-			element.msRequestFullscreen();
+	document.querySelector('#trackpad img').addEventListener('click', onClick)
+	document.querySelector('#trackpad img').addEventListener('touchstart', onClick)
+	function onClick(event){
+		event.stopPropagation()
+		if (document.webkitFullscreenElement) { 
+			console.log('exit')
+			if( document.exitFullscreen ) document.exitFullscreen() 
+			else if( document.mozExitFullscreen ) document.mozExitFullscreen() 
+			else if( document.webkitExitFullscreen ) document.webkitExitFullscreen() 
+			else if( document.msExitFullscreen ) document.msExitFullscreen() 
+		} else { 
+			var element = document.documentElement
+			if (element.requestFullscreen) 			element.requestFullscreen();
+			else if (element.mozRequestFullScreen) 		element.mozRequestFullScreen();
+			else if (element.webkitRequestFullscreen)	element.webkitRequestFullscreen();
+			else if (element.msRequestFullscreen)		element.msRequestFullscreen();
+			
 		}
-	})
-})()
+	}
+3})()
 </script>
 </html>

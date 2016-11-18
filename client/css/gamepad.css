@@ -36,6 +36,14 @@ body, html, #container {
 	border-bottom: 1px solid #aaa;
 }
 
+#trackpad img {
+
+    position: absolute;
+    left: 0px;
+    margin: 0.4em;
+    width: 1em;
+}
+
 /*******************************************************************************
 	button
 *******************************************************************************/
