@@ -56,11 +56,9 @@
 	
 
 ;(function(){
-	var buttonPressed = false
 	var swipeDetector = new SwipeDetector()
 	gamepadSignals.signals.touchStart.add(function(buttonIndex){		
 		if(buttonIndex !== 2)	return	
-		buttonPressed = true
 
 		var gamepad = getGamepad()
 		if( gamepad === null )	return
@@ -72,8 +70,6 @@
 
 	gamepadSignals.signals.touchEnd.add(function(buttonIndex){
 		if(buttonIndex !== 2)	return	
-
-		buttonPressed = false
 
 		var gamepad = getGamepad()
 		if( gamepad === null )	return
