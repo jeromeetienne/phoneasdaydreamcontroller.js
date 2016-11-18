@@ -51,7 +51,7 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 			gamepad.buttons[index].value = 0
 		}
 		// update axes[0] with trackpad
-		if( event.target === 'trackpad' && ['touchstart', 'touchmove', 'touchend'].indexOf(event.type) !== -1 ){
+		if( event.target === 'trackpad' && ['touchstart', 'touchmove'].indexOf(event.type) !== -1 ){
 			gamepad.axes[0] = [
 				event.positionX,
 				event.positionY
