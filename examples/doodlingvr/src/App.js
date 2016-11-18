@@ -106,25 +106,22 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 		_this._uiMode = new UiModeVrMenu(this)
 		_this._uiMode.signals.select.add(function(itemKey){
 			if( itemKey === 'select' ){
-				// _this._postSelectUiMode = 'vrMenu'
 				_this._gotoUiMode('select')
-			}else if( itemKey === 'objectTranslation' ){
-				// _this._postSelectUiMode = 'objectTranslation'
-				if( _this.selected === null ){
-					_this._gotoUiMode('select')
-				}else{
-					_this._gotoUiMode('objectTranslation')					
-				}
+			}else if( itemKey === 'objectTranslation' || itemKey === 'objectRotation' || itemKey === 'objectScale' ){
+				if( _this.selected === null ) alert('PANIC!! NO OBJECT SELECTED!!')
+				_this._gotoUiMode(itemKey)
 			}else if( itemKey === 'controllerOrientation' ){
 				_this._gotoUiMode('controllerOrientation')					
 			}
 		})
-	}else if(uiModeType === 'objectTranslation'){
-		_this._uiMode = new UiModeObjectTranslation(this, 'translation', 'planeXY')
+	}else if(uiModeType === 'objectTranslation' || uiModeType === 'objectRotation' || uiModeType === 'objectScale'){
+		if( uiModeType === 'objectTranslation')	var mode = 'translation'
+		if( uiModeType === 'objectRotation' )	var mode = 'rotation'
+		if( uiModeType === 'objectScale' )	var mode = 'scale'
+		_this._uiMode = new UiModeObjectPosRotSca(this, mode, 'planeXY')
 		_this._uiMode.signals.completed.add(function(){
 			_this._gotoUiMode('select')
 		})
-					
 	}else if(uiModeType === 'controllerOrientation'){
 		_this._uiMode = new UiModeControllerOrientation(this)
 		_this._uiMode.signals.completed.add(function(){
