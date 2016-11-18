@@ -1,15 +1,24 @@
-<script src='/node_modules/socket.io-client/socket.io.js'></script>
-<script src='js/phoneasvrcontroller.js'></script>
+<script src='/node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script>
+<script src='js/phoneasvrcontrollercontext.js'></script>
+<script src='js/phoneasvrcontrollerphone.js'></script>
 <script src='vendor/three.js/build/three.js'></script>
 <pre id='output'></pre>
 <script>
-	var serverUrl = 'http://192.168.0.2:4000'
-	var phoneAsVRController = new PhoneAsVRController(serverUrl);
-	
+	var serverUrl = 'http://'+location.hostname+':4000'
+	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
+
 	function dumpGamepad(){
 		var domElement = document.querySelector('#output')
-		var gamepad = phoneAsVRController.gamepad
-		domElement.innerText = JSON.stringify(gamepad, null, '\t')
+
+		var text = ''
+		// var gamepads = navigator.getGamepads()
+		var gamepads = phoneAsVRController.getGamepads()
+		for(var i = 0; i < gamepads.length; i++){
+			var gamepad = gamepads[i]
+			if( gamepad === undefined )	continue
+			text += JSON.stringify(gamepad, null, '\t')
+		}
+		domElement.innerText = text
 		setTimeout(dumpGamepad, 100)
 	}
 	dumpGamepad()
