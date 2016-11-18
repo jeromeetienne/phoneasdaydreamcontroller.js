@@ -23,7 +23,6 @@ var SwipeDetector = function(){
         }
         this.update = function(x,y){}
         this.end = function(x,y){
-                // console.log('end', x, y)
                 // sanity check
                 console.assert(x >= 0 && x <= 1.0 && y >= 0 && y <= 1.0)
                 console.assert( startX !== null && startY !== null && startedAt !== null)
