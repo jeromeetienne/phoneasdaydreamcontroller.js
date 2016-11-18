@@ -12,6 +12,8 @@ function UiModeVrMenu(app){
 		'objectTranslation' : 'Translate',
 		'objectRotation' : 'rotate',
 		'objectScale' : 'scale',
+		'deleteSelected' : 'delete',
+		'createObject' : 'create Object',
 	})
 	scene.add(vrMenu.object3d)
 	

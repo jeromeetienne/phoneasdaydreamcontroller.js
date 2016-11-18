@@ -112,7 +112,11 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 				_this._gotoUiMode(itemKey)
 			}else if( itemKey === 'controllerOrientation' ){
 				_this._gotoUiMode('controllerOrientation')					
-			}
+			}else if( itemKey === 'deleteSelected' ){
+				_this._gotoUiMode('deleteSelected')					
+			}else if( itemKey === 'createObject' ){
+				_this._gotoUiMode('createObject')					
+			}else   console.assert(false)
 		})
 	}else if(uiModeType === 'objectTranslation' || uiModeType === 'objectRotation' || uiModeType === 'objectScale'){
 		if( uiModeType === 'objectTranslation')	var mode = 'translation'
@@ -124,6 +128,16 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 		})
 	}else if(uiModeType === 'controllerOrientation'){
 		_this._uiMode = new UiModeControllerOrientation(this)
+		_this._uiMode.signals.completed.add(function(){
+			_this._gotoUiMode('select')
+		})
+	}else if(uiModeType === 'deleteSelected'){
+		_this._uiMode = new UiModeDelete(this)
+		_this._uiMode.signals.completed.add(function(){
+			_this._gotoUiMode('select')
+		})
+	}else if(uiModeType === 'createObject'){
+		_this._uiMode = new UiModeCreateObject(this)
 		_this._uiMode.signals.completed.add(function(){
 			_this._gotoUiMode('select')
 		})
