@@ -1,4 +1,5 @@
-<script src='/node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script>
+<!-- <script src='../../node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script> -->
+<script src='../../node_modules/socket.io-client/socket.io.js'></script>
 <script src='js/phoneasvrcontrollercontext.js'></script>
 <script src='js/phoneasvrcontrollerphone.js'></script>
 <script src='vendor/three.js/build/three.js'></script>
@@ -14,13 +15,13 @@
 		// var gamepads = navigator.getGamepads()
 		var gamepads = phoneAsVRController.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
-			var gamepad = gamepads[i]
-			if( gamepad === undefined )	continue
-			text += JSON.stringify(gamepad, null, '\t')+'\n'
+			if( gamepads[i] === undefined )	continue
+			text += JSON.stringify(gamepads[i], null, '\t')+'\n'
 		}
 
 		domElement.innerText = text
 		setTimeout(dumpGamepad, 100)
 	}
+	
 	dumpGamepad()
 </script>

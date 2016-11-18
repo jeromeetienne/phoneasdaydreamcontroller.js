@@ -10,6 +10,8 @@ function UiModeVrMenu(app){
 		'select' : 'Select',
 		'controllerOrientation' : 'Controller Orientation',
 		'objectTranslation' : 'Translate',
+		'objectRotation' : 'rotate',
+		'objectScale' : 'scale',
 	})
 	scene.add(vrMenu.object3d)
 	

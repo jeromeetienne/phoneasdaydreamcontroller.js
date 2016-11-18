@@ -11,7 +11,9 @@
 </head>
 <link rel="stylesheet" href="css/gamepad.css">
 <div id="container">
-	<div id="trackpad">Trackpad</div>    
+	<div id="trackpad">Trackpad
+		<img src="images/fullscreen.png" alt="" />
+	</div>    
 	<div id="bottomRow">
 		<div id="homeButton">Home Button</div>
 		<div id="appButton">App Button</div>
@@ -41,7 +43,8 @@ if( hasParameters === false )	alert('PANIC no url parameter')
 
 </script>
 
-<script src="../../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+<!-- <script src='../node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script> -->
+<script src='../node_modules/socket.io-client/socket.io.js'></script>
 <script>
 var serverUrl = 'http://'+location.hostname+':4000'
 var socket = io(serverUrl, { 
@@ -248,25 +251,37 @@ function onDeviceOrientation(event) {
 	
 	// Enable wake lock.
 	// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
-	document.addEventListener('touchstart', function enableNoSleep() {
+	document.addEventListener('touchend', function enableNoSleep() {
 		noSleep.enable();
-		document.removeEventListener('touchstart', enableNoSleep, false);
+		document.removeEventListener('touchend', enableNoSleep, false);
 	}, false);
 })()
-</script>
-<!-- <script type="text/javascript">
-	document.querySelector('#container').addEventListener('touchstart', function onClick(event){
-		document.querySelector('#container').removeEventListener('touchstart', onClick);
-		var element = document.querySelector('#container')
-		if (element.requestFullscreen) {
-			element.requestFullscreen();
-		} else if (element.mozRequestFullScreen) {
-			element.mozRequestFullScreen();
-		} else if (element.webkitRequestFullscreen) {
-			element.webkitRequestFullscreen();
-		} else if (element.msRequestFullscreen) {
-			element.msRequestFullscreen();
+
+//////////////////////////////////////////////////////////////////////////////
+//		Handle fullscreen
+//////////////////////////////////////////////////////////////////////////////
+;(function(){
+// return
+	// FIXME find a good way to start it
+	document.querySelector('#trackpad img').addEventListener('click', onClick)
+	document.querySelector('#trackpad img').addEventListener('touchstart', onClick)
+	function onClick(event){
+		event.stopPropagation()
+		if (document.webkitFullscreenElement) { 
+			console.log('exit')
+			if( document.exitFullscreen ) document.exitFullscreen() 
+			else if( document.mozExitFullscreen ) document.mozExitFullscreen() 
+			else if( document.webkitExitFullscreen ) document.webkitExitFullscreen() 
+			else if( document.msExitFullscreen ) document.msExitFullscreen() 
+		} else { 
+			var element = document.documentElement
+			if (element.requestFullscreen) 			element.requestFullscreen();
+			else if (element.mozRequestFullScreen) 		element.mozRequestFullScreen();
+			else if (element.webkitRequestFullscreen)	element.webkitRequestFullscreen();
+			else if (element.msRequestFullscreen)		element.msRequestFullscreen();
+			
 		}
-	})
-</script> -->
+	}
+3})()
+</script>
 </html>

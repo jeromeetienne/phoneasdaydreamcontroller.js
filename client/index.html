@@ -16,7 +16,7 @@
 		<li>Make your phone acts a daydream controller</li>
 		<li>3dof, 1 trackpad, 2 buttons</li>
 	</ul>
-	<input type="button" value="Ok">
+	<input type="button" value="Ok" id='buttonOK'>
 
 	<ul class='options'>
 		<li>Hand : 
@@ -38,8 +38,8 @@
 
 <script>
 	// goto gamepage.html on submit
-	document.querySelector('#container input[type=button]').addEventListener('touchstart', onSubmit)
-	document.querySelector('#container input[type=button]').addEventListener('click', onSubmit)
+	document.querySelector('#buttonOK').addEventListener('touchstart', onSubmit)
+	document.querySelector('#buttonOK').addEventListener('click', onSubmit)
 
 	function onSubmit(){
 		var handValue = document.querySelector('#container .hand select').value
