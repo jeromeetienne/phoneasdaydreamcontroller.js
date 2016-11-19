@@ -91,7 +91,7 @@ var onRenderFcts = []
 // Only enable it if you actually need to.
 var renderer = new THREE.WebGLRenderer({antialias: false});
 renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
-renderer.setPixelRatio(1/2);
+// renderer.setPixelRatio(1/2);
 
 // Append the canvas element created by the renderer to fullScreenContainer
 document.querySelector('#fullScreenContainer').appendChild(renderer.domElement);
@@ -214,8 +214,6 @@ function enterFullscreen (element) {
 }
 </script>
 
-<script src='../vendor/ray-input/build/ray.js'></script>
-
 <script src='../vendor/three.js/editor/js/libs/signals.min.js'></script>
 <!-- <script src='../../node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script> -->
 <script src='../../node_modules/socket.io-client/socket.io.js'></script>
@@ -235,7 +233,7 @@ function enterFullscreen (element) {
 
 <script src='../js/threex.vrmenu.js'></script>
 <script src="src/App.js"></script>
-<script src="src/AppGestures.js"></script>
+<script src="../js/threex.vrgestures.js"></script>
 <script src='src/UiMode.js'></script>
 <script src='src/UiModeObjectPosRotSca.js'></script>
 <script src='src/UiModeVrMenu.js'></script>
@@ -243,6 +241,7 @@ function enterFullscreen (element) {
 <script src='src/UiModeControllerOrientation.js'></script>
 <script src='src/UiModeDelete.js'></script>
 <script src='src/UiModeCreateObject.js'></script>
+<script src='src/UiModeCloneSelected.js'></script>
 
 
 <script>

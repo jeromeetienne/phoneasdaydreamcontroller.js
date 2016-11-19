@@ -5,6 +5,7 @@ Appx.App = function(){
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
 	
+	_this.camera = camera
 
 	function getGamepad(){
 		// var gamepads = navigator.getGamepads()
@@ -83,14 +84,26 @@ Appx.App = function(){
 	//////////////////////////////////////////////////////////////////////////////
 	//		Handle gestures
 	//////////////////////////////////////////////////////////////////////////////
-	this._gestures = new Appx.Gestures(gamepadSignals)
+	this._gestures = new THREEx.VrGestures(gamepadSignals)
 	this._gestures.signals.swipe.add(function(direction){
-		// console.log('app swipe', direction)
+		console.log('app swipe', direction)
 		
 		// if swipe left, then delete selected object
 		if( direction === 'left' && _this.selected !== null ){
 			console.log('swipe left => deleteSelected')
 			_this._gotoUiMode('deleteSelected')
+		}
+		if( direction === 'up' && _this.selected !== null ){
+			console.log('swipe up => biggerSelected')
+			_this.selected.scale.multiplyScalar(1.2)
+		}
+		if( direction === 'down' && _this.selected !== null ){
+			console.log('swipe down => smallerSelected')
+			_this.selected.scale.multiplyScalar(1/1.2)
+		}
+		if( direction === 'right' && _this.selected !== null ){
+			console.log('swipe right => cloneSelected')
+			_this._gotoUiMode('cloneSelected')
 		}
 	})
 }
@@ -130,6 +143,8 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 				_this._gotoUiMode('deleteSelected')					
 			}else if( itemKey === 'createObject' ){
 				_this._gotoUiMode('createObject')					
+			}else if( itemKey === 'cloneSelected' ){
+				_this._gotoUiMode('cloneSelected')					
 			}else   console.assert(false)
 		})
 	}else if(uiModeType === 'objectTranslation' || uiModeType === 'objectRotation' || uiModeType === 'objectScale'){
@@ -155,7 +170,11 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 		_this._uiMode.signals.completed.add(function(){
 			_this._gotoUiMode('select')
 		})
-					
+	}else if(uiModeType === 'cloneSelected'){
+		_this._uiMode = new UiModeCloneSelected(this)
+		_this._uiMode.signals.completed.add(function(){
+			_this._gotoUiMode('select')
+		})
 	}else console.assert(false)
 }
 

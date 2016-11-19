@@ -14,6 +14,7 @@ function UiModeVrMenu(app){
 		'objectScale' : 'scale',
 		'deleteSelected' : 'delete',
 		'createObject' : 'create Object',
+		'cloneSelected' : 'clone Object',
 	})
 	scene.add(vrMenu.object3d)
 	
@@ -43,15 +44,21 @@ function UiModeVrMenu(app){
 
 	var intersects = []
 	this.update = function(){
+		// make the menu facing the camera
+		vrMenu.object3d.lookAt(app.camera.position)
+		
 		intersects	= app.intersects
 
 		_this.getActionableObjects().forEach(function(itemBack){
 			itemBack.material.color.set('black')
+			itemBack.position.z = 0.5
 		})
 
 		if( intersects.length === 0 )	return
+
 		var itemBack = intersects[0].object
 		itemBack.material.color.set('cyan')
+		itemBack.position.z = 0
 	}
 	
 	return

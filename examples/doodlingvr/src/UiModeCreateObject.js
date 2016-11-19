@@ -22,7 +22,8 @@ function UiModeCreateObject(app){
 	timerId = setTimeout(function(){
 		timerId = null;
 		_this.signals.completed.dispatch()
-	})
+	}, 0)
+
 	this.dispose = function(){
 		if( timerId === null )	return
 		clearTimeout(timerId)

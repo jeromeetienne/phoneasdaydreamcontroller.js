@@ -1,6 +1,6 @@
 var Appx = Appx || {}
 
-Appx.Gestures = function(gamepadSignals){
+THREEx.VrGestures = function(gamepadSignals){
 	var _this = this
         this.signals = {
                 swipe : new signals.Signal(),
@@ -10,7 +10,7 @@ Appx.Gestures = function(gamepadSignals){
 	//		init SwipeDetector
 	//////////////////////////////////////////////////////////////////////////////
 	var swipeDetector = new SwipeDetector()
-	gamepadSignals.signals.touchStart.add(function(buttonIndex, gamepad){		
+	gamepadSignals.signals.touchStart.add(function(buttonIndex, gamepad){	
 		if(buttonIndex !== 2)	return	
 
 		var x = gamepad.axes[0][0]/2 + 0.5

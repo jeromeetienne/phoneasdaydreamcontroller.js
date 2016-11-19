@@ -6,35 +6,9 @@ THREEx.DaydreamController = function(){
 	this.object3d = new THREE.Group
 
 	this._initRayModel()	
-	this._initArmModel()	
 
 	// handle originCamera for onDeviceOrientationReset
 	this._originCameraQuaternion = null
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//		Code Separator
-//////////////////////////////////////////////////////////////////////////////
-THREEx.DaydreamController.prototype._initArmModel = function (){
-	this.armModel = new OrientationArmModel();
-
-	// Create a cylindrical ray
-	function base64(mimeType, base64) {
-		return 'data:' + mimeType + ';base64,' + base64;
-	}
-	const RAY_RADIUS = 0.02;
-	const GRADIENT_IMAGE = base64('image/png', 'iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAABdklEQVR4nO3WwXHEQAwDQcin/FOWw+BjuiPYB2q4G2nP933P9SO4824zgDADiDOAuHfb3/UjuKMAcQYQZwBx/gBxChCnAHEKEKcAcQoQpwBxChCnAHEGEGcAcf4AcQoQZwBxBhBnAHEGEGcAcQYQZwBxBhBnAHEGEGcAcQYQZwBxBhBnAHHvtt/1I7ijAHEGEGcAcf4AcQoQZwBxTkCcAsQZQJwTEKcAcQoQpwBxBhDnBMQpQJwCxClAnALEKUCcAsQpQJwCxClAnALEKUCcAsQpQJwBxDkBcQoQpwBxChCnAHEKEKcAcQoQpwBxChCnAHEKEGcAcU5AnALEKUCcAsQZQJwTEKcAcQYQ5wTEKUCcAcQZQJw/QJwCxBlAnAHEGUCcAcQZQJwBxBlAnAHEGUCcAcQZQJwBxBlAnAHEGUDcu+25fgR3FCDOAOIMIM4fIE4B4hQgTgHiFCBOAeIUIE4B4hQgzgDiDCDOHyBOAeIMIM4A4v4B/5IF9eD6QxgAAAAASUVORK5CYII=');
-	var geometry = new THREE.CylinderGeometry(RAY_RADIUS, RAY_RADIUS, 1, 32);
-	var material = new THREE.MeshBasicMaterial({
-		map: THREE.ImageUtils.loadTexture(GRADIENT_IMAGE),
-		//color: 0xffffff,
-		transparent: true,
-		opacity: 0.3
-	});
-	var mesh = new THREE.Mesh(geometry, material);
-	this.armMesh = mesh
-	
-	scene.add(mesh)
 }
 
 /**
@@ -98,20 +72,6 @@ THREEx.DaydreamController.prototype.updatePosition = function(camera, gamepad){
 	camera.updateMatrixWorld(true)
 	camera.localToWorld(position)
 	object3d.position.copy(position)
-	
-	
-	// this.armModel.setHeadOrientation(camera.quaternion);
-        // this.armModel.setHeadPosition(camera.position);
-        // this.armModel.setControllerOrientation(poseQuaternion);
-        // this.armModel.update();
-	// 
-        // var modelPose = this.armModel.getPose();
-	// modelPose.position.y += 0.5
-        // this.armMesh.position.copy(modelPose.position);
-        // this.armMesh.quaternion.copy(modelPose.orientation);
-	// // this.armMesh.rotateX(Math.PI/2)
-	// // this.armMesh.rotateZ(Math.PI)
-	// window.armMesh = this.armMesh	
 }
 
 
