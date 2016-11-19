@@ -12,7 +12,7 @@ based on https://developers.google.com/vr/unity/controller-basics
 - start a static http server, e.g. ```http-server```
 - open ```http:192.168.0.2:8080/examples/webvr.html``` for an example of 3dof controller
 
-# Instruction
+# Get Started
 
 To run the examples, first do install the server 
 
@@ -20,7 +20,7 @@ To run the examples, first do install the server
 npm install
 ```
 
-start to run the server 
+start to run the websocket server 
 
 ```
 npm start
@@ -40,3 +40,5 @@ In my case it is like that. Change the ip address to match your case.
 [http://192.168.0.2:8080/client](http://192.168.0.2:8080/client)
 
 it will run the controller emulation on your phone
+
+#

@@ -11,6 +11,7 @@
 - vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
 - issue with selected when i clone. cloning should select the cloned one
 - rotateSelected doesnt work
+- support dragSelected
 
 
 - DONE remove arm model stuff as it is not working now
