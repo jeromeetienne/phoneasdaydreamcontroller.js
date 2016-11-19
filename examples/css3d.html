@@ -82,9 +82,17 @@
 	}
 
 </script>
-<script src='/node_modules/socket.io-client/socket.io.js'></script>
+<!-- <script src='/node_modules/socket.io-client/socket.io.js'></script>
 <script src='js/phoneasvrcontroller.js'></script>
+<script src='vendor/three.js/editor/js/libs/signals.min.js'></script> -->
+
 <script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
+<script src="/node_modules/socket.io-client/socket.io.js"></script>
+<script src="js/phoneasvrcontrollercontext.js"></script>
+<script src="js/phoneasvrcontrollerphone.js"></script>
+<script src="js/threex.daydreamcontroller.js"></script>
+<script src="js/threex.gamepadsignals.js"></script>
+<script src="js/threex.vrmenu.js"></script>
 
 <script src='js/rayCss3d.js'></script>
 <script src='vendor/three.js/examples/js/renderers/Projector.js' charset='utf-8'></script>
@@ -93,8 +101,20 @@
 	//////////////////////////////////////////////////////////////////////////////
 	//		handle phone as controller
 	//////////////////////////////////////////////////////////////////////////////
-	var serverUrl = 'http://192.168.0.2:4000'
-	var phoneAsVRController = new PhoneAsVRController(serverUrl);
+	var serverUrl = 'http://'+location.hostname+':4000'
+	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
+
+	function getGamepad(hand){
+		// var gamepads = navigator.getGamepads()
+		var gamepads = phoneAsVRController.getGamepads()
+		for(var i = 0; i < gamepads.length; i++){
+			var gamepad = gamepads[i]
+			if( gamepad === undefined )	continue
+			if( gamepad.hand !== hand )	continue
+			return gamepad
+		}
+		return null
+	}
 
 	// handle originCamera for onDeviceOrientationReset
 	var originCameraQuaternion = null
@@ -102,13 +122,17 @@
 		originCameraQuaternion = null
 	}
 	onRenderFcts.push(function(){
+		var gamepad = getGamepad('right')
+		if( gamepad === null )	return
+
 		// handle originCamera for onDeviceOrientationReset
 		if(originCameraQuaternion === null){
 			originCameraQuaternion = camera.quaternion.clone()	
 		}
+		
 
 		// compute phoneModel from gamepad.pose.orientation
-		var controllerQuaternion = new THREE.Quaternion().fromArray(phoneAsVRController.gamepad.pose.orientation)
+		var controllerQuaternion = new THREE.Quaternion().fromArray(gamepad.pose.orientation)
 		var poseQuaternion = originCameraQuaternion.clone().multiply( controllerQuaternion )
 
 		rayCSS3D.setOrientation(poseQuaternion)
@@ -129,42 +153,16 @@
 
 	var button0WasPressed = false
 	onRenderFcts.push(function(){
+		var gamepad = getGamepad('right')
+		if( gamepad === null )	return
+		
 		// test if the button0 is cliking
-		var button0IsPressed = phoneAsVRController.gamepad.buttons[0].pressed
+		var button0IsPressed = gamepad.buttons[0].pressed
 		var clicking = button0WasPressed === false && button0IsPressed === true ? true : false
 		button0WasPressed = button0IsPressed
 
 		rayCSS3D.update(camera, scene.children, clicking)
 	})
-	
-	// phoneAsVRController.signals.touchGesture.add(function(event){
-	// 	if( event.gesture !== 'swipeup' && event.gesture !== 'swipedown' )	return
-	// 
-	// 	var domElement = document.querySelector('ul')
-	// 	var computedStyle = getComputedStyle(domElement)
-	// 	var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
-	// 	lineHeight = lineHeight+2	// +2 is like the border
-	// 	if( event.gesture === 'swipedown' ){
-	// 		domElement.scrollTop -= lineHeight
-	// 	}else if( event.gesture === 'swipeup' ){
-	// 		domElement.scrollTop += lineHeight
-	// 	}
-	// })
-	// 
-	// function scrollList(direction){
-	// 	var domElement = document.querySelector('ul')
-	// 	var computedStyle = getComputedStyle(domElement)
-	// 	var lineHeight = parseInt(computedStyle.lineHeight.replace(/px$/,''), 10)
-	// 	lineHeight = lineHeight+2	// +2 is like the border
-	// 	if( direction === 'down' ){
-	// 		domElement.scrollTop -= lineHeight
-	// 	}else if( direction === 'up' ){
-	// 		domElement.scrollTop += lineHeight
-	// 	}else {
-	// 		console.assert(false)
-	// 	}
-	// }
-
 </script>
 <style>
 	.container {

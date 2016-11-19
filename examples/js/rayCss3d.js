@@ -60,7 +60,7 @@ function RayCSS3D(){
 		var intersects		= raycaster.intersectObjects( objects);
 		if( intersects.length === 0 ){
 			// set default length
-			updateRayLength(500)
+			updateRayLength(700)
 			return
 		}
 
