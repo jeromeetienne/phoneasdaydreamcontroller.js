@@ -31,11 +31,11 @@ THREEx.GamepadSignals = function(){
 			var isPressed = gamepad.buttons[buttonIndex].pressed
 			// detect touchStart
 			if( isPressed === true && wasPressed === false ){
-				_this.signals.touchStart.dispatch(buttonIndex)
+				_this.signals.touchStart.dispatch(buttonIndex, gamepad)
 			}
 			// detect touchEnd
 			if( isPressed === false && wasPressed === true ){
-				_this.signals.touchEnd.dispatch(buttonIndex)
+				_this.signals.touchEnd.dispatch(buttonIndex, gamepad)
 			}
 			// update wasPresseds
 			wasPresseds[buttonIndex] = isPressed

@@ -58,3 +58,15 @@ PhoneAsVRController.Context = function(serverUrl, camera){
 		return gamepads
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//          Code Separator
+////////////////////////////////////////////////////////////////////////////////
+
+PhoneAsVRController.overloadGamepadsAPI = function(serverUrl, camera){
+	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl, camera)
+
+	navigator.getGamepads = function(){
+        	return phoneAsVRController.getGamepads()
+	}	
+}

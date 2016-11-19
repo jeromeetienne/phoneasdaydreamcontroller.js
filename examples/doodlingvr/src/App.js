@@ -79,6 +79,20 @@ Appx.App = function(){
 	//          Handle long press traclpad to toggle menu
 	////////////////////////////////////////////////////////////////////////////////
 	this._initTrackpadToggleMenu()
+	
+	//////////////////////////////////////////////////////////////////////////////
+	//		Handle gestures
+	//////////////////////////////////////////////////////////////////////////////
+	this._gestures = new Appx.Gestures(gamepadSignals)
+	this._gestures.signals.swipe.add(function(direction){
+		// console.log('app swipe', direction)
+		
+		// if swipe left, then delete selected object
+		if( direction === 'left' && _this.selected !== null ){
+			console.log('swipe left => deleteSelected')
+			_this._gotoUiMode('deleteSelected')
+		}
+	})
 }
 
 /**
