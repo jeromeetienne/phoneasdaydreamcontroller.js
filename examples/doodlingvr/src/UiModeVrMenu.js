@@ -18,12 +18,12 @@ function UiModeVrMenu(app){
 	})
 	scene.add(vrMenu.object3d)
 	
-	if( app.selected === null ){
+	// if( app.selected === null ){
 		vrMenu.object3d.position.z = -4
-	}else{
-		vrMenu.object3d.position.copy(app.selected.position)
-		vrMenu.object3d.position.y += 0.5
-	}
+	// }else{
+	// 	vrMenu.object3d.position.copy(app.selected.position)
+	// 	vrMenu.object3d.position.y += 0.5
+	// }
 	vrMenu.object3d.scale.multiplyScalar(1/2)
 
 	app.gamepadSignals.signals.touchStart.add(onTouchStart)

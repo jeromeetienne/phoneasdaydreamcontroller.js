@@ -16,7 +16,6 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 
 	var buttonNames = ['appButton', 'homeButton', 'trackpad']
 
-	
 	this.dispose = function(){
 		console.log('dispose of phone', _this.gamepad.index)
 		socket.removeAllListeners('broadcast')

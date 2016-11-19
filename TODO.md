@@ -1,5 +1,7 @@
 # to fix for mvp
-- simplify the code to the max
+- rotateSelected doesnt work
+- support dragSelected
+- clean up the whole repository as much as needed
 - menu popping up behind the object
 - have minimal docs in README.md
   - what is the future ?
@@ -10,8 +12,9 @@
 - reorga the /examples/js folders
 - vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
 - issue with selected when i clone. cloning should select the cloned one
-- rotateSelected doesnt work
-- support dragSelected
+- webvr.html can handle 2 gamepad. one left, one right
+  - there is an issue which happen when you reload gamepad page on the devices
+  - one got kinda disconnected
 
 
 - DONE remove arm model stuff as it is not working now
