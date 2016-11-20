@@ -11,10 +11,6 @@ emulator to start experimenting now :)
 This repository contains the phoneasvrcontroller library that you can reuse.
 My experimentations are in the ```/examples``` folder.
 
-- It it possible to use it with [ray-input](https://github.com/borismus/ray-input) too.
-  Go [here](https://github.com/jeromeetienne/ray-input/blob/phone-as-vr-controller/phoneasvrcontroller.html#L30) to see how it can be done.
-- To learn more about daydream controller, i used the [documentation for their unity plugin](https://developers.google.com/vr/unity/controller-basics).
-
 # Get Started
 
 To run the examples, first do install node modules for the websocket server
@@ -44,3 +40,9 @@ In my case it is like that. Change the ip address to match your case.
 [http://192.168.0.2:8080/examples](http://192.168.0.2:8080/examples) and pick 'phone controller'
 
 it will run the controller emulation on your phone. Aka a daydream kind of controller (orientation, one trackpad and 3 button)
+
+# Misc
+
+- It it possible to use it with [ray-input](https://github.com/borismus/ray-input) too.
+  Go [here](https://github.com/jeromeetienne/ray-input/blob/phone-as-vr-controller/phoneasvrcontroller.html#L30) to see how it can be done.
+- To learn more about daydream controller, i used the [documentation for their unity plugin](https://developers.google.com/vr/unity/controller-basics).
