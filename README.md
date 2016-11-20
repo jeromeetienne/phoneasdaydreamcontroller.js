@@ -1,18 +1,19 @@
-# phoneasvrcontroller
-use your phone as a gamepad (3dof Virtual reality gamepad).
+# phoneasvrcontroller.js
+It make your phone act as a daydream vr controller. Thus you can start experimenting
+with daydream vr without a pixel phone or daydream viewer.
+
+phoneasvrcontroller.js uses your phone as a gamepad (3dof Virtual reality gamepad).
 It is widely inspired by daydream controller.
 In fact, originally i wrote this to experiment on daydream, but i could not 
 get my hand on a Pixel Phone and its daydream viewer. So i wrote this 
-emulator to start experimenting now :)
+emulator to start experimenting now :) 
 
 This repository contains the phoneasvrcontroller library that you can reuse.
 My experimentations are in the ```/examples``` folder.
 
-
 - It it possible to use it with [ray-input](https://github.com/borismus/ray-input) too.
   Go [here](https://github.com/jeromeetienne/ray-input/blob/phone-as-vr-controller/phoneasvrcontroller.html#L30) to see how it can be done.
 - To learn more about daydream controller, i used the [documentation for their unity plugin](https://developers.google.com/vr/unity/controller-basics).
-
 
 # Get Started
 

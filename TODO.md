@@ -10,6 +10,7 @@
   - what is this effort ? goals and current state
   - what is the future ?
 - css3d controller recalibration is not working
+- put a div info in each examples
 
 - clean up the whole repository as much as needed
   - reorga the /examples/js folders
