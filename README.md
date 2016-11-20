@@ -1,10 +1,10 @@
 # phoneasvrcontroller.js
-It make your phone act as a daydream vr controller. Thus you can start experimenting
+phoneasvrcontroller.js  makes your phone act as a daydream vr controller. Thus you can start experimenting
 with daydream vr without a pixel phone or daydream viewer.
 
 phoneasvrcontroller.js uses your phone as a gamepad (3dof Virtual reality gamepad).
 It is widely inspired by daydream controller.
-In fact, originally i wrote this to experiment on daydream, but i could not 
+In fact, originally i wrote this to experiment on daydream, because i could not 
 get my hand on a Pixel Phone and its daydream viewer. So i wrote this 
 emulator to start experimenting now :) 
 
@@ -46,3 +46,10 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
 - It it possible to use it with [ray-input](https://github.com/borismus/ray-input) too.
   Go [here](https://github.com/jeromeetienne/ray-input/blob/phone-as-vr-controller/phoneasvrcontroller.html#L30) to see how it can be done.
 - To learn more about daydream controller, i used the [documentation for their unity plugin](https://developers.google.com/vr/unity/controller-basics).
+- Current the phone read the IMU by using [Device Orientation events](https://www.w3.org/TR/2016/CR-orientation-event-20160818/).
+  But in some phones, the gyroscope is quite noisy. It makes it hard to be precise w
+  It can be helped using sensor fusion tho. 
+  See ["Sensor fusion and motion prediction" article](http://smus.com/sensor-fusion-prediction-webvr/) 
+  by [Boris Smüs](https://twitter.com/borismus) to understand how it can help and how to code it.
+  It has been implemented in [webvr-polyfill](https://github.com/googlevr/webvr-polyfill/tree/master/src/sensor-fusion) too.
+  It could be ported if needed in ```/client```.
