@@ -2,8 +2,8 @@
  * @file handle actions signals based on gamepad API
  * - touchStart/touchEnd on any button
  *
- * LATER:GFND                                                                                                                                                            
- * - axesChange when axes value changes
+ * LATER:                                                                                                                                      
+ * - axesChanged when axes value changes
  */
 
 var THREEx = THREEx || {}
