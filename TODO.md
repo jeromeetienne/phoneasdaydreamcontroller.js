@@ -1,28 +1,36 @@
 # to fix for mvp
 - FIXME: rotateSelected doesnt work
-- FIXME: issue with selected when i clone. cloning should select the cloned one
+- FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 - TODO: support dragSelected
 - FIXME: fix the socket.io location issue with the various npm
-- clean up the whole repository as much as needed
+- FIXME: sometime the trackpad send coord > 1.0 - some asserts popup in swipedetector.js
 
-- menu popping up behind the object
-- vrButton to go closer to us when hovering
-- TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
 
 - TODO: have minimal docs in README.md
-  - what is the future ?
   - what is this effort ? goals and current state
+  - what is the future ?
 - css3d controller recalibration is not working
-- comment the uimode.js stuff
-- reorga the /examples/js folders
+
+- clean up the whole repository as much as needed
+  - reorga the /examples/js folders
+
+- TODO: find a good workflow for dooglinvr
+  - all the selected required operation. should be better detected
+  - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
+  - TODO: if click on a object while on the menu, then select the object and keep the menu
+
 - webvr.html can handle 2 gamepad. one left, one right
   - there is an issue which happen when you reload gamepad page on the devices
   - one got kinda disconnected
   - FIXME: how webvr.html and dooglinvr are different ?
   - need a simpler webvr.html
-- TODO: find a good workflow for dooglinvr
-  - all the selected required operation. should be better detected
 
+
+# Done
+- DONE: menu popping up behind the object
+  - should be a double render
+  - i added a depthTest: false, it isnt perfect but good for now
+- DONE comment the uimode.js stuff
 - DONE put the ui in headspace at the bottom of the screen
   - like with the threex.vrbutton, one button per operation
   - remove the threex.vr menu ?
@@ -35,3 +43,6 @@
   - swipe down => decrease size
   - swipe left => delete selected
   - swipe right => clone selected
+
+# Later
+- when menu is displayed, the swipe should be to navigate the menu

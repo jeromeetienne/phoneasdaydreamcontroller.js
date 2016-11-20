@@ -33,6 +33,7 @@ THREEx.VRButton.prototype._buildItemBack = function() {
 		color: 'black',
 		opacity: .5,
 		transparent : true,
+		depthTest : false
 	})
 	var geometry = new THREE.PlaneBufferGeometry( 2, 0.5 );
 	var mesh = new THREE.Mesh( geometry, material );
@@ -69,6 +70,7 @@ THREEx.VRButton.prototype._buildItemFront = function (itemValue) {
 	var material = new THREE.MeshBasicMaterial({
 		map: texture,
 		transparent : true,
+		depthTest : false
 	})
 	var geometry = new THREE.PlaneBufferGeometry( 2, 0.5 );
 	var mesh = new THREE.Mesh( geometry, material );
