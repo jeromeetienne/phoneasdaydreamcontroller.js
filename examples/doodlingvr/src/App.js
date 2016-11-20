@@ -74,7 +74,7 @@ Appx.App = function(){
 
 
 	// setup initial mode
-	_this._gotoUiMode('select')
+	_this._gotoUiMode('vrMenu')
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Handle long press traclpad to toggle menu
@@ -130,22 +130,22 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 			if( _this.selected !== null && _this._postSelectUiMode ) _this._gotoUiMode(_this._postSelectUiMode)
 		})
 	}else if(uiModeType === 'vrMenu'){
-		_this._uiMode = new UiModeVrMenu(this)
+		var menuItems = {
+			'select' : 'Select',
+			'controllerOrientation' : 'Controller Orientation',
+			'objectTranslation' : 'Translate',
+			'objectRotation' : 'rotate',
+			'objectScale' : 'scale',
+			'deleteSelected' : 'delete',
+			'createObject' : 'create Object',
+			'cloneSelected' : 'clone Object',
+		}
+		_this._uiMode = new UiModeVrMenu2(this, menuItems)
 		_this._uiMode.signals.select.add(function(itemKey){
-			if( itemKey === 'select' ){
-				_this._gotoUiMode('select')
-			}else if( itemKey === 'objectTranslation' || itemKey === 'objectRotation' || itemKey === 'objectScale' ){
+			if( itemKey === 'objectTranslation' || itemKey === 'objectRotation' || itemKey === 'objectScale' ){
 				if( _this.selected === null ) alert('PANIC!! NO OBJECT SELECTED!!')
-				_this._gotoUiMode(itemKey)
-			}else if( itemKey === 'controllerOrientation' ){
-				_this._gotoUiMode('controllerOrientation')					
-			}else if( itemKey === 'deleteSelected' ){
-				_this._gotoUiMode('deleteSelected')					
-			}else if( itemKey === 'createObject' ){
-				_this._gotoUiMode('createObject')					
-			}else if( itemKey === 'cloneSelected' ){
-				_this._gotoUiMode('cloneSelected')					
-			}else   console.assert(false)
+			}
+			_this._gotoUiMode(itemKey)
 		})
 	}else if(uiModeType === 'objectTranslation' || uiModeType === 'objectRotation' || uiModeType === 'objectScale'){
 		if( uiModeType === 'objectTranslation')	var mode = 'translation'
@@ -190,7 +190,7 @@ Appx.App.prototype._initTrackpadToggleMenu = function () {
 		stopTimerIfNeeded()	
 		timerId = setTimeout(function(){
 			stopTimerIfNeeded()
-			if( _this._uiMode instanceof UiModeVrMenu === false ){
+			if( _this._uiMode instanceof UiModeVrMenu2 === false ){
 				_this._gotoUiMode('vrMenu')
 			}else{
 				_this._gotoUiMode('select')						

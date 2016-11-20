@@ -5,6 +5,10 @@ function UiModeVrMenu(app){
 		select : new signals.Signal()
 	}
 	
+	var vrButton = new THREEx.VRButton('Load')
+	vrButton.object3d.position.set(-1,0,-4)
+	scene.add(vrButton.object3d)
+	
 
 	var vrMenu = new THREEx.VRMenu({
 		'select' : 'Select',

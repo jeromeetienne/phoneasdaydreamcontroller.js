@@ -1,6 +1,7 @@
 # to fix for mvp
 - rotateSelected doesnt work
 - support dragSelected
+- fix the socket.io location issue with the various npm
 - clean up the whole repository as much as needed
 - menu popping up behind the object
 - have minimal docs in README.md
@@ -15,7 +16,11 @@
 - webvr.html can handle 2 gamepad. one left, one right
   - there is an issue which happen when you reload gamepad page on the devices
   - one got kinda disconnected
-
+- find a good workflow for dooglinvr
+  - all the selected required operation. should be better detected
+- put the ui in headspace at the bottom of the screen
+  - like with the threex.vrbutton, one button per operation
+  - remove the threex.vr menu ?
 
 - DONE remove arm model stuff as it is not working now
 - DONE fix vrMenu orientation - do a lookat camera at every render

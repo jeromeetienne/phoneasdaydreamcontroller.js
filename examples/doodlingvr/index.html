@@ -232,11 +232,13 @@ function enterFullscreen (element) {
 
 
 <script src='../js/threex.vrmenu.js'></script>
+<script src='../js/threex.vrbutton.js'></script>
 <script src="src/App.js"></script>
 <script src="../js/threex.vrgestures.js"></script>
 <script src='src/UiMode.js'></script>
 <script src='src/UiModeObjectPosRotSca.js'></script>
 <script src='src/UiModeVrMenu.js'></script>
+<script src='src/UiModeVrMenu2.js'></script>
 <script src='src/UiModeSelect.js'></script>
 <script src='src/UiModeControllerOrientation.js'></script>
 <script src='src/UiModeDelete.js'></script>
@@ -249,6 +251,7 @@ function enterFullscreen (element) {
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
 	(function(){
+// return
 		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
 		//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
 		for(var i = 0; i < 200; i++){
