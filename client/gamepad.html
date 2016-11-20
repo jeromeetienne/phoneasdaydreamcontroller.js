@@ -133,6 +133,9 @@ function sendTrackpadEvent(domEvent){
 		var boundRect = trackpadElement.getBoundingClientRect()
 		event.positionX = (touch.clientX / boundRect.width - 0.5) * 2
 		event.positionY = (touch.clientY / boundRect.height- 0.5) * 2
+		// touchmove is still notified out of the touchstart element, so here clamp the position
+		event.positionX = Math.min(event.positionX, 1.0)
+		event.positionY = Math.min(event.positionY, 1.0)
 	}else{
 		event.positionX = 0
 		event.positionY = 0
@@ -156,14 +159,16 @@ document.body.appendChild(img)
 function updateImgPosition(domEvent){
 	var touch = domEvent.touches[0]
 	if( touch ){
-		img.style.left = touch.clientX+'px'
-		img.style.top = touch.clientY+'px'
 		img.style.display = 'block'
+
+		img.style.left = touch.clientX+'px'
 		
 		var trackpadElement = document.querySelector('#trackpad')
 		var boundRect = trackpadElement.getBoundingClientRect()
 		if( touch.clientY > boundRect.height ){
-			img.style.display = 'none'
+			img.style.top = boundRect.height+'px'
+		}else{
+			img.style.top = touch.clientY+'px'
 		}
 	}else{
 		img.style.display = 'none'

@@ -2,19 +2,15 @@
 - FIXME: rotateSelected doesnt work
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 - TODO: support dragSelected
-- FIXME: sometime the trackpad send coord > 1.0 
-  - some asserts popup in swipedetector.js
-  - likely an issue in /client itself
 
 
 - TODO: have minimal docs in README.md
   - what is this effort ? goals and current state
   - what is the future ?
-- put a div info in each examples
 
 - css3d controller recalibration is not working
 - fix recalibration code... this dependancy on the camera is dirty
-  - what about a Context.viewQuaternion which should be set externally ?
+  - what about a Context.viewQuaternion which should be set externally ? YES DO IT
   - thus if it isnt set, all still work, except calibration is always facing identity
 
 - clean up the whole repository as much as needed
@@ -30,11 +26,15 @@
   - one got kinda disconnected
 - FIXME: how webvr.html and dooglinvr are different ?
   - need a simpler webvr.html
-  - it show a basic action
+  - it show a basic action. like the ray-input one ?
 - import the ray-input examples in /examples
 
 
 # Done
+- DONE FIXME: sometime the trackpad send coord > 1.0 
+  - some asserts popup in swipedetector.js
+  - likely an issue in /client itself
+- DONE put a div info in each examples ? no it pollute on mobile or vr display
 - DONE: fix the socket.io location issue with the various npm
   - force npmv3 to use nested folders
 - DONE: menu popping up behind the object
