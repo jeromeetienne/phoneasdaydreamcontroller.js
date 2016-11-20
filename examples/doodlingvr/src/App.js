@@ -140,7 +140,7 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 			'createObject' : 'create Object',
 			'cloneSelected' : 'clone Object',
 		}
-		_this._uiMode = new UiModeVrMenu2(this, menuItems)
+		_this._uiMode = new UiModeVrMenu(this, menuItems)
 		_this._uiMode.signals.select.add(function(itemKey){
 			if( itemKey === 'objectTranslation' || itemKey === 'objectRotation' || itemKey === 'objectScale' ){
 				if( _this.selected === null ) alert('PANIC!! NO OBJECT SELECTED!!')
@@ -190,7 +190,7 @@ Appx.App.prototype._initTrackpadToggleMenu = function () {
 		stopTimerIfNeeded()	
 		timerId = setTimeout(function(){
 			stopTimerIfNeeded()
-			if( _this._uiMode instanceof UiModeVrMenu2 === false ){
+			if( _this._uiMode instanceof UiModeVrMenu === false ){
 				_this._gotoUiMode('vrMenu')
 			}else{
 				_this._gotoUiMode('select')						

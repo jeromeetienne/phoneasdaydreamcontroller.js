@@ -1,27 +1,31 @@
 # to fix for mvp
-- rotateSelected doesnt work
-- support dragSelected
-- fix the socket.io location issue with the various npm
+- FIXME: rotateSelected doesnt work
+- FIXME: issue with selected when i clone. cloning should select the cloned one
+- TODO: support dragSelected
+- FIXME: fix the socket.io location issue with the various npm
 - clean up the whole repository as much as needed
+
 - menu popping up behind the object
-- have minimal docs in README.md
+- vrButton to go closer to us when hovering
+- TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
+
+- TODO: have minimal docs in README.md
   - what is the future ?
   - what is this effort ? goals and current state
 - css3d controller recalibration is not working
-- vrMenu item to go closer to us when hovering
 - comment the uimode.js stuff
 - reorga the /examples/js folders
-- vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
-- issue with selected when i clone. cloning should select the cloned one
 - webvr.html can handle 2 gamepad. one left, one right
   - there is an issue which happen when you reload gamepad page on the devices
   - one got kinda disconnected
-- find a good workflow for dooglinvr
+  - FIXME: how webvr.html and dooglinvr are different ?
+  - need a simpler webvr.html
+- TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
-- put the ui in headspace at the bottom of the screen
+
+- DONE put the ui in headspace at the bottom of the screen
   - like with the threex.vrbutton, one button per operation
   - remove the threex.vr menu ?
-
 - DONE remove arm model stuff as it is not working now
 - DONE fix vrMenu orientation - do a lookat camera at every render
 - DONE reenable css3d examples

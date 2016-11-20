@@ -1,16 +1,11 @@
-function UiModeVrMenu(app){
+function UiModeVrMenu(app, menuItems){
 	UiMode.call( this );
 	var _this = this
 	this.signals = {
 		select : new signals.Signal()
 	}
-	
-	var vrButton = new THREEx.VRButton('Load')
-	vrButton.object3d.position.set(-1,0,-4)
-	scene.add(vrButton.object3d)
-	
 
-	var vrMenu = new THREEx.VRMenu({
+	var menuItems = {
 		'select' : 'Select',
 		'controllerOrientation' : 'Controller Orientation',
 		'objectTranslation' : 'Translate',
@@ -19,50 +14,71 @@ function UiModeVrMenu(app){
 		'deleteSelected' : 'delete',
 		'createObject' : 'create Object',
 		'cloneSelected' : 'clone Object',
-	})
-	scene.add(vrMenu.object3d)
+	}	
 	
-	// if( app.selected === null ){
-		vrMenu.object3d.position.z = -4
-	// }else{
-	// 	vrMenu.object3d.position.copy(app.selected.position)
-	// 	vrMenu.object3d.position.y += 0.5
-	// }
-	vrMenu.object3d.scale.multiplyScalar(1/2)
+	var vrButtons = []
+	
+	var rootObject = new THREE.Group
+	scene.add(rootObject)
+	
+	Object.keys(menuItems).forEach(function(itemKey, index){
+		var itemValue = menuItems[itemKey]
+		var vrButton = new THREEx.VRButton(itemValue)
+		vrButton.object3d.scale.multiplyScalar(1/2)
+		vrButton.object3d.userData.vrMenuItemKey = itemKey
+
+		vrButtons.push(vrButton)
+		rootObject.add(vrButton.object3d)		
+	})
+
+	updatePositions()
+
+
+	function updatePositions(){
+		vrButtons.forEach(function(vrButton, index){
+			var maxWidth = 4
+			var position = new THREE.Vector3
+			position.x = -2 + (index % maxWidth) * 1.2
+			position.y = -1.5 -Math.floor(index / maxWidth)*0.3
+			position.z = -3
+
+			app.camera.localToWorld(position)
+			vrButton.object3d.position.copy(position)
+
+			// make the menu facing the camera
+			vrButton.object3d.lookAt(app.camera.position)
+		})
+	}
 
 	app.gamepadSignals.signals.touchStart.add(onTouchStart)
 	this.dispose = function(){
 		app.gamepadSignals.signals.touchStart.remove(onTouchStart)
-		scene.remove(vrMenu.object3d)
+		scene.remove(rootObject)
 	}
 
 
 	this.getActionableObjects = function(){
 		var itemsBack = []
-		vrMenu.object3d.traverse(function(object3d){
-			if( object3d.name !== 'itemBack' ) return
-			itemsBack.push(object3d)
+		vrButtons.forEach(function(vrButton){
+			itemsBack.push(vrButton.itemBack)
 		})
 		return itemsBack
 	}
 
 	var intersects = []
 	this.update = function(){
-		// make the menu facing the camera
-		vrMenu.object3d.lookAt(app.camera.position)
+		updatePositions()
 		
 		intersects	= app.intersects
 
-		_this.getActionableObjects().forEach(function(itemBack){
-			itemBack.material.color.set('black')
-			itemBack.position.z = 0.5
+		vrButtons.forEach(function(vrButton){
+			vrButton.itemBack.material.color.set('black')
 		})
 
 		if( intersects.length === 0 )	return
 
 		var itemBack = intersects[0].object
 		itemBack.material.color.set('cyan')
-		itemBack.position.z = 0
 	}
 	
 	return
@@ -72,7 +88,7 @@ function UiModeVrMenu(app){
 		if( intersects.length === 0 )	return
 		var object3d = intersects[0].object
 		
-		var itemKey = object3d.userData.vrMenuItemKey
+		var itemKey = object3d.parent.userData.vrMenuItemKey
 		console.log('just selected', itemKey)
 		_this.signals.select.dispatch(itemKey)
 	}
