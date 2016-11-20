@@ -45,9 +45,12 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
 
 - It it possible to use it with [ray-input](https://github.com/borismus/ray-input) too.
   Go [here](https://github.com/jeromeetienne/ray-input/blob/phone-as-vr-controller/phoneasvrcontroller.html#L30) to see how it can be done.
+  It gives a better experience to people who got no 3dof controller but got a phone.
+  e.g. google cardboard can use a 3dof controller now.
+  This make the vr experience more democratic 'giving the best VR experience possible to as many people as possible'
 - To learn more about daydream controller, i used the [documentation for their unity plugin](https://developers.google.com/vr/unity/controller-basics).
 - Current the phone read the IMU by using [Device Orientation events](https://www.w3.org/TR/2016/CR-orientation-event-20160818/).
-  But in some phones, the gyroscope is quite noisy. It makes it hard to be precise w
+  But in some phones, the gyroscope is quite noisy. It makes it less precise and less confortable.
   It can be helped using sensor fusion tho. 
   See ["Sensor fusion and motion prediction" article](http://smus.com/sensor-fusion-prediction-webvr/) 
   by [Boris Smüs](https://twitter.com/borismus) to understand how it can help and how to code it.
