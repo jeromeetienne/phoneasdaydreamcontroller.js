@@ -10,6 +10,7 @@ emulator to start experimenting now :)
 
 This repository contains the phoneasvrcontroller library that you can reuse.
 My experimentations are in the ```/examples``` folder.
+You can even have up to 4 phones connected at the same time :)
 
 # Get Started
 
@@ -19,13 +20,14 @@ To run the examples, first do install node modules for the websocket server
 npm install
 ```
 
-Then start to run the websocket server 
+for npm-v2, for npm-v3 one need to switch off the new flat package behavior, and 
+use ```npm install --legacy-bundling``` instead. Then start to run the websocket server 
 
 ```
 npm start
 ```
 
-then run a local http server. e.g. for [http-server](https://github.com/indexzero/http-server) it is
+then run a local http server. e.g. for [http-server](https://github.com/indexzero/http-server), it is
 
 ```
 http-server
@@ -41,13 +43,24 @@ In my case it is like that. Change the ip address to match your case.
 
 it will run the controller emulation on your phone. Aka a daydream kind of controller (orientation, one trackpad and 3 button)
 
+
+# Show, dont Tell
+
+- ```client/``` is the phone controller, aka the webapps which emulate the daydream controller on your phone
+- ```examples/basic.html``` simply display the gamepad. raw output of the phone gamepad. Good to debug
+- ```examples/doodlingvr/``` doodling in vr : wip application to doodle in VR
+- ```examples/gestures.html``` gestures : gesture detection on gamepad trackpad - support swipe gesture + one dollar gesture
+- ```examples/css3d.html``` an example using css3d
+- ```examples/webvr.html``` an example using webvr
+
 # Misc
 
 - It it possible to use it with [ray-input](https://github.com/borismus/ray-input) too.
   Go [here](https://github.com/jeromeetienne/ray-input/blob/phone-as-vr-controller/phoneasvrcontroller.html#L30) to see how it can be done.
   It gives a better experience to people who got no 3dof controller but got a phone.
   e.g. google cardboard can use a 3dof controller now.
-  This make the vr experience more democratic 'giving the best VR experience possible to as many people as possible'
+  This make the vr experience more democratic.
+  As i see it, the goal is about 'giving the best VR experience possible to as many people as possible'
 - To learn more about daydream controller, i used the [documentation for their unity plugin](https://developers.google.com/vr/unity/controller-basics).
 - Current the phone read the IMU by using [Device Orientation events](https://www.w3.org/TR/2016/CR-orientation-event-20160818/).
   But in some phones, the gyroscope is quite noisy. It makes it less precise and less confortable.
@@ -56,3 +69,4 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
   by [Boris Smüs](https://twitter.com/borismus) to understand how it can help and how to code it.
   It has been implemented in [webvr-polyfill](https://github.com/googlevr/webvr-polyfill/tree/master/src/sensor-fusion) too.
   It could be ported if needed in ```/client```.
+  
