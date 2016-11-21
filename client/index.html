@@ -25,8 +25,8 @@
 				<option value="left">left</option>
 			</select></span>
 		</li>
-		<li>Gamepad Index : 
-			<span class='gamepadIndex'><select name="select">
+		<li>Index : 
+			<span class='index'><select name="select">
 				<option value="0" selected>0</option> 
 				<option value="1">1</option>
 				<option value="2">2</option>
@@ -43,10 +43,10 @@
 
 	function onSubmit(){
 		var handValue = document.querySelector('#container .hand select').value
-		var gamepadIndexValue = document.querySelector('#container .gamepadIndex select').value
+		var indexValue = document.querySelector('#container .index select').value
 		var url = 'gamepad.html'
 		url += '#hand='+encodeURIComponent(handValue)
-		url += '&gamepadIndex='+encodeURIComponent(gamepadIndexValue)
+		url += '&index='+encodeURIComponent(indexValue)
 		location.href = url
 	}
 </script>

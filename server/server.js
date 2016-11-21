@@ -16,7 +16,7 @@ io.on('connection', function(socket){
         var query = require('querystring').parse(parsedUrl.query)
         var parameters = {
                 hand : query.hand,
-                gamepadIndex : query.gamepadIndex ? parseInt(query.gamepadIndex,10) : undefined,
+                gamepadIndex : parseInt(query.gamepadIndex,10),
         }
 
         if( query.origin === 'app' ){
@@ -57,7 +57,7 @@ function onConnectionAppSocket(socket, parameters){
 }
 
 function onConnectionPhoneSocket(socket, parameters){
-        console.log('a phone connected', parameters);
+        console.log('a phone connected with', parameters);
 
         socket.join('phone')
         var phone = phones[socket.id] = {

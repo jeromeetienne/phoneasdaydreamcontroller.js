@@ -13,13 +13,15 @@
   - TODO: if click on a object while on the menu, then select the object and keep the menu
 
 - FIXME: fix the issue with '2 gamepads diconnecting reconnecting'
-- webvr.html can handle 2 gamepad. one left, one right
+  - occurs in examples/basic.html - this localize the issue
   - there is an issue which happen when you reload gamepad page on the devices
   - one got kinda disconnected
-- FIXME: how webvr.html and dooglinvr are different ?
-  - need a simpler webvr.html
-  - it show a basic action. like the ray-input one ? YES
-  - examples like ray-input but with this stack and 2 gamepads
+  - modify client/ to get the hand/index/serverconnected/appconnected
+  - put it at the bottom of the screen with pointer-event none
+
+- TODO: change webvr example
+  - same as ray-input
+  - handle 2 gamepads
 
 
 # Done

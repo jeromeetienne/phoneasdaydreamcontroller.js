@@ -15,8 +15,18 @@
 		<img src="images/fullscreen.png" alt="" />
 	</div>    
 	<div id="bottomRow">
-		<div id="homeButton">Home Button</div>
+		<div id="homeButton">Home Button
+
+		</div>
 		<div id="appButton">App Button</div>
+	</div>
+	<div id='status'>
+		<ul>
+			<li>hand : <span class='hand'>unknown</span></li>
+			<li>index : <span class='index'>unknown</span></li>
+			<li>server : <span class='server'>not connected</span></li>
+			<li>app : <span class='app'>not connected</span></li>
+		</ul>
 	</div>
 </div>
 <script>
@@ -34,12 +44,16 @@ function getQueryVariable(variable) {
 }
 var queryParameters = {
 	hand : getQueryVariable('hand'),
-	gamepadIndex : getQueryVariable('gamepadIndex') ? parseInt(getQueryVariable('gamepadIndex'),10) : undefined,
+	index : getQueryVariable('index') ? parseInt(getQueryVariable('index'),10) : undefined,
 }
 
-var hasParameters = (queryParameters.hand === undefined || queryParameters.gamepadIndex === undefined) ? false : true
+var hasParameters = (queryParameters.hand === undefined || queryParameters.index === undefined) ? false : true
 if( hasParameters === false )	alert('PANIC no url parameter')
 
+console.log(queryParameters)
+// update status
+document.querySelector('#status .hand').innerText = queryParameters.hand
+document.querySelector('#status .index').innerText = queryParameters.index
 
 </script>
 
@@ -49,17 +63,30 @@ var serverUrl = 'http://'+location.hostname+':4000'
 var socket = io(serverUrl, { 
 	query: "origin=phone"
 		+ "&hand=" + encodeURIComponent(queryParameters.hand)
-		+ "&gamepadIndex=" + encodeURIComponent(queryParameters.gamepadIndex)
+		+ "&gamepadIndex=" + encodeURIComponent(queryParameters.index)
 });
+
+//////////////////////////////////////////////////////////////////////////////
+//		monitor server connection
+//////////////////////////////////////////////////////////////////////////////
+socket.on('connect', function(){
+	document.querySelector('#status .server').innerText = 'connected'
+
+})
+socket.on('disconnect', function(){
+	document.querySelector('#status .server').innerText = 'Not connected'
+	document.querySelector('#status .app').innerText = 'Not connected'
+})
 
 //////////////////////////////////////////////////////////////////////////////
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
 socket.on('appconnected', function(){
-	console.log('app connected')
+	document.querySelector('#status .app').innerText = 'connected'
+
 })
 socket.on('appdisconnected', function(){
-	console.log('app disconnected')
+	document.querySelector('#status .app').innerText = 'Not connected'
 })
 
 
@@ -95,10 +122,11 @@ document.querySelector('#appButton').addEventListener('touchend', function(){
 function sendButtonsEvent(type, target){
 	var event = {
 		type : type,
-		gamepadIndex: queryParameters.gamepadIndex,
+		gamepadIndex: queryParameters.index,
 		// data properties
 		target : target,
 	}
+console.log('sendButtonsEvent', event)
 	socket.emit('forwardToApp', JSON.stringify(event))		
 }
 
@@ -122,7 +150,7 @@ document.querySelector('#trackpad').addEventListener('touchmove', function(event
 function sendTrackpadEvent(domEvent){
 	var event = {
 		type : domEvent.type,
-		gamepadIndex: queryParameters.gamepadIndex,
+		gamepadIndex: queryParameters.index,
 		// data properties
 		target : 'trackpad'
 	}
@@ -193,8 +221,8 @@ document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosit
 			stopTimerIfNeeded()
 			socket.emit('forwardToApp', JSON.stringify({
 				type : 'deviceOrientationReset',
-				gamepadIndex: queryParameters.gamepadIndex,
-			}))			
+				gamepadIndex: queryParameters.index,
+			}))	
 		}, 1000*0.5)
 	})
 	document.querySelector('#homeButton').addEventListener('touchend', function(){
@@ -215,7 +243,7 @@ function onDeviceOrientation(event) {
 	// console.log('onDeviceOrientation')
 	var event = {
 		type : 'deviceOrientation',
-		gamepadIndex: queryParameters.gamepadIndex,
+		gamepadIndex: queryParameters.index,
 		// data properties
 		alpha : event.alpha,
 		beta : event.beta,

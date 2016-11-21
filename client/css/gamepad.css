@@ -67,3 +67,26 @@ body, html, #container {
 	width: 50%;
 	height: 100%;
 }
+
+
+#status {
+	position: absolute;
+	text-align: left;
+	bottom: 0px;
+	left: 0px;
+	font-size: 50%;
+	color: #222;
+	pointer-events: none;
+}
+
+/*******************************************************************************
+	status
+*******************************************************************************/
+
+#status ul {
+	margin: 8px;
+	padding: 8px;
+	list-style: none;
+}
+#status li {
+}
