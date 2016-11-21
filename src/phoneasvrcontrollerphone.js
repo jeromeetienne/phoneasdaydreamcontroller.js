@@ -1,6 +1,6 @@
 var PhoneAsVRController = PhoneAsVRController || {}
 
-PhoneAsVRController.Phone = function(socket, phoneParameters){
+PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 	var _this = this
 
 	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsVRController.Phone._gamepadTemplate))
@@ -82,7 +82,13 @@ PhoneAsVRController.Phone = function(socket, phoneParameters){
 
 		// FIXME here i include the whole three.js for this loosy line... let avoid that ...
 		var controllerQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
-                controllerQuaternion.toArray(gamepad.pose.orientation)		
+                // controllerQuaternion.toArray(gamepad.pose.orientation)	
+
+		var poseQuaternion = new THREE.Quaternion()
+				.fromArray(context.viewQuaternion)
+				.multiply( controllerQuaternion )
+		poseQuaternion.toArray(gamepad.pose.orientation)
+		
 	}
 }
 

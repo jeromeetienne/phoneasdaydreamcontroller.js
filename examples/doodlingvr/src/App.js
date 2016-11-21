@@ -5,6 +5,10 @@ Appx.App = function(){
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
 	
+	onRenderFcts.push(function(){
+		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+	})
+window.phoneAsVRController = phoneAsVRController
 	_this.camera = camera
 
 	function getGamepad(){

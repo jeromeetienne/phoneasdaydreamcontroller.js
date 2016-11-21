@@ -57,8 +57,8 @@ THREEx.DaydreamController.prototype.updatePosition = function(camera, gamepad){
 
 	// compute quaternion from gamepad.pose.orientation
 	var controllerQuaternion = new THREE.Quaternion().fromArray(gamepad.pose.orientation)
-	var poseQuaternion = _this._originCameraQuaternion.clone().multiply( controllerQuaternion )
-	object3d.quaternion.copy(poseQuaternion)
+	// var poseQuaternion = _this._originCameraQuaternion.clone().multiply( controllerQuaternion )
+	object3d.quaternion.copy(controllerQuaternion)
 
 	// set position according to gamepad.hand
 	if( gamepad.hand === 'right' ){

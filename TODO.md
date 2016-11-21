@@ -2,7 +2,6 @@
 - FIXME: rotateSelected doesnt work
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 - TODO: support dragSelected
-- TODO: recompile ray.js to avoid the silly debug print
 - TODO: make the server accept multiple app at the same time
 - TODO: in css3d, use swipe to scroll list
 
@@ -10,18 +9,13 @@
 - TODO: have minimal docs in README.md  
   - what is this effort ? goals and current state
   - what is the future ?
+- TODO clean up /examples/js if possible ?
 
 - css3d controller recalibration is not working
 - fix recalibration code... this dependancy on the camera is dirty
   - what about a Context.viewQuaternion which should be set externally ? YES DO IT
   - thus if it isnt set, all still work, except calibration is always facing identity
 
-- clean up the whole repository as much as needed
-  - reorga the /examples/js folders
-  - put phoneasvrcontrollercontext.js and phoneasvrcontrollerphone.js in a /src
-  - DONE create a ```/examples/gesture``` and copy all the dependancies from gesture in it
-  - DONE same for css3d
-  - DONE same for webvr ? where to put what is shared ?
 
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
@@ -34,10 +28,17 @@
 - FIXME: how webvr.html and dooglinvr are different ?
   - need a simpler webvr.html
   - it show a basic action. like the ray-input one ? YES
-- import the ray-input examples in /examples
 
 
 # Done
+- DONE clean up the whole repository as much as needed
+  - reorga the /examples/js folders
+  - put phoneasvrcontrollercontext.js and phoneasvrcontrollerphone.js in a /src
+  - DONE create a ```/examples/gesture``` and copy all the dependancies from gesture in it
+  - DONE same for css3d
+  - DONE same for webvr ? where to put what is shared ?
+- DONE import the ray-input examples in /examples
+- DONE: recompile ray.js to avoid the silly debug print
 - DONE FIXME: sometime the trackpad send coord > 1.0 
   - some asserts popup in swipedetector.js
   - likely an issue in /client itself

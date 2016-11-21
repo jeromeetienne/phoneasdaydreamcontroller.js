@@ -2,6 +2,8 @@ var PhoneAsVRController = PhoneAsVRController || {}
 
 PhoneAsVRController.Context = function(serverUrl, camera){
 	var _this = this
+	
+	_this.viewQuaternion = [0,0,0,1]
 
 	this._socket = io(serverUrl, {
 		query : 'origin=app'
@@ -24,7 +26,7 @@ PhoneAsVRController.Context = function(serverUrl, camera){
 			phone.dispose()
 		}
 		
-		_this._phones[message.gamepadIndex] =  new PhoneAsVRController.Phone(_this._socket, {
+		_this._phones[message.gamepadIndex] =  new PhoneAsVRController.Phone(_this, _this._socket, {
 			hand : message.hand,
 			gamepadIndex: message.gamepadIndex
 		})
