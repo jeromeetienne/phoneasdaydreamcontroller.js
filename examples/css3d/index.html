@@ -89,8 +89,15 @@
 <script src='../../src/phoneasvrcontrollerphone.js'></script>
 <script src='../js/threex.gamepadsignals.js'></script>
 
+
 <script src='js/rayCss3d.js'></script>
 <script src='../vendor/three.js/examples/js/renderers/Projector.js' charset='utf-8'></script>
+
+
+<script src='../js/threex.gamepadsignals.js'></script>
+<script src='../gestures/js/swipedetector.js'></script>
+<script src='../gestures/vendor/onedollar-unistroke-coffee/lib/onedollar.js'></script>
+
 <script type='text/javascript'>
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -225,10 +232,47 @@
 		})
 
 		var object = new THREE.CSS3DObject( container );
+		object.name = 'menu'
 		object.position.z = -300
 		return object
 	}
 
 
+</script>
+<script src='../js/threex.gamepadsignals.js'></script>
+<script src='../gestures/js/swipedetector.js'></script>
+<script src='../gestures/vendor/onedollar-unistroke-coffee/lib/onedollar.js'></script>
+<script src="../js/threex.vrgestures.js"></script>
+<script>
+
+
+var gamepadSignals = new THREEx.GamepadSignals()
+onRenderFcts.push(function(){
+	var gamepad = getGamepad('right')
+	if( gamepad === null )	return
+	
+	gamepadSignals.update(gamepad)
+})
+//////////////////////////////////////////////////////////////////////////////
+//		Handle gestures
+//////////////////////////////////////////////////////////////////////////////
+var vrGestures = new THREEx.VrGestures(gamepadSignals)
+vrGestures.signals.swipe.add(function(direction){
+	
+	var object3d = scene.getObjectByName('menu')
+	var domElement = object3d.element.querySelector('ul')
+
+	var style = window.getComputedStyle(domElement.querySelector('li'))
+	var itemHeight = parseInt(style.lineHeight.replace(/px$/, ''), 10)
+
+	if( direction === 'up' ){
+		console.log('app swipe', direction)
+		domElement.scrollTop -= itemHeight
+	}
+	if( direction === 'down' ){
+		console.log('app swipe', direction)
+		domElement.scrollTop += itemHeight
+	}
+})
 </script>
 </body></html>

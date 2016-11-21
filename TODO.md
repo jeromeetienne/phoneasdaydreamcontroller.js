@@ -3,19 +3,15 @@
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 - TODO: support dragSelected
 - TODO: make the server accept multiple app at the same time
-- TODO: in css3d, use swipe to scroll list
 
 
-- TODO: have minimal docs in README.md  
-  - what is this effort ? goals and current state
-  - what is the future ?
 - TODO clean up /examples/js if possible ?
 
 - css3d controller recalibration is not working
 - fix recalibration code... this dependancy on the camera is dirty
   - what about a Context.viewQuaternion which should be set externally ? YES DO IT
   - thus if it isnt set, all still work, except calibration is always facing identity
-
+  - started but still unsure
 
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
@@ -28,9 +24,14 @@
 - FIXME: how webvr.html and dooglinvr are different ?
   - need a simpler webvr.html
   - it show a basic action. like the ray-input one ? YES
+  - examples like ray-input but with this stack and 2 gamepads
 
 
 # Done
+- DONE: in css3d, use swipe to scroll list
+- DONE: have minimal docs in README.md  
+  - what is this effort ? goals and current state
+  - what is the future ?
 - DONE clean up the whole repository as much as needed
   - reorga the /examples/js folders
   - put phoneasvrcontrollercontext.js and phoneasvrcontrollerphone.js in a /src
