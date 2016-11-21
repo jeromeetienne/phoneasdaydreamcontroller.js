@@ -19,9 +19,9 @@
 - clean up the whole repository as much as needed
   - reorga the /examples/js folders
   - put phoneasvrcontrollercontext.js and phoneasvrcontrollerphone.js in a /src
-  - create a ```/examples/gesture``` and copy all the dependancies from gesture in it
-  - same for css3d
-  - same for webvr ? where to put what is shared ?
+  - DONE create a ```/examples/gesture``` and copy all the dependancies from gesture in it
+  - DONE same for css3d
+  - DONE same for webvr ? where to put what is shared ?
 
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
