@@ -105,6 +105,10 @@
 	//////////////////////////////////////////////////////////////////////////////
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
+	// update phoneAsVRController.viewQuaternion for recalibration
+	onRenderFcts.push(function(){
+		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+	})
 
 	function getGamepad(hand){
 		// var gamepads = navigator.getGamepads()
@@ -118,26 +122,13 @@
 		return null
 	}
 
-	// handle originCamera for onDeviceOrientationReset
-	var originCameraQuaternion = null
-	phoneAsVRController.onDeviceOrientationReset = function(){
-		originCameraQuaternion = null
-	}
 	onRenderFcts.push(function(){
 		var gamepad = getGamepad('right')
 		if( gamepad === null )	return
 
-		// handle originCamera for onDeviceOrientationReset
-		if(originCameraQuaternion === null){
-			originCameraQuaternion = camera.quaternion.clone()	
-		}
-		
-
 		// compute phoneModel from gamepad.pose.orientation
 		var controllerQuaternion = new THREE.Quaternion().fromArray(gamepad.pose.orientation)
-		var poseQuaternion = originCameraQuaternion.clone().multiply( controllerQuaternion )
-
-		rayCSS3D.setOrientation(poseQuaternion)
+		rayCSS3D.setOrientation(controllerQuaternion)
 	})
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator

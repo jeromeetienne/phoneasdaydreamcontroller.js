@@ -6,9 +6,6 @@ THREEx.DaydreamController = function(){
 	this.object3d = new THREE.Group
 
 	this._initRayModel()	
-
-	// handle originCamera for onDeviceOrientationReset
-	this._originCameraQuaternion = null
 }
 
 /**
@@ -43,21 +40,11 @@ THREEx.DaydreamController.prototype._initRayModel = function () {
  */
 THREEx.DaydreamController.prototype.updatePosition = function(camera, gamepad){
 	var _this = this
-	gamepad.onDeviceOrientationReset = function(){
-		_this._originCameraQuaternion = null
-	}
-
-	// handle originCamera for onDeviceOrientationReset
-	if(_this._originCameraQuaternion === null){
-		_this._originCameraQuaternion = camera.quaternion.clone()
-	}
-	
 	
 	var object3d = _this.object3d
 
 	// compute quaternion from gamepad.pose.orientation
 	var controllerQuaternion = new THREE.Quaternion().fromArray(gamepad.pose.orientation)
-	// var poseQuaternion = _this._originCameraQuaternion.clone().multiply( controllerQuaternion )
 	object3d.quaternion.copy(controllerQuaternion)
 
 	// set position according to gamepad.hand

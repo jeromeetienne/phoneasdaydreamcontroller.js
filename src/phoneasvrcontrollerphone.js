@@ -8,10 +8,11 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 	this.gamepad.hand = phoneParameters.hand
 	var gamepad = this.gamepad
 
-
+	// for calibration
 	var lastDeviceOrientationEvent = null
 	var originDeviceOrientation = null
-	this.gamepad.onDeviceOrientationReset = function(){}
+	var originViewQuaternion = null
+
 	socket.on('broadcast', onBroadcast)
 
 	var buttonNames = ['appButton', 'homeButton', 'trackpad']
@@ -31,7 +32,8 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 		
 		if( event.type === 'deviceOrientationReset' ){
 			originDeviceOrientation = null
-			_this.gamepad.onDeviceOrientationReset()
+			originViewQuaternion = null
+			// reinit device orientation
 			if( lastDeviceOrientationEvent ){
 				onDeviceOrientation(lastDeviceOrientationEvent)
 			}
@@ -69,6 +71,9 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 				gamma: event.gamma
 			}
 		}
+		if( originViewQuaternion === null ){
+			originViewQuaternion = new THREE.Quaternion().fromArray(context.viewQuaternion)
+		}
 		
 		var alpha = event.alpha - originDeviceOrientation.alpha
                 var beta  = event.beta  - originDeviceOrientation.beta
@@ -82,11 +87,7 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 
 		// FIXME here i include the whole three.js for this loosy line... let avoid that ...
 		var controllerQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
-                // controllerQuaternion.toArray(gamepad.pose.orientation)	
-
-		var poseQuaternion = new THREE.Quaternion()
-				.fromArray(context.viewQuaternion)
-				.multiply( controllerQuaternion )
+		var poseQuaternion = originViewQuaternion.clone().multiply( controllerQuaternion )
 		poseQuaternion.toArray(gamepad.pose.orientation)
 		
 	}

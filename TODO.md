@@ -7,12 +7,6 @@
 
 - TODO clean up /examples/js if possible ?
 
-- css3d controller recalibration is not working
-- fix recalibration code... this dependancy on the camera is dirty
-  - what about a Context.viewQuaternion which should be set externally ? YES DO IT
-  - thus if it isnt set, all still work, except calibration is always facing identity
-  - started but still unsure
-
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
@@ -28,6 +22,11 @@
 
 
 # Done
+- DONE css3d controller recalibration is not working
+- DONE fix recalibration code... this dependancy on the camera is dirty
+  - what about a Context.viewQuaternion which should be set externally ? YES DO IT
+  - thus if it isnt set, all still work, except calibration is always facing identity
+  - started but still unsure
 - DONE: in css3d, use swipe to scroll list
 - DONE: have minimal docs in README.md  
   - what is this effort ? goals and current state

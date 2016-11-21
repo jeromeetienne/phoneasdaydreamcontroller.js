@@ -297,7 +297,11 @@ function enterFullscreen (element) {
 <script>
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
-	
+	// update phoneAsVRController.viewQuaternion for recalibration
+	onRenderFcts.push(function(){
+		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+	})
+
 
 	function getGamepad(hand){
 		// var gamepads = navigator.getGamepads()
