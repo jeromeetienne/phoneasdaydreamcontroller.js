@@ -9,6 +9,7 @@ get my hand on a Pixel Phone and its daydream viewer. So i wrote this
 emulator to start experimenting now :) 
 
 This repository contains the phoneasvrcontroller library that you can reuse.
+Technically it exports the data in the same format as the gamepad api.
 My experimentations are in the ```/examples``` folder.
 You can even have up to 4 phones connected at the same time :)
 
@@ -20,7 +21,7 @@ To run the examples, first do install node modules for the websocket server
 npm install
 ```
 
-for npm-v2, for npm-v3 one need to switch off the new flat package behavior, and 
+Note, if you use npm-v3, you need to switch off the new flat package behavior, just
 use ```npm install --legacy-bundling``` instead. Then start to run the websocket server 
 
 ```

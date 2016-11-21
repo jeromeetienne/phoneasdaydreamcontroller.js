@@ -4,7 +4,7 @@
 - TODO: support dragSelected
 
 
-- TODO: have minimal docs in README.md
+- TODO: have minimal docs in README.md  
   - what is this effort ? goals and current state
   - what is the future ?
 
@@ -15,7 +15,11 @@
 
 - clean up the whole repository as much as needed
   - reorga the /examples/js folders
-
+  - put phoneasvrcontrollercontext.js and phoneasvrcontrollerphone.js in a /src
+  - create a ```/examples/gesture``` and copy all the dependancies from gesture in it
+  - same for css3d
+  - same for webvr ? where to put what is shared ?
+3
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
