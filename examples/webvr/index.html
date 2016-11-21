@@ -72,17 +72,17 @@ document.addEventListener('touchmove', function(event) {
 </script>
 
 <!-- three.js library -->
-<script src='vendor/three.js/build/three.js'></script>
+<script src='../vendor/three.js/build/three.js'></script>
 
 <!-- VRControls.js applies the WebVR transformations to a three.js camera object. -->
-<script src='vendor/three.js/examples/js/controls/VRControls.js'></script>
+<script src='../vendor/three.js/examples/js/controls/VRControls.js'></script>
 
 <!-- VREffect.js handles stereo camera setup and rendering.  -->
-<script src='vendor/three.js/examples/js/effects/VREffect.js'></script>
-<!-- <script src='vendor/three.js/examples/js/effects/VREffect-fromweb.js'></script> -->
+<script src='../vendor/three.js/examples/js/effects/VREffect.js'></script>
+<!-- <script src='../vendor/three.js/examples/js/effects/VREffect-fromweb.js'></script> -->
 
 <!-- A polyfill for the WebVR API.  -->
-<script src='vendor/webvr-polyfill.js'></script>
+<script src='../vendor/webvr-polyfill.js'></script>
 
 <script>
 var onRenderFcts = []
@@ -181,7 +181,7 @@ renderer.domElement.addEventListener('click', function(event){
 	var element = renderer.domElement
 	// check it is the proper click
 	if( event.target !== element )	return
-	if( vrDisplay.displayName !== "Mouse and Keyboard VRDisplay (webvr-polyfill)")	return	
+	if( vrDisplay.displayName !== 'Mouse and Keyboard VRDisplay (webvr-polyfill)')	return	
 	// Ask the browser to lock the pointer
 	element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 	if ( /Firefox/i.test( navigator.userAgent ) ) {
@@ -215,20 +215,13 @@ function enterFullscreen (element) {
 </script>
 
 
-<script src='js/threex.gamepadsignals.js'></script>
-<script src='js/swipedetector.js'></script>
-<script src='vendor/onedollar-unistroke-coffee/lib/onedollar.js'></script>
+<script src='../js/threex.gamepadsignals.js'></script>
 
-<script src='vendor/threex.laser/threex.laserbeam.js'></script>
-<script src='vendor/threex.laser/threex.lasercooked.js'></script>
-<script>THREEx.LaserCooked.baseURL	= 'vendor/threex.laser/';</script>
+<script src='../vendor/threex.laser/threex.laserbeam.js'></script>
+<script src='../vendor/threex.laser/threex.lasercooked.js'></script>
+<script>THREEx.LaserCooked.baseURL	= '../vendor/threex.laser/';</script>
 
 
-<script src="vendor/threex.domevents/threex.domevents.js"></script>
-<script>
-var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
-
-</script>
 <script>
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
@@ -255,10 +248,6 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 			object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
 			object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
 			object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
-			
-			domEvents.addEventListener(object3d, 'click', function(event){
-				object3d.parent.remove(object3d)
-			}, false)		
 		}
 	})()	
 	//////////////////////////////////////////////////////////////////////////////
@@ -268,7 +257,7 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 	// Add a repeating grid as a skybox.
 	var boxWidth = 10;
 	var loader = new THREE.TextureLoader();
-	loader.load('images/box.png', function onTextureLoaded(texture) {
+	loader.load('../images/box.png', function onTextureLoaded(texture) {
 		texture.wrapS = THREE.RepeatWrapping;
 		texture.wrapT = THREE.RepeatWrapping;
 		texture.repeat.set(boxWidth, boxWidth);
@@ -299,13 +288,12 @@ var domEvents	= new THREEx.DomEvents(camera, renderer.domElement)
 </script>
 
 
-<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
-<script src='../node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script>
-<script src="js/phoneasvrcontrollercontext.js"></script>
-<script src="js/phoneasvrcontrollerphone.js"></script>
-<script src="js/threex.daydreamcontroller.js"></script>
-<script src="js/threex.gamepadsignals.js"></script>
-<script src="js/threex.vrmenu.js"></script>
+<script src='../vendor/three.js/editor/js/libs/signals.min.js'></script>
+<script src='../../node_modules/socket.io/node_modules/socket.io-client/socket.io.js'></script>
+<script src='../js/phoneasvrcontrollercontext.js'></script>
+<script src='../js/phoneasvrcontrollerphone.js'></script>
+<script src='../js/threex.daydreamcontroller.js'></script>
+<script src='../js/threex.gamepadsignals.js'></script>
 <script>
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);

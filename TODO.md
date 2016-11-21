@@ -2,6 +2,9 @@
 - FIXME: rotateSelected doesnt work
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 - TODO: support dragSelected
+- TODO: recompile ray.js to avoid the silly debug print
+- TODO: make the server accept multiple app at the same time
+- TODO: in css3d, use swipe to scroll list
 
 
 - TODO: have minimal docs in README.md  
@@ -19,7 +22,7 @@
   - create a ```/examples/gesture``` and copy all the dependancies from gesture in it
   - same for css3d
   - same for webvr ? where to put what is shared ?
-3
+
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
@@ -30,7 +33,7 @@
   - one got kinda disconnected
 - FIXME: how webvr.html and dooglinvr are different ?
   - need a simpler webvr.html
-  - it show a basic action. like the ray-input one ?
+  - it show a basic action. like the ray-input one ? YES
 - import the ray-input examples in /examples
 
 
