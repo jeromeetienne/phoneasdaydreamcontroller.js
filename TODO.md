@@ -12,6 +12,7 @@
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
   - TODO: if click on a object while on the menu, then select the object and keep the menu
 
+- FIXME: fix the issue with '2 gamepads diconnecting reconnecting'
 - webvr.html can handle 2 gamepad. one left, one right
   - there is an issue which happen when you reload gamepad page on the devices
   - one got kinda disconnected
