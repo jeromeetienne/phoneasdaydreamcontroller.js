@@ -12,17 +12,14 @@
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
   - TODO: if click on a object while on the menu, then select the object and keep the menu
 
-- FIXME: fix the issue with '2 gamepads diconnecting reconnecting'
+# Done
+- DONE: fix the issue with '2 gamepads diconnecting reconnecting'
   - occurs in examples/basic.html - this localize the issue
   - there is an issue which happen when you reload gamepad page on the devices
   - one got kinda disconnected
   - modify client/ to get the hand/index/serverconnected/appconnected
   - put it at the bottom of the screen with pointer-event none
   - check it works in webvr examples
-
-
-
-# Done
 - DONE: change webvr example
   - same as ray-input
 - DONE css3d controller recalibration is not working
