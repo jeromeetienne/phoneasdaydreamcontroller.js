@@ -50,7 +50,6 @@ var queryParameters = {
 var hasParameters = (queryParameters.hand === undefined || queryParameters.index === undefined) ? false : true
 if( hasParameters === false )	alert('PANIC no url parameter')
 
-console.log(queryParameters)
 // update status
 document.querySelector('#status .hand').innerText = queryParameters.hand
 document.querySelector('#status .index').innerText = queryParameters.index

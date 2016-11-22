@@ -18,13 +18,13 @@
   - one got kinda disconnected
   - modify client/ to get the hand/index/serverconnected/appconnected
   - put it at the bottom of the screen with pointer-event none
+  - check it works in webvr examples
 
-- TODO: change webvr example
-  - same as ray-input
-  - handle 2 gamepads
 
 
 # Done
+- DONE: change webvr example
+  - same as ray-input
 - DONE css3d controller recalibration is not working
 - DONE fix recalibration code... this dependancy on the camera is dirty
   - what about a Context.viewQuaternion which should be set externally ? YES DO IT

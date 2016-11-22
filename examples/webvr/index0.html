@@ -215,44 +215,41 @@ function enterFullscreen (element) {
 </script>
 
 
+<script src='../js/threex.gamepadsignals.js'></script>
+
+<script src='../vendor/threex.laser/threex.laserbeam.js'></script>
+<script src='../vendor/threex.laser/threex.lasercooked.js'></script>
+<script>THREEx.LaserCooked.baseURL	= '../vendor/threex.laser/';</script>
 
 
 <script>
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
+	(function(){
+		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
+		//var geometry	= new THREE.SphereGeometry(0.5, 32, 16);
+		for(var i = 0; i < 200; i++){
+			var material	= new THREE.MeshPhongMaterial({
+				color	: 0xffffff,
+				specular: 0xffffff,
+				shininess: 200,
+			});
 
-	var actionableObjects = []
+			var object3d	= new THREE.Mesh( geometry, material );
+			object3d.scale.set(1,1,1).multiplyScalar(1/2)
+			scene.add( object3d );
 
-	const DEFAULT_COLOR = new THREE.Color(0x00FF00);
-	const HIGHLIGHT_COLOR = new THREE.Color(0x1E90FF);
-	const ACTIVE_COLOR = new THREE.Color(0xFF3333);
-	;(function(){
-		var width = 2
-		var height = 2
-		
-		var menu = new THREE.Group
-		scene.add(menu)
 
-		// Create a 2x2 grid of menu items (green rectangles).
-		for (var i = 0; i < width; i++) {
-			for (var j = 0; j < height; j++) {
-				var item = createMenuItem();
-				item.position.set(i, j, 0);
-				item.scale.set(0.9, 0.9, 0.1);
-				actionableObjects.push(item)
-				menu.add(item);
-			}
+			object3d.position.x	= (Math.random()-0.5)*10
+			object3d.position.y	= (Math.random()-0.5)*5
+			object3d.position.z	= (Math.random()-0.5)*10
+			
+			object3d.rotation.x	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.y	= (Math.random()-0.5)*Math.PI*2
+			object3d.rotation.z	= (Math.random()-0.5)*Math.PI*2
 		}
-		menu.position.set(-width/4, 0, -3);
-		
-		function createMenuItem() {
-			var geometry = new THREE.BoxGeometry(1, 1, 1);
-			var material = new THREE.MeshPhongMaterial({color: DEFAULT_COLOR});
-			var cube = new THREE.Mesh(geometry, material);
-			return cube;
-		}		
-	})()
+	})()	
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
@@ -268,15 +265,19 @@ function enterFullscreen (element) {
 		var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
 		var material = new THREE.MeshPhongMaterial({
 			map: texture,
-			color: 0x015500,
+			// color: 0x01BE00,
+			color	: 0xaa8888,
+			specular: 0xffffff,
 			side: THREE.BackSide
 		});
 		
 		var skybox = new THREE.Mesh(geometry, material);
 		scene.add(skybox);
+
+
+
 	});
 
-    
 	//////////////////////////////////////////////////////////////////////////////////
 	//		comment								//
 	//////////////////////////////////////////////////////////////////////////////////
@@ -285,12 +286,6 @@ function enterFullscreen (element) {
 	light.position.set( 0.75, 1, 0.25 )
 	scene.add(light)
 </script>
-
-<script src='../js/threex.gamepadsignals.js'></script>
-
-<script src='../vendor/threex.laser/threex.laserbeam.js'></script>
-<script src='../vendor/threex.laser/threex.lasercooked.js'></script>
-<script>THREEx.LaserCooked.baseURL	= '../vendor/threex.laser/';</script>
 
 
 <script src='../vendor/three.js/editor/js/libs/signals.min.js'></script>
@@ -325,32 +320,35 @@ function enterFullscreen (element) {
 	//////////////////////////////////////////////////////////////////////////////
 ;(function(){
 	createController('right')
-	createController('left')
+	// createController('left')
 
 	function createController(hand){
 		var controllerRight = new THREEx.DaydreamController()
 		scene.add(controllerRight.object3d)
 		var gamepadSignals = new THREEx.GamepadSignals()
 
+		var uiMode = null
+
 		var intersects = []
-		var raycaster = null
 		onRenderFcts.push(function(){
 			var gamepad = getGamepad(hand)
 			if( gamepad === null )	return
 			controllerRight.updatePosition(camera, gamepad)
 
 			gamepadSignals.update(gamepad)
-							
-			raycaster = controllerRight.getRaycaster()
+			
+			var actionableObjects = uiMode.getActionableObjects(scene)
+			
+			var raycaster = controllerRight.getRaycaster()
 			
 			// compute intersects
 			intersects	= raycaster.intersectObjects( actionableObjects );
-		})
+			
+			uiMode.update && uiMode.update(intersects)
 
-		//////////////////////////////////////////////////////////////////////////////
-		//		set laser beam  length according to intersects
-		//////////////////////////////////////////////////////////////////////////////
-		onRenderFcts.push(function(){
+			//////////////////////////////////////////////////////////////////////////////
+			//		set laser beam  length according to intersects
+			//////////////////////////////////////////////////////////////////////////////
 			if( intersects.length > 0 ){
 				var position	= intersects[0].point
 				var distance	= position.distanceTo(raycaster.ray.origin)
@@ -360,42 +358,133 @@ function enterFullscreen (element) {
 			}
 		})
 		
-		//////////////////////////////////////////////////////////////////////////////
-		//		set laser beam  length according to intersects
-		//////////////////////////////////////////////////////////////////////////////
-		onRenderFcts.push(function(){
-			actionableObjects.forEach(function(object3d){
-				object3d.material.color.copy(DEFAULT_COLOR)
-			})
-			if( intersects.length === 0 )	return
-
-			var object3d = intersects[0].object
-			if( selected === object3d ){
-				object3d.material.color.copy(ACTIVE_COLOR)
-			}else{
-				object3d.material.color.copy(HIGHLIGHT_COLOR)
-			}
-		})
 		
 		//////////////////////////////////////////////////////////////////////////////
 		//		Code Separator
 		//////////////////////////////////////////////////////////////////////////////
-		var selected = null
-		gamepadSignals.signals.touchStart.add(function onTouchStart(buttonIndex){
-			if( buttonIndex !== 0 )	return
-			if( intersects.length === 0 )	return
-			var object3d = intersects[0].object
-			
-			selected = intersects[0].object
-		})
 		
-		gamepadSignals.signals.touchEnd.add(function onTouchStart(buttonIndex){
-			if( buttonIndex !== 0 )	return
+		
+		
+		function gotoUiMode(uiModeType){
+			// dispose of old uiMode
+			if(uiMode !== null ){
+				uiMode.dispose()
+			}
 
-			selected = null
-		})
+			// create new uiMode
+			if(uiModeType === 'select'){
+				uiMode = new UiModeSelect(gamepadSignals)
+			}else if(uiModeType === 'vrMenu'){
+				uiMode = new UiModeVrMenu(gamepadSignals)
+			}
+		}
+
+		// setup initial mode
+		gotoUiMode('select')
+
+		////////////////////////////////////////////////////////////////////////////////
+		//          Handle long press traclpad to toggle menu
+		////////////////////////////////////////////////////////////////////////////////
+		
+		;(function(){
+			var timerId = null
+			gamepadSignals.signals.touchStart.add(function(buttonIndex){
+				if( buttonIndex !== 2 )	return	
+				stopTimerIfNeeded()	
+				timerId = setTimeout(function(){
+					stopTimerIfNeeded()
+					if( uiMode.type !== 'vrMenu' ){
+						gotoUiMode('vrMenu')
+					}else{
+						gotoUiMode('select')						
+					}
+				}, 1000*0.5)
+			})
+			gamepadSignals.signals.touchEnd.add(function(buttonIndex){
+				if( buttonIndex !== 2 )	return	
+				stopTimerIfNeeded()
+			})
+			function stopTimerIfNeeded(){
+				if( timerId !== null ) clearTimeout(timerId)
+				timerId = null			
+			}
+		})()
 	}
 })()
 
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+function UiModeSelect(gamepadSignals){
+	var _this = this
+	this.type = 'select'
+	console.log('create UiModeSelect')
+
+	this._selected = null
+	this._intersects = []
+
+	this.getActionableObjects = function(scene){
+		var clickableObjects = []
+		scene.traverse(function(object3d){
+			if( object3d.geometry instanceof THREE.TorusGeometry ){
+				clickableObjects.push(object3d)
+			}
+		})
+		return clickableObjects
+	}
+	
+	gamepadSignals.signals.touchStart.add(onTouchStart)
+	this.dispose = function(){
+		gamepadSignals.signals.touchStart.remove(onTouchStart)
+	}
+	
+	this.update = function(intersects){
+		this._intersects	= intersects
+	}
+	return
+	
+	function onTouchStart(buttonIndex){
+		if( buttonIndex !== 0 )	return
+		if( _this._intersects.length === 0 )	return
+		var object3d = _this._intersects[0].object
+		
+		object3d.material.color.setHex(0xffffff*Math.random())
+		
+		_this._selected = object3d
+		
+		console.log('selecting', object3d)
+	}
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//		Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+function UiModeVrMenu(){
+	this.type = 'vrMenu'
+	var vrMenu = new THREEx.VRMenu(domEvents, {
+		'open' : 'Open app',
+		'biggerBrush' : 'Bigger brush',
+		'Wow' : 'Wow',
+		'smallerBrush' : 'Smaller',
+	}, function onSelect(itemKey){
+		console.log('selected', itemKey)
+	})
+	
+
+	vrMenu.object3d.position.z = -4
+	// vrMenu.object3d.scale.multiplyScalar(1/2)
+	scene.add(vrMenu.object3d)
+
+	this.getActionableObjects = function(scene){
+		var clickableObjects = [vrMenu.object3d]
+		return clickableObjects
+	}
+
+	this.dispose = function(){
+		scene.remove(vrMenu.object3d)
+	}	
+}
 </script>
 </html>
