@@ -2,6 +2,8 @@ var PhoneAsVRController = PhoneAsVRController || {}
 
 PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 	var _this = this
+	
+	
 
 	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsVRController.Phone._gamepadTemplate))
 	this.gamepad.index = phoneParameters.gamepadIndex
@@ -19,16 +21,14 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 
 	this.dispose = function(){
 		console.log('dispose of phone', _this.gamepad.index)
-		socket.removeAllListeners('broadcast')
+		socket.removeListener('broadcast', onBroadcast)
 	}
 	return
 	
 	function onBroadcast(message){   
 		var event = JSON.parse(message)
 		
-		// console.log(event.gamepadIndex, gamepadIndex )
-		
-		if( event.gamepadIndex !== phoneParameters.gamepadIndex )	return
+		if( event.gamepadIndex !== _this.gamepad.index )	return
 		
 		if( event.type === 'deviceOrientationReset' ){
 			originDeviceOrientation = null
