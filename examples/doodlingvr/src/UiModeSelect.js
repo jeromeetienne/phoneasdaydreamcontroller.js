@@ -29,8 +29,15 @@ function UiModeSelect(app){
 	
 	function onTouchStart(buttonIndex){
 		if( buttonIndex !== 0 )	return
+		
+		var intersects = _this._intersects
+		// return now, if the intersected object if one of mine
+		if( intersects.length > 0 && _this.getActionableObjects().indexOf( intersects[0].object ) === -1 ){
+			return
+		}
+
 		if( _this._intersects.length > 0 ){
-			var object3d = _this._intersects[0].object
+			var object3d = intersects[0].object
 			_this.signals.select.dispatch(object3d)
 		}else{
 			_this.signals.select.dispatch(null)

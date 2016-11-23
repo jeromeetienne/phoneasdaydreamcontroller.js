@@ -35,6 +35,7 @@ Appx.App = function(){
 	_this.gamepadSignals = gamepadSignals
 
 	_this._uiMode = null
+	_this._uiMenu = null
 
 	var raycaster = null
 	_this.intersects = []
@@ -46,12 +47,14 @@ Appx.App = function(){
 		gamepadSignals.update(gamepad)
 		
 		var actionableObjects = _this._uiMode.getActionableObjects(app)
+		actionableObjects = actionableObjects.concat(_this._uiMenu.getActionableObjects(app))
 		
 		raycaster = controller.getRaycaster()
 		
 		// compute intersects
 		_this.intersects	= raycaster.intersectObjects( actionableObjects, true );
 		
+		_this._uiMenu.update(app)
 		_this._uiMode.update(app)
 	})
 	
@@ -77,8 +80,13 @@ Appx.App = function(){
 	_this._postSelectUiMode = 'vrMenu'
 
 
-	// setup initial mode
+	// setup uiMenu
 	_this._gotoUiMode('vrMenu')
+	_this._uiMenu = _this._uiMode
+	_this._uiMode = null
+	
+	// start the first uiMode
+	_this._gotoUiMode('select')
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Handle long press traclpad to toggle menu
