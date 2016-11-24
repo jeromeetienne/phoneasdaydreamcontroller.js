@@ -181,7 +181,7 @@ document.querySelector('#resetButton').addEventListener('click', function() {
 // 	var element = renderer.domElement
 // 	// check it is the proper click
 // 	if( event.target !== element )	return
-// 	if( vrDisplay.displayName !== "Mouse and Keyboard VRDisplay (webvr-polyfill)")	return	
+// 	if( vrDisplay.displayName !== 'Mouse and Keyboard VRDisplay (webvr-polyfill)')	return	
 // 	// Ask the browser to lock the pointer
 // 	element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 // 	if ( /Firefox/i.test( navigator.userAgent ) ) {
@@ -214,10 +214,15 @@ function enterFullscreen (element) {
 }
 </script>
 
-<script src="../threex.domevents.js"></script>
-<script src="../threex.domevents.mousepointer.js"></script>
+<script src='../threex.domevents.js'></script>
+<script src='../threex.domevents.mousepointer.js'></script>
+<script src='../../vendor/three.js/editor/js/libs/signals.min.js'></script>
+<script src='../../vendor/Tween.js'></script>
 
-<script src="threex.vrbutton.js"></script>
+<script src='js/threex.vrbutton.js'></script>
+<script src='js/threex.vroptionitem.js'></script>
+<script src='js/threex.vroptionmenu.js'></script>
+<script src='js/threex.vruiutils.js'></script>
 
 
 <script>
@@ -228,55 +233,72 @@ function enterFullscreen (element) {
 	var domEvents = new THREEx.DomEvents()
 	var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
 
+	onRenderFcts.push(function(){
+		TWEEN.update()
+	})
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
-	var vrButton = new THREEx.VRButton(domEvents, 'click')
-	vrButton.object3d.position.set(0,0,-2)
-	scene.add( vrButton.object3d )
+	// var vrButton = new THREEx.VRButton(domEvents, 'click')
+	// vrButton.object3d.position.set(0,0,-2)
+	// scene.add( vrButton.object3d )
+
+	// var vrOptionItem = new THREEx.VROptionItem(domEvents, 'Click')
+	// vrOptionItem.object3d.position.set(0,0,-2)
+	// scene.add( vrOptionItem.object3d )
+
+	var vrOptionMenu = new THREEx.VROptionMenu(domEvents, {
+		'fullscreen' : 'Full',
+		'click' : 'Click',
+	})
+	vrOptionMenu.object3d.position.set(0,0,-2)
+	scene.add( vrOptionMenu.object3d )
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
 	
 
-	var mesh = createObject()
-	mesh.name = 'torusFront'
-	mesh.position.z = -2
-	scene.add(mesh);
-
-	var mesh = createObject()
-	mesh.name = 'torusBack'
-	mesh.position.x =  1
-	mesh.position.z = -3
-	scene.add(mesh);
-
-	function createObject(){
-		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
-		var material = new THREE.MeshNormalMaterial()
-		var mesh = new THREE.Mesh(geometry, material)
-
-
-		domEvents.addEventListener(mesh, 'mousedown', handleMouseEvent, false)
-		domEvents.addEventListener(mesh, 'mouseup', handleMouseEvent, false)
-		domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
-
-		domEvents.addEventListener(mesh, 'click', handleMouseEvent, false)
-		domEvents.addEventListener(mesh, 'mouseenter', handleMouseEvent, false)
-		domEvents.addEventListener(mesh, 'mouseleave', handleMouseEvent, false)
-
-		function handleMouseEvent(event){
-			console.log('mesh', mesh.name, 'received', event.type, 'event')
+	;(function(){
+return
+		var mesh = createObject()
+		mesh.name = 'torusFront'
+		mesh.position.z = -2
+		scene.add(mesh);
+		
+		var mesh = createObject()
+		mesh.name = 'torusBack'
+		mesh.position.x =  1
+		mesh.position.z = -3
+		scene.add(mesh);
+		
+		function createObject(){
+			var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
+			var material = new THREE.MeshNormalMaterial()
+			var mesh = new THREE.Mesh(geometry, material)
+		
+		
+			domEvents.addEventListener(mesh, 'mousedown', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseup', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
+		
+			domEvents.addEventListener(mesh, 'click', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseenter', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseleave', handleMouseEvent, false)
+		
+			function handleMouseEvent(event){
+				console.log('mesh', mesh.name, 'received', event.type, 'event')
+			}
+			return mesh
 		}
-		return mesh
-	}
+	})()
 		
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
 	;(function(){
-// return
+return
 		var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
 		for(var i = 0; i < 200; i++){
 			var material	= new THREE.MeshLambertMaterial({
