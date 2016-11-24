@@ -216,13 +216,6 @@ function enterFullscreen (element) {
 
 <script src='../threex.domevents.js'></script>
 <script src='../threex.domevents.mousepointer.js'></script>
-<script src='../../vendor/three.js/editor/js/libs/signals.min.js'></script>
-<script src='../../vendor/Tween.js'></script>
-
-<script src='js/threex.vrbutton.js'></script>
-<script src='js/threex.vroptionitem.js'></script>
-<script src='js/threex.vroptionmenu.js'></script>
-<script src='js/threex.vruiutils.js'></script>
 
 
 <script>
@@ -233,57 +226,43 @@ function enterFullscreen (element) {
 	var domEvents = new THREEx.DomEvents()
 	var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
 
-	onRenderFcts.push(function(){
-		TWEEN.update()
-	})
-	
-	// var vrWidgetType = 'vrButton'
-	var vrWidgetType = 'vrOptionItem'
-	// var vrWidgetType = 'vrOptionMenu'
-
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
-	if( vrWidgetType === 'vrButton' ){		
-		var vrButton = new THREEx.VRButton(domEvents, 'click')
-		vrButton.object3d.position.set(0,0,-2)
-		scene.add( vrButton.object3d )
-	} else if( vrWidgetType === 'vrOptionItem' ){		
-		var vrOptionItem = new THREEx.VROptionItem(domEvents, {
-			label: 'John Smith',
-			iconUrl: 'images/ionicons_2-0-1_android-person_56_4_ffffff_none.png',
-			actionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
-			},
-			actionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
-			}
-		})
-		vrOptionItem.object3d.position.set(0,0,-2)
-		scene.add( vrOptionItem.object3d )	
-	} else if( vrWidgetType === 'vrOptionMenu' ){		
-		var vrOptionMenu = new THREEx.VROptionMenu(domEvents, {
-			items : {
-				'item1' : 'item1',
-				'item2' : 'item2',
-				'item3' : 'item3',
-				'item4' : 'item4',
-				'item5' : 'item5',
-				'item6' : 'item6',
-				'item7' : 'item7',
-				'item8' : 'item8',
-			},
-			actionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
-			},
-			actionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
-			}
-		})
-		vrOptionMenu.object3d.position.set(0,0,0)
-		scene.add( vrOptionMenu.object3d )
-	}
+	
 
+	;(function(){
+		var mesh = createObject()
+		mesh.name = 'torusFront'
+		mesh.position.z = -2
+		scene.add(mesh);
+		
+		var mesh = createObject()
+		mesh.name = 'torusBack'
+		mesh.position.x =  1
+		mesh.position.z = -3
+		scene.add(mesh);
+		
+		function createObject(){
+			var geometry	= new THREE.TorusGeometry(0.5-0.15, 0.15);
+			var material = new THREE.MeshNormalMaterial()
+			var mesh = new THREE.Mesh(geometry, material)
+		
+			domEvents.addEventListener(mesh, 'mousedown', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseup', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
+			
+			domEvents.addEventListener(mesh, 'click', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseenter', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseleave', handleMouseEvent, false)
+		
+			function handleMouseEvent(event){
+				console.log('mesh', mesh.name, 'received', event.type, 'event')
+			}
+			return mesh
+		}
+	})()
+		
 	//////////////////////////////////////////////////////////////////////////////////
 	//		comment								//
 	//////////////////////////////////////////////////////////////////////////////////

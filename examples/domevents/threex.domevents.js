@@ -121,4 +121,3 @@ THREEx.DomEvents.PointerContext = function(){
 	this.lastMouseDownObject = null
 	this.lastMouseMoveObject = null
 }
-

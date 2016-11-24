@@ -1,9 +1,6 @@
 # to fix for mvp
 - FIXME: rotateSelected doesnt work
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
-- TODO: support dragSelected
-- TODO: make the server accept multiple app at the same time
-  - would fix the issue (already a app connected)
 
 
 - TODO clean up /examples/js if possible ?
@@ -14,6 +11,8 @@
   - TODO: if click on a object while on the menu, then select the object and keep the menu
 
 # Done
+- DONE: make the server accept multiple app at the same time
+  - would fix the issue (already a app connected)
 - DONE: fix the issue with '2 gamepads diconnecting reconnecting'
   - occurs in examples/basic.html - this localize the issue
   - there is an issue which happen when you reload gamepad page on the devices
@@ -65,3 +64,4 @@
 
 # Later
 - when menu is displayed, the swipe should be to navigate the menu
+- support dragSelected

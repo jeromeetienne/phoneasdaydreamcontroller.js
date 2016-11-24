@@ -33,11 +33,11 @@ io.on('connection', function(socket){
 function onConnectionAppSocket(socket, parameters){
         console.log('a app connected');
 
-        if( io.sockets.adapter.rooms['app'] && io.sockets.adapter.rooms['app'].length > 0 ){
-                console.warn('received a new appSocket but already had a appSocket')
-                socket.client.close()
-                return
-        }
+        // if( io.sockets.adapter.rooms['app'] && io.sockets.adapter.rooms['app'].length > 0 ){
+        //         console.warn('received a new appSocket but already had a appSocket')
+        //         socket.client.close()
+        //         return
+        // }
 
         socket.join('app')
 
