@@ -244,15 +244,38 @@ function enterFullscreen (element) {
 	// vrButton.object3d.position.set(0,0,-2)
 	// scene.add( vrButton.object3d )
 
-	// var vrOptionItem = new THREEx.VROptionItem(domEvents, 'Click')
+	// var vrOptionItem = new THREEx.VROptionItem(domEvents, {
+	// 	label: 'John Smith',
+	// 	iconUrl: 'images/ionicons_2-0-1_android-person_56_4_ffffff_none.png',
+	// 	actionRight : {
+	// 		url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
+	// 	},
+	// 	actionLeft : {
+	// 		url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
+	// 	}
+	// })
 	// vrOptionItem.object3d.position.set(0,0,-2)
 	// scene.add( vrOptionItem.object3d )
-
+	
 	var vrOptionMenu = new THREEx.VROptionMenu(domEvents, {
-		'fullscreen' : 'Full',
-		'click' : 'Click',
+		items : {
+			'item1' : 'item1',
+			'item2' : 'item2',
+			'item3' : 'item3',
+			'item4' : 'item4',
+			'item5' : 'item5',
+			'item6' : 'item6',
+			'item7' : 'item7',
+			'item8' : 'item8',
+		},
+		actionRight : {
+			url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
+		},
+		actionLeft : {
+			url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
+		}
 	})
-	vrOptionMenu.object3d.position.set(0,0,-2)
+	vrOptionMenu.object3d.position.set(0,0,0)
 	scene.add( vrOptionMenu.object3d )
 
 	////////////////////////////////////////////////////////////////////////////////

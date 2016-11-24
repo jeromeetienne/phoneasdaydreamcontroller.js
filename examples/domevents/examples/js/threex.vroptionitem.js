@@ -1,6 +1,6 @@
 var THREEx = THREEx || {}
 
-THREEx.VROptionItem = function(domEvents, itemText){
+THREEx.VROptionItem = function(domEvents, options){
 	var _this = this
 	this.object3d = new THREE.Group
 
@@ -26,37 +26,44 @@ THREEx.VROptionItem = function(domEvents, itemText){
 	////////////////////////////////////////////////////////////////////////////////
 	
 
-	var itemFront = _this._buildItemFront(itemText)
+	var itemFront = _this._buildItemFront(options.label, options.iconUrl)
 	this._itemFront = itemFront
 	_this.object3d.add(itemFront)
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
-	
-	var itemButton = _this._buildItemButton()
-	this._itemButton = itemButton
-	_this.object3d.add(itemButton)
+	if( options.actionRight ){
+		this._itemButtonRight = _this._buildItemButton(options.actionRight.url)
+		this._itemButtonRight.position.x = +(1.5 - 0.5/2);
+		_this.object3d.add(this._itemButtonRight)		
+	}
+
+	if( options.actionLeft ){
+		this._itemButtonLeft = _this._buildItemButton(options.actionLeft.url)
+		this._itemButtonLeft.position.x = -(1.5 - 0.5/2);
+		_this.object3d.add(this._itemButtonLeft)		
+	}
 }
 
 /**
  * [_buildItemBack description]
  * @return {[type]} [description]
  */
-THREEx.VROptionItem.prototype._buildItemButton = function() {
+THREEx.VROptionItem.prototype._buildItemButton = function(imageUrl) {
 	var _this = this
 	// create texture
-	var texture = THREEx.VRUiUtils.createCanvasTexture(256, 64)
+	var texture = THREEx.VRUiUtils.createCanvasTexture(64, 64)
 	var canvas = texture.image
 	var context = canvas.getContext('2d');
 	
         var image = new Image()
 	image.addEventListener('load', function(){
 		// console.log('arguments', arguments)
-		context.drawImage(image, 0.75*canvas.width, 0.1*canvas.height, 0.2*canvas.width, 0.8*canvas.height);
+		context.drawImage(image, 0.1*canvas.width, 0.1*canvas.height, 0.8*canvas.width, 0.8*canvas.height);
 		texture.needsUpdate = true
 	})
-        image.src = 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png';
+        image.src = imageUrl;
 
 	// build the mesh
 	var material = new THREE.MeshBasicMaterial({
@@ -65,7 +72,7 @@ THREEx.VROptionItem.prototype._buildItemButton = function() {
 		opacity: 0,
 		transparent : true,
 	})
-	var geometry = new THREE.PlaneBufferGeometry( 2, 0.5 );
+	var geometry = new THREE.PlaneGeometry( 0.5, 0.5 );
 	var mesh = new THREE.Mesh( geometry, material );
 	mesh.name = 'itemButton'
 
@@ -80,14 +87,14 @@ THREEx.VROptionItem.prototype._buildItemButton = function() {
 			opacity : material.opacity
 		}).to({
 			opacity: targetValue
-		}, 300)
+		}, 200)
 		.delay(delay)
 		.onUpdate(function(value) {
 			material.opacity = this.opacity
     		}).start()		
 	}
 	domEvents.addEventListener(_this._itemBack, 'mouseenter', function(event){
-		startTweenOpacity(300, 1)
+		startTweenOpacity(200, 1)
 	}, false)
 	domEvents.addEventListener(_this._itemBack, 'mouseleave', function(event){
 		startTweenOpacity(0, 0)
@@ -108,13 +115,17 @@ THREEx.VROptionItem.prototype._buildItemBack = function() {
 	var canvas = texture.image
 	var context = canvas.getContext('2d');
 	// draw on texture
-	context.fillStyle = 'rgba(127,127,127,1)';
+	context.fillStyle = 'rgba(127,127,127,0.2)';
 	context.fillRect(0, 0, 1*canvas.width, 1*canvas.height);
 	
+	context.strokeStyle = '#fff';
+	context.lineWidth = 4
+	context.strokeRect(0, 0, canvas.width, canvas.height);
+
 	// build the mesh
 	var material = new THREE.MeshBasicMaterial({
 		map: texture,
-		color: 'red',
+		// color: 'red',
 		// color: 'black',
 		opacity: .5,
 		transparent : true,
@@ -122,63 +133,49 @@ THREEx.VROptionItem.prototype._buildItemBack = function() {
 	var geometry = new THREE.PlaneGeometry( 2, 0.5 );
 	var mesh = new THREE.Mesh( geometry, material );
 	mesh.name = 'itemBack'
-window.geometry = geometry
+	
 	////////////////////////////////////////////////////////////////////////////////
-	//          bind events
+	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
 	
-	// domEvents.addEventListener(mesh, 'mouseenter', function(event){
-	// 	mesh.material.color.set('cyan')
-	// }, false)
-	// domEvents.addEventListener(mesh, 'mouseleave', function(event){
-	// 	mesh.material.color.set('black')
-	// }, false)	
-	// domEvents.addEventListener(mesh, 'mousedown', function(event){
-	// 	mesh.material.color.set('pink')
-	// }, false)
-	// domEvents.addEventListener(mesh, 'mouseup', function(event){
-	// 	mesh.material.color.set('black')
-	// }, false)
-	// domEvents.addEventListener(mesh, 'click', function(event){
-	// 	mesh.material.color.set('cyan')
-	// }, false)
-	
-		
-		////////////////////////////////////////////////////////////////////////////////
-		//          Code Separator
-		////////////////////////////////////////////////////////////////////////////////
-		
-		var tweenWidth = null
-		function startTweenWidth(delay, srcValue, dstValue){
-			if( tweenWidth !== null ){
-				tweenWidth.stop()
-				tweenWidth = null
-			}
-			tweenWidth = new TWEEN.Tween({
-					width : srcValue,
-				}).to({
-					width : dstValue
-				}, 300)
-				.delay(delay)
-				.onUpdate(function(value) {
-					var geometry = _this._itemBack.geometry
-					geometry.vertices[1].x = this.width
-					geometry.vertices[3].x = this.width
-					geometry.verticesNeedUpdate = true
-
-					var geometry = _this._itemFront.geometry
-					geometry.vertices[1].x = this.width
-					geometry.vertices[3].x = this.width
-					geometry.verticesNeedUpdate = true
-				})
-				.start()		
+	var tweenWidth = null
+	function startTweenWidth(delay, srcValue, dstValue){
+		if( tweenWidth !== null ){
+			tweenWidth.stop()
+			tweenWidth = null
 		}
-		domEvents.addEventListener(mesh, 'mouseenter', function(event){
-			startTweenWidth(0, geometry.vertices[1].x, 1.5)
-		}, false)
-		domEvents.addEventListener(mesh, 'mouseleave', function(event){
-			startTweenWidth(300, geometry.vertices[1].x, 1.0)
-		}, false)
+		tweenWidth = new TWEEN.Tween({
+				width : srcValue,
+			}).to({
+				width : dstValue
+			}, 200)
+			.delay(delay)
+			.onUpdate(function(value) {
+				var geometry = _this._itemBack.geometry
+				if( _this._itemButtonRight ){
+					geometry.vertices[1].x = this.width
+					geometry.vertices[3].x = this.width					
+				}
+				if( _this._itemButtonLeft ){
+					geometry.vertices[0].x = -this.width
+					geometry.vertices[2].x = -this.width					
+				}
+				geometry.verticesNeedUpdate = true
+			})
+			.start()		
+	}
+	domEvents.addEventListener(mesh, 'mouseenter', function(event){
+		if( _this._itemButtonRight )	var currentWidth = geometry.vertices[1].x
+		else if( _this._itemButtonLeft)	var currentWidth = -geometry.vertices[0].x
+		else return
+		startTweenWidth(0, currentWidth, 1.5)
+	}, false)
+	domEvents.addEventListener(mesh, 'mouseleave', function(event){
+		if( _this._itemButtonRight )	var currentWidth = geometry.vertices[1].x
+		else if( _this._itemButtonLeft)	var currentWidth = -geometry.vertices[0].x
+		else return
+		startTweenWidth(200, currentWidth, 1.0)
+	}, false)
 
 
 	return mesh
@@ -190,24 +187,33 @@ window.geometry = geometry
  * @param {[type]} itemValue [description]
  * @return {[type]} [description]
  */
-THREEx.VROptionItem.prototype._buildItemFront = function (itemValue) {
+THREEx.VROptionItem.prototype._buildItemFront = function (itemValue, iconUrl) {
 	// create texture
 	var texture = THREEx.VRUiUtils.createCanvasTexture(256, 64)
 	var canvas = texture.image
 	var context = canvas.getContext('2d');
 
-	// draw on texture
+
+	// draw iconUrl on texture
+	if( iconUrl ){
+		var image = new Image()
+		image.addEventListener('load', function(){
+			// console.log('arguments', arguments)
+			context.drawImage(image, 0.0*canvas.width, 0.0*canvas.height, 1*canvas.height, 1*canvas.height);
+			texture.needsUpdate = true
+		})
+	        image.src = iconUrl;
+	}
+	// draw label on texture
 	context.font = '30pt Arial';
 	context.fillStyle = '#fff';
 	context.textBaseline = "middle";
-	context.fillText(itemValue, canvas.width / 20, canvas.height / 2);
-
-	context.strokeStyle = '#fff';
-	context.lineWidth = 4
-	context.strokeRect(0, 0, canvas.width, canvas.height);
-	
-	var texture = new THREE.Texture(canvas);
-	texture.needsUpdate = true
+	if( iconUrl ){
+		context.fillText(itemValue, 5/20*canvas.width, canvas.height / 2);
+	}else{
+		context.fillText(itemValue, 1/20*canvas.width, canvas.height / 2);
+		
+	}
 
 	var material = new THREE.MeshBasicMaterial({
 		map: texture,
