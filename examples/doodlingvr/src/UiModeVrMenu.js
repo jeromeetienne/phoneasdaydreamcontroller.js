@@ -92,13 +92,10 @@ function UiModeVrMenu(app, menuItems){
 	function onTouchStart(buttonIndex){
 		if( buttonIndex !== 0 )	return
 
-		// return now if there is no intersects
-		if( intersects.length === 0 )	return
 		// return now, if the intersected object if one of mine
-		if( intersects.length > 0 && _this.getActionableObjects().indexOf( intersects[0].object ) === -1 ){
+		if( intersects.length === 0 && _this.getActionableObjects().indexOf( intersects[0].object ) === -1 ){
 			return
 		}		
-
 		var object3d = intersects[0].object
 		
 		var itemKey = object3d.parent.userData.vrMenuItemKey

@@ -3,10 +3,11 @@
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 - TODO: support dragSelected
 - TODO: make the server accept multiple app at the same time
+  - would fix the issue (already a app connected)
 
 
 - TODO clean up /examples/js if possible ?
-
+- FIXME fix the menu display. weird rotation happen. they are ugly
 - TODO: find a good workflow for dooglinvr
   - all the selected required operation. should be better detected
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
