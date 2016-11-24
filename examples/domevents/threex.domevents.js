@@ -19,6 +19,7 @@ THREEx.DomEvents.prototype.addEventListener = function (object, eventType, callb
 	object.userData.listeners = object.userData.listeners || {
 		'mousedown' : [],
 		'mouseup' : [],
+		'mousemove' : [],
 	}
 
 	console.assert(object.userData.listeners[eventType] !== undefined)
@@ -47,7 +48,7 @@ THREEx.DomEvents.prototype.processIntersects = function(intersects, eventType){
 			object : intersect.object,
 			intersect : intersect
 		}
-		notify(intersect.object, event, intersect)		
+		notify(intersect.object, event, intersect)
 	})
 	
 	return
