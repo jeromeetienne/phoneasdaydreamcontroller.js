@@ -5,7 +5,6 @@ THREEx.DomEvents = function(){
 	this._objects = []
 }
 
-
 THREEx.DomEvents.prototype.remoteAllEventListeners = function (object) {
 	delete object.userData.listeners	
 	
@@ -20,6 +19,10 @@ THREEx.DomEvents.prototype.addEventListener = function (object, eventType, callb
 		'mousedown' : [],
 		'mouseup' : [],
 		'mousemove' : [],
+
+		'click' : [],
+		'mouseenter' : [],
+		'mouseleave' : [],
 	}
 
 	console.assert(object.userData.listeners[eventType] !== undefined)
@@ -40,20 +43,54 @@ THREEx.DomEvents.prototype.addEventListener = function (object, eventType, callb
 //		Code Separator
 //////////////////////////////////////////////////////////////////////////////
 
-THREEx.DomEvents.prototype.processIntersects = function(intersects, eventType){	
+
+
+THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersects, eventType){	
 
 	intersects.forEach(function(intersect){
-		var event = {
+		notify(intersect.object, {
 			type : eventType,
 			object : intersect.object,
 			intersect : intersect
-		}
-		notify(intersect.object, event, intersect)
+		})
 	})
 	
+	// generate 'click' event 
+	if( eventType === 'mouseup' && intersects.length >= 1 ){
+		if( pointerContext.lastMouseDownObject === intersects[0].object ){
+			this.processIntersects(pointerContext, intersects, 'click')
+		}
+	}
+	
+	// handle mouseleave/mouseenter thru mousemove
+	if( eventType === 'mousemove' ){
+		var currentObject = intersects.length ? intersects[0].object : null
+		if( currentObject !== pointerContext.lastMouseMoveObject && pointerContext.lastMouseMoveObject !== null ){
+			notify(pointerContext.lastMouseMoveObject, {
+				type : 'mouseleave',
+				object : pointerContext.lastMouseMoveObject,
+				intersect : intersects[0]
+			})
+		}
+		if( currentObject !== pointerContext.lastMouseMoveObject && currentObject !== null ){
+			notify(currentObject, {
+				type : 'mouseenter',
+				object : currentObject,
+				intersect : intersects[0]
+			})
+		}
+	}
+
+	// update pointerContext.lastMouseDownObject
+	if( eventType === 'mousedown' ){
+		pointerContext.lastMouseDownObject = intersects.length === 0 ? null : intersects[0].object
+	}
+	if( eventType === 'mousemove' ){
+		pointerContext.lastMouseMoveObject = intersects.length === 0 ? null : intersects[0].object
+	}
 	return
 	
-	function notify(object, event, intersect) {
+	function notify(object, event) {
 		if( object.userData.listeners !== undefined ){
 			object.userData.listeners[event.type].slice(0).forEach(function(listener){		
 				listener.callback(event)
@@ -62,8 +99,23 @@ THREEx.DomEvents.prototype.processIntersects = function(intersects, eventType){
 		}
 		
 		if( object.parent ){
-			notify(object.parent, event, intersect)
+			notify(object.parent, event)
 		}
 	};
 	
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+//          Code Separator
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * sub class to init the variables per ray
+ * @return {[type]} [description]
+ */
+THREEx.DomEvents.PointerContext = function(){
+	this.lastMouseDownObject = null
+	this.lastMouseMoveObject = null
+}
+
