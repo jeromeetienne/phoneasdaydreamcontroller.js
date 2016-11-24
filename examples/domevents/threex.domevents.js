@@ -13,7 +13,6 @@ THREEx.DomEvents.prototype.remoteAllEventListeners = function (object) {
 }
 
 THREEx.DomEvents.prototype.addEventListener = function (object, eventType, callback, useCapture) {
-
 	// object listen on eventType
 	object.userData.listeners = object.userData.listeners || {
 		'mousedown' : [],
@@ -37,6 +36,9 @@ THREEx.DomEvents.prototype.addEventListener = function (object, eventType, callb
 	if( this._objects.indexOf(object) === -1 )	this._objects.push(object)
 };
 
+THREEx.DomEvents.prototype.removeEventListener = function (object, eventType, callback, useCapture) {
+	console.assert(false, 'NOT YET IMPLEMENTED')
+}
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -85,6 +87,7 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 	if( eventType === 'mousedown' ){
 		pointerContext.lastMouseDownObject = intersects.length === 0 ? null : intersects[0].object
 	}
+	// update pointerContext.lastMouseMoveObject
 	if( eventType === 'mousemove' ){
 		pointerContext.lastMouseMoveObject = intersects.length === 0 ? null : intersects[0].object
 	}
@@ -112,7 +115,7 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 
 /**
  * sub class to init the variables per ray
- * @return {[type]} [description]
+ * - contains state variable to handle click, mouseenter, mouseleave
  */
 THREEx.DomEvents.PointerContext = function(){
 	this.lastMouseDownObject = null

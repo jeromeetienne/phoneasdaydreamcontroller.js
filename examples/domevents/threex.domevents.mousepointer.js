@@ -28,6 +28,7 @@ THREEx.DomEvents.MousePointer = function(element, domEvents){
 		domEvents.processIntersects(pointerContext, intersects, domEvent.type)
 	}
 	
+	// dispose of the object - aka remove all listener
 	this.dispose = function(){
 		element.removeEventListener( 'mousemove', onMouseMove, false );
 		element.removeEventListener('mousedown', processDomEvent)
