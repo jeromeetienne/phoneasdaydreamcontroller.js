@@ -16,6 +16,19 @@ THREEx.VRButton = function(domEvents, label){
 	domEvents.addEventListener(itemBack, 'mouseleave', function(event){
 		itemBack.material.color.set('black')
 	}, false)
+	domEvents.addEventListener(itemBack, 'mousedown', function(event){
+		itemBack.material.color.set('pink')
+	}, false)
+	domEvents.addEventListener(itemBack, 'mouseup', function(event){
+		itemBack.material.color.set('black')
+	}, false)
+	domEvents.addEventListener(itemBack, 'click', function(event){
+		itemBack.material.color.set('cyan')
+	}, false)
+	
+	this.dispose = function(){
+		domEvents.remoteAllEventListeners(itemBack)
+	}
 }
 
 /**
