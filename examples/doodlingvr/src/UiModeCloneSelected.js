@@ -12,12 +12,14 @@ function UiModeCloneSelected(app){
 	clone.material = clone.material.clone()
 	clone.position.x += clone.geometry.boundingSphere.radius
 	scene.add( clone )
+	
+	
 
 	// notify caller on next iteration
 	if( timerId !== null )	return
 	timerId = setTimeout(function(){
 		timerId = null;
-		_this.signals.completed.dispatch()
+		_this.signals.completed.dispatch(clone)
 	}, 0)
 
 	this.dispose = function(){
