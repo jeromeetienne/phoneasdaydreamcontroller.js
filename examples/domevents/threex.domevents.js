@@ -6,7 +6,7 @@ THREEx.DomEvents = function(){
 }
 
 THREEx.DomEvents.prototype.remoteAllEventListeners = function (object) {
-	delete object.userData.listeners	
+	delete object.userData.listeners
 	
 	var index = this._objects.indexOf(object)
 	if (index !== -1 ) this._objects.splice(index, 1);
@@ -68,6 +68,11 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 	if( eventType === 'mousemove' ){
 		var currentObject = intersects.length ? intersects[0].object : null
 		if( currentObject !== pointerContext.lastMouseMoveObject && pointerContext.lastMouseMoveObject !== null ){
+			// TODO should set hovering = false to lastMouseMoveObject and all its parent
+			// - on each node, dispatch mouseLeave or not depending on previous hovering
+			// - if hovering was already false, do nothing
+			// - if hovering was true, notify a mouse leave
+			// - 	function notifyEnterLeave(object, event, newHovering)
 			notify(pointerContext.lastMouseMoveObject, {
 				type : 'mouseleave',
 				object : pointerContext.lastMouseMoveObject,
@@ -75,6 +80,11 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 			})
 		}
 		if( currentObject !== pointerContext.lastMouseMoveObject && currentObject !== null ){
+			// TODO should set hovering = true to currentObject and all its parent
+			// - on each node, dispatch mouseEnter or not depending on previous hovering
+			// - if hovering was already true, do nothing
+			// - if hovering was false, notify a mouse enter
+			// - 	function notifyEnterLeave(object, event, newHovering)
 			notify(currentObject, {
 				type : 'mouseenter',
 				object : currentObject,
@@ -94,18 +104,15 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 	return
 	
 	function notify(object, event) {
-		if( object.userData.listeners !== undefined ){
-			object.userData.listeners[event.type].slice(0).forEach(function(listener){		
-				listener.callback(event)
-				// TODO here handle the stopPropagation
-			})
-		}
+		object.userData.listeners && object.userData.listeners[event.type].slice(0).forEach(function(listener){		
+			listener.callback(event)
+			// TODO here handle the stopPropagation
+		})
 		
 		if( object.parent ){
 			notify(object.parent, event)
 		}
 	};
-	
 }
 
 

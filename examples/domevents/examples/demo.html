@@ -237,7 +237,7 @@ function enterFullscreen (element) {
 	////////////////////////////////////////////////////////////////////////////////
 	
 	var domEvents = new THREEx.DomEvents()
-	// var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
+	var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
 
 	onRenderFcts.push(function(){
 		TWEEN.update()
