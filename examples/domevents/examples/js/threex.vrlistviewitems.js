@@ -1,6 +1,6 @@
 var THREEx = THREEx || {}
 
-THREEx.VROptionMenu = function(domEvents, options){
+THREEx.VRListviewItems = function(domEvents, options){
 	var _this = this
 	this.object3d = new THREE.Group
 
@@ -13,13 +13,13 @@ THREEx.VROptionMenu = function(domEvents, options){
 	Object.keys(options.items).forEach(function(itemKey, index){
 		var itemValue = options.items[itemKey]
 
-		var vrOptionItem = new THREEx.VROptionItem(domEvents, {
+		var vrOptionItem = new THREEx.VRListviewItem(domEvents, {
 			label : options.items[itemKey],
 			actionRight : options.actionRight,
 			actionLeft : options.actionLeft,
 		})
 
-		vrOptionItem.object3d.position.set(0,-index*0.5,-2)
+		vrOptionItem.object3d.position.y = -index*0.5
 		_this.object3d.add( vrOptionItem.object3d )
 		
 		vrOptionItem.signals.selected.add(function(){

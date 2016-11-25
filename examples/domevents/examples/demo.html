@@ -92,6 +92,7 @@ var onRenderFcts = []
 var renderer = new THREE.WebGLRenderer({antialias: false});
 renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
 // renderer.setPixelRatio(1/2);
+renderer.setClearColor('gray')
 
 // Append the canvas element created by the renderer to fullScreenContainer
 document.querySelector('#fullScreenContainer').appendChild(renderer.domElement);
@@ -103,7 +104,7 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
 // Apply VR headset positional data to camera.
-// var controls = new THREE.VRControls(camera);
+var controls = new THREE.VRControls(camera);
 
 // Apply VR stereo rendering to renderer.
 var effect = new THREE.VREffect(renderer);
@@ -219,10 +220,15 @@ function enterFullscreen (element) {
 <script src='../../vendor/three.js/editor/js/libs/signals.min.js'></script>
 <script src='../../vendor/Tween.js'></script>
 
-<script src='js/threex.vrbutton.js'></script>
-<script src='js/threex.vroptionitem.js'></script>
-<script src='js/threex.vroptionmenu.js'></script>
 <script src='js/threex.vruiutils.js'></script>
+<script src='js/threex.vrpanel.js'></script>
+<script src='js/threex.vrpanelheader.js'></script>
+
+<script src='js/threex.vrlistview.js'></script>
+<script src='js/threex.vrlistviewitem.js'></script>
+<script src='js/threex.vrlistviewitems.js'></script>
+
+<script src='js/threex.vrbutton.js'></script>
 
 
 <script>
@@ -231,15 +237,17 @@ function enterFullscreen (element) {
 	////////////////////////////////////////////////////////////////////////////////
 	
 	var domEvents = new THREEx.DomEvents()
-	var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
+	// var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
 
 	onRenderFcts.push(function(){
 		TWEEN.update()
 	})
 	
 	// var vrWidgetType = 'vrButton'
-	var vrWidgetType = 'vrOptionItem'
-	// var vrWidgetType = 'vrOptionMenu'
+	// var vrWidgetType = 'vrListviewItem'
+	var vrWidgetType = 'vrListviewItems'
+	var vrWidgetType = 'panelHeader'
+	var vrWidgetType = 'vrListview'
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
@@ -248,8 +256,26 @@ function enterFullscreen (element) {
 		var vrButton = new THREEx.VRButton(domEvents, 'click')
 		vrButton.object3d.position.set(0,0,-2)
 		scene.add( vrButton.object3d )
-	} else if( vrWidgetType === 'vrOptionItem' ){		
-		var vrOptionItem = new THREEx.VROptionItem(domEvents, {
+	} else if( vrWidgetType === 'panelHeader' ){		
+		var panelHeader = new THREEx.VRPanelHeader(domEvents, {
+			title : 'super title',
+			actionRight : {
+				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
+			},
+			actionLeft : {
+				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
+			}
+		})
+		panelHeader.object3d.position.set(0,0,-2)
+		scene.add( panelHeader.object3d )
+		panelHeader.signals.clickRightAction.add(function(){
+			console.log('click header right action')
+		})
+		panelHeader.signals.clickLeftAction.add(function(){
+			console.log('click header left action')
+		})
+	} else if( vrWidgetType === 'vrListviewItem' ){	
+		var vrListviewItem = new THREEx.VRListviewItem(domEvents, {
 			label: 'John Smith',
 			iconUrl: 'images/ionicons_2-0-1_android-person_56_4_ffffff_none.png',
 			actionRight : {
@@ -259,10 +285,10 @@ function enterFullscreen (element) {
 				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
 			}
 		})
-		vrOptionItem.object3d.position.set(0,0,-2)
-		scene.add( vrOptionItem.object3d )	
-	} else if( vrWidgetType === 'vrOptionMenu' ){		
-		var vrOptionMenu = new THREEx.VROptionMenu(domEvents, {
+		vrListviewItem.object3d.position.set(0,0,-2)
+		scene.add( vrListviewItem.object3d )	
+	} else if( vrWidgetType === 'vrListviewItems' ){		
+		var vrListviewItems = new THREEx.VRListviewItems(domEvents, {
 			items : {
 				'item1' : 'item1',
 				'item2' : 'item2',
@@ -280,8 +306,35 @@ function enterFullscreen (element) {
 				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
 			}
 		})
-		vrOptionMenu.object3d.position.set(0,0,0)
-		scene.add( vrOptionMenu.object3d )
+		vrListviewItems.object3d.position.set(0,0,0)
+		scene.add( vrListviewItems.object3d )
+	} else if( vrWidgetType === 'vrListview' ){		
+		var vrListview = new THREEx.VRListview(domEvents, {
+			headerLabel : 'super title',
+			headerActionRight : {
+				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
+			},
+			headerActionLeft : {
+				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
+			},
+			items : {
+				'item1' : 'item1',
+				'item2' : 'item2',
+				'item3' : 'item3',
+				'item4' : 'item4',
+				'item5' : 'item5',
+				'item6' : 'item6',
+				'item7' : 'item7',
+			},
+			itemActionRight : {
+				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
+			},
+			itemActionLeft : {
+				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
+			}
+		})
+		vrListview.object3d.position.set(0,2,-5)
+		scene.add( vrListview.object3d )
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////

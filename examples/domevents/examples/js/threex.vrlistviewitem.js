@@ -1,6 +1,6 @@
 var THREEx = THREEx || {}
 
-THREEx.VROptionItem = function(domEvents, options){
+THREEx.VRListviewItem = function(domEvents, options){
 	var _this = this
 	this.object3d = new THREE.Group
 
@@ -50,7 +50,7 @@ THREEx.VROptionItem = function(domEvents, options){
  * [_buildItemBack description]
  * @return {[type]} [description]
  */
-THREEx.VROptionItem.prototype._buildItemButton = function(imageUrl) {
+THREEx.VRListviewItem.prototype._buildItemButton = function(imageUrl) {
 	var _this = this
 	// create texture
 	var texture = THREEx.VRUiUtils.createCanvasTexture(64, 64)
@@ -108,7 +108,7 @@ THREEx.VROptionItem.prototype._buildItemButton = function(imageUrl) {
  * [_buildItemBack description]
  * @return {[type]} [description]
  */
-THREEx.VROptionItem.prototype._buildItemBack = function() {
+THREEx.VRListviewItem.prototype._buildItemBack = function() {
 	var _this = this
 	// create texture
 	var texture = THREEx.VRUiUtils.createCanvasTexture(256, 64)
@@ -125,8 +125,6 @@ THREEx.VROptionItem.prototype._buildItemBack = function() {
 	// build the mesh
 	var material = new THREE.MeshBasicMaterial({
 		map: texture,
-		// color: 'red',
-		// color: 'black',
 		opacity: .5,
 		transparent : true,
 	})
@@ -187,7 +185,7 @@ THREEx.VROptionItem.prototype._buildItemBack = function() {
  * @param {[type]} itemValue [description]
  * @return {[type]} [description]
  */
-THREEx.VROptionItem.prototype._buildItemFront = function (itemValue, iconUrl) {
+THREEx.VRListviewItem.prototype._buildItemFront = function (itemValue, iconUrl) {
 	// create texture
 	var texture = THREEx.VRUiUtils.createCanvasTexture(256, 64)
 	var canvas = texture.image
