@@ -47,14 +47,12 @@ Appx.App = function(){
 		gamepadSignals.update(gamepad)
 		
 		var actionableObjects = _this._uiMode.getActionableObjects(app)
-		actionableObjects = actionableObjects.concat(_this._uiMenu.getActionableObjects(app))
 		
 		raycaster = controller.getRaycaster()
 		
 		// compute intersects
 		_this.intersects	= raycaster.intersectObjects( actionableObjects, true );
 		
-		_this._uiMenu.update(app)
 		_this._uiMode.update(app)
 	})
 	
@@ -80,11 +78,6 @@ Appx.App = function(){
 	_this._postSelectUiMode = 'vrMenu'
 
 
-	// setup uiMenu
-	_this._gotoUiMode('vrMenu')
-	_this._uiMenu = _this._uiMode
-	_this._uiMode = null
-	
 	// start the first uiMode
 	_this._gotoUiMode('select')
 
@@ -120,6 +113,12 @@ Appx.App = function(){
 	})
 }
 
+Appx.App.prototype.select = function(object3d){
+	if( this.selected !== null )	this.selected.material.color.set('white')
+	this.selected = object3d
+	if( this.selected !== null ) this.selected.material.color.set('hotpink')	
+}
+
 /**
  * to switch betwen uiMode
  */
@@ -133,10 +132,8 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 	// create new uiMode
 	if(uiModeType === 'select'){
 		_this._uiMode = new UiModeSelect(this)
-		_this._uiMode.signals.select.add(function(object3d){
-			if( _this.selected !== null )	_this.selected.material.color.set('white')
-			_this.selected = object3d
-			if( _this.selected !== null ) _this.selected.material.color.set('hotpink')
+		_this._uiMode.signals.select.add(function(selected){
+			_this.select(selected)
 
 			// honor _this._postSelectUiMode
 			if( _this.selected !== null && _this._postSelectUiMode ) _this._gotoUiMode(_this._postSelectUiMode)
@@ -184,7 +181,8 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 		})
 	}else if(uiModeType === 'cloneSelected'){
 		_this._uiMode = new UiModeCloneSelected(this)
-		_this._uiMode.signals.completed.add(function(){
+		_this._uiMode.signals.completed.add(function(selected){
+			_this.select(selected)
 			_this._gotoUiMode('select')
 		})
 	}else console.assert(false)

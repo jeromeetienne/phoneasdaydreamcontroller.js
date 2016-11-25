@@ -4,8 +4,6 @@
   - measure angle in projection-plane space
   - take projected point and do a object3d.worldToLocal on it
   - try cross product with 2 vectors you know
-- FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
-  - do a app.select(object) function and use it
 
 
 - TODO clean up /examples/js if possible ?
@@ -16,8 +14,11 @@
   - TODO: if click on a object while on the menu, then select the object and keep the menu
 - put more work on the doodling menu
   - export more feature. e.g. more projection plane
+  - export all the underlying features
 
 # Done
+- DONE FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
+  - do a app.select(object) function and use it
 - DONE: make the server accept multiple app at the same time
   - would fix the issue (already a app connected)
 - DONE: fix the issue with '2 gamepads diconnecting reconnecting'
