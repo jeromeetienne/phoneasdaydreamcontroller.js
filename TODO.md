@@ -1,5 +1,10 @@
 # to fix for mvp
 - FIXME: rotateSelected doesnt work
+  - read normal from projection plane, the object will turn around it
+  - measure angle in projection-plane space
+  - take projected point and do a object3d.worldToLocal on it
+  - try cross product with 2 vectors you know
+  - 
 - FIXME: issue with selected when i clone. cloning should select the cloned one and unselect the original
 
 
@@ -9,6 +14,8 @@
   - all the selected required operation. should be better detected
   - TODO: vrMenu if i click outside the menu and vrmenu visible, hide vrmenu
   - TODO: if click on a object while on the menu, then select the object and keep the menu
+- put more work on the doodling menu
+  - export more feature. e.g. more projection plane
 
 # Done
 - DONE: make the server accept multiple app at the same time
