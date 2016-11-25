@@ -49,15 +49,16 @@ function UiModeObjectPosRotSca(app, mode, planeType){
 			var intersectPoint = intersects[0].point
 			app.selected.position.copy(intersectPoint)			
 		}else if( mode === 'rotation'){
-			// var intersectPointWorld = intersects[0].point
-			// var intersectPointLocal = grid.worldToLocal(intersectPointWorld.clone())
-			// 
-			// intersectPointLocal.normalize()
-			// var centerPosition = new THREE.Vector(0,0,0)
-			// var centerPosition = new THREE.Vector(1,0,0)
-			
-			var axis = projectionPlane.localToWorld(new THREE.Vector3(0,1,0))
-			app.selected.quaternion.setFromAxisAngle(axis, Date.now()/1000)
+			// compute the intersect with the projected plane
+			var intersectPointWorld = intersects[0].point
+			var intersectPointLocal = grid.worldToLocal(intersectPointWorld.clone())
+			// compute the angle and the matching quaternion
+			var angle = new THREE.Vector3(1,0,0).angleTo(intersectPointLocal)
+			if( intersectPointLocal.y >= 0 )	angle = 2*Math.PI - angle
+			var planeNormal = new THREE.Vector3(0,0,-1)
+			var quaternion = new THREE.Quaternion().setFromAxisAngle(planeNormal, angle)
+			// apply rotation to app.selected quaternion
+			app.selected.quaternion.copy(originQuaternion).multiply(quaternion)
 		}else if( mode === 'scale'){
 			var intersectPoint = intersects[0].point
 			var distance = intersectPoint.distanceTo(app.selected.position)
@@ -83,6 +84,7 @@ function UiModeObjectPosRotSca(app, mode, planeType){
 		if( buttonIndex !== 0 )	return
 		originPosition = null
 		originScale = null
+		originQuaternion = null
 		_this.signals.completed.dispatch()
 	}
 }
