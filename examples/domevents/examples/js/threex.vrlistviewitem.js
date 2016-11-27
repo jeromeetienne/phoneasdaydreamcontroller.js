@@ -5,7 +5,8 @@ THREEx.VRListviewItem = function(domEvents, options){
 	this.object3d = new THREE.Group
 
 	this.signals = {
-		selected : new signals.Signal(),
+		selectedPrimaryAction : new signals.Signal(),
+		selectedSecondaryAction : new signals.Signal(),
 	}
 	
 	this.dispose = function(){
@@ -34,13 +35,13 @@ THREEx.VRListviewItem = function(domEvents, options){
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
 	if( options.actionRight ){
-		this._itemButtonRight = _this._buildItemButton(options.actionRight.url)
+		this._itemButtonRight = _this._buildItemButton(options.actionRight)
 		this._itemButtonRight.position.x = +(1.5 - 0.5/2);
 		_this.object3d.add(this._itemButtonRight)		
 	}
 
 	if( options.actionLeft ){
-		this._itemButtonLeft = _this._buildItemButton(options.actionLeft.url)
+		this._itemButtonLeft = _this._buildItemButton(options.actionLeft)
 		this._itemButtonLeft.position.x = -(1.5 - 0.5/2);
 		_this.object3d.add(this._itemButtonLeft)		
 	}
@@ -50,7 +51,7 @@ THREEx.VRListviewItem = function(domEvents, options){
  * [_buildItemBack description]
  * @return {[type]} [description]
  */
-THREEx.VRListviewItem.prototype._buildItemButton = function(imageUrl) {
+THREEx.VRListviewItem.prototype._buildItemButton = function(action) {
 	var _this = this
 	// create texture
 	var texture = THREEx.VRUiUtils.createCanvasTexture(64, 64)
@@ -63,7 +64,7 @@ THREEx.VRListviewItem.prototype._buildItemButton = function(imageUrl) {
 		context.drawImage(image, 0.1*canvas.width, 0.1*canvas.height, 0.8*canvas.width, 0.8*canvas.height);
 		texture.needsUpdate = true
 	})
-        image.src = imageUrl;
+        image.src = action.url;
 
 	// build the mesh
 	var material = new THREE.MeshBasicMaterial({
@@ -76,6 +77,16 @@ THREEx.VRListviewItem.prototype._buildItemButton = function(imageUrl) {
 	var mesh = new THREE.Mesh( geometry, material );
 	mesh.name = 'itemButton'
 
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+
+	domEvents.addEventListener(mesh, 'click', function(event){
+		if( action.onClick === undefined )	return
+		action.onClick(event)
+	}, false)
+
+	
 	////////////////////////////////////////////////////////////////////////////////
 	//          bind events
 	////////////////////////////////////////////////////////////////////////////////
@@ -94,9 +105,11 @@ THREEx.VRListviewItem.prototype._buildItemButton = function(imageUrl) {
     		}).start()		
 	}
 	domEvents.addEventListener(_this._itemBack, 'mouseenter', function(event){
+// console.log(event.type, 'button opacity')
 		startTweenOpacity(200, 1)
 	}, false)
 	domEvents.addEventListener(_this._itemBack, 'mouseleave', function(event){
+// console.log(event.type, 'button opacity')
 		startTweenOpacity(0, 0)
 	}, false)
 
@@ -159,16 +172,19 @@ THREEx.VRListviewItem.prototype._buildItemBack = function() {
 					geometry.vertices[2].x = -this.width					
 				}
 				geometry.verticesNeedUpdate = true
+				geometry.computeBoundingSphere()
 			})
-			.start()		
+			.start()
 	}
 	domEvents.addEventListener(mesh, 'mouseenter', function(event){
+// console.log(event.type, 'item width')
 		if( _this._itemButtonRight )	var currentWidth = geometry.vertices[1].x
 		else if( _this._itemButtonLeft)	var currentWidth = -geometry.vertices[0].x
 		else return
 		startTweenWidth(0, currentWidth, 1.5)
 	}, false)
 	domEvents.addEventListener(mesh, 'mouseleave', function(event){
+// console.log(event.type, 'item width')
 		if( _this._itemButtonRight )	var currentWidth = geometry.vertices[1].x
 		else if( _this._itemButtonLeft)	var currentWidth = -geometry.vertices[0].x
 		else return

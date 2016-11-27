@@ -92,7 +92,6 @@ var onRenderFcts = []
 var renderer = new THREE.WebGLRenderer({antialias: false});
 renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
 // renderer.setPixelRatio(1/2);
-renderer.setClearColor('gray')
 
 // Append the canvas element created by the renderer to fullScreenContainer
 document.querySelector('#fullScreenContainer').appendChild(renderer.domElement);
@@ -104,7 +103,7 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
 // Apply VR headset positional data to camera.
-var controls = new THREE.VRControls(camera);
+// var controls = new THREE.VRControls(camera);
 
 // Apply VR stereo rendering to renderer.
 var effect = new THREE.VREffect(renderer);
@@ -217,18 +216,6 @@ function enterFullscreen (element) {
 
 <script src='../threex.domevents.js'></script>
 <script src='../threex.domevents.mousepointer.js'></script>
-<script src='../../vendor/three.js/editor/js/libs/signals.min.js'></script>
-<script src='../../vendor/Tween.js'></script>
-
-<script src='js/threex.vruiutils.js'></script>
-<script src='js/threex.vrpanel.js'></script>
-<script src='js/threex.vrpanelheader.js'></script>
-
-<script src='js/threex.vrlistview.js'></script>
-<script src='js/threex.vrlistviewitem.js'></script>
-<script src='js/threex.vrlistviewitems.js'></script>
-
-<script src='js/threex.vrbutton.js'></script>
 
 
 <script>
@@ -239,122 +226,47 @@ function enterFullscreen (element) {
 	var domEvents = new THREEx.DomEvents()
 	var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
 
-	onRenderFcts.push(function(){
-		TWEEN.update()
-	})
-	
-	// var vrWidgetType = 'vrButton'
-	var vrWidgetType = 'vrListviewItem'
-	// var vrWidgetType = 'vrListviewItems'
-	// var vrWidgetType = 'panelHeader'
-	var vrWidgetType = 'vrListview'
-
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
-	if( vrWidgetType === 'vrButton' ){		
-		var vrButton = new THREEx.VRButton(domEvents, 'click')
-		vrButton.object3d.position.set(0,0,-2)
-		scene.add( vrButton.object3d )
-	} else if( vrWidgetType === 'panelHeader' ){		
-		var panelHeader = new THREEx.VRPanelHeader(domEvents, {
-			title : 'super title',
-			actionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
-			},
-			actionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
-			}
-		})
-		panelHeader.object3d.position.set(0,0,-2)
-		scene.add( panelHeader.object3d )
-		panelHeader.signals.clickRightAction.add(function(){
-			console.log('click header right action')
-		})
-		panelHeader.signals.clickLeftAction.add(function(){
-			console.log('click header left action')
-		})
-	} else if( vrWidgetType === 'vrListviewItem' ){	
-		var vrListviewItem = new THREEx.VRListviewItem(domEvents, {
-			label: 'John Smith',
-			iconUrl: 'images/ionicons_2-0-1_android-person_56_4_ffffff_none.png',
-			actionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png',
-				onClick : function(){
-					console.log('clicked right')
-				},
-			},
-			actionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png',
-				onClick : function(){
-					console.log('clicked left')
-				},
-			}
-		})
-		vrListviewItem.object3d.position.set(0,0,-2)
-		scene.add( vrListviewItem.object3d )	
-	} else if( vrWidgetType === 'vrListviewItems' ){		
-		var vrListviewItems = new THREEx.VRListviewItems(domEvents, {
-			items : {
-				'item1' : 'item1',
-				'item2' : 'item2',
-				'item3' : 'item3',
-				'item4' : 'item4',
-				'item5' : 'item5',
-				'item6' : 'item6',
-				'item7' : 'item7',
-				'item8' : 'item8',
-			},
-			actionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png',
-				onClick : function(){
-					console.log('clicked right')
-				},
-			},
-			actionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png',
-				onClick : function(){
-					console.log('clicked left')
-				},
-			}
-		})
-		vrListviewItems.object3d.position.set(0,0,0)
-		scene.add( vrListviewItems.object3d )
-	} else if( vrWidgetType === 'vrListview' ){		
-		var vrListview = new THREEx.VRListview(domEvents, {
-			headerLabel : 'super title',
-			headerActionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png'
-			},
-			headerActionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png'
-			},
-			items : {
-				'item1' : 'item1',
-				'item2' : 'item2',
-				'item3' : 'item3',
-				'item4' : 'item4',
-				'item5' : 'item5',
-				'item6' : 'item6',
-				'item7' : 'item7',
-			},
-			itemActionRight : {
-				url : 'images/font-awesome_4-7-0_dot-circle-o_56_4_ffffff_none.png',
-				onClick : function(){
-					console.log('clicked item action right')
-				},				
-			},
-			itemActionLeft : {
-				url : 'images/ligature-symbols_2-11-0_delete_56_4_ffffff_none.png',
-				onClick : function(){
-					console.log('clicked item action left')
-				},
-			}
-		})
-		vrListview.object3d.position.set(0,2,-5)
-		scene.add( vrListview.object3d )
-	}
+	
 
+	;(function(){
+		var geometry	= new THREE.PlaneGeometry(1,1);
+		var material = new THREE.MeshBasicMaterial()
+		var meshParent = new THREE.Mesh(geometry, material)
+		meshParent.name = 'parent mesh'
+		meshParent.position.z = -2
+		meshParent.material.color.set('green')
+		scene.add(meshParent);
+
+		domEvents.addEventListener(meshParent, 'mouseenter', function(event){
+			console.log('received', event.type, 'on', meshParent.name)
+			meshParent.material.color.set('cyan')
+		}, false)
+		domEvents.addEventListener(meshParent, 'mouseleave', function(event){
+			meshParent.material.color.set('green')
+			console.log('received', event.type, 'on', meshParent.name)
+		}, false)
+		
+		var geometry	= new THREE.PlaneGeometry(0.5,0.5);
+		var material = new THREE.MeshBasicMaterial()
+		var meshChild = new THREE.Mesh(geometry, material)
+		meshChild.name = 'child mesh'
+		meshChild.position.z = 0.1
+		meshChild.material.color.set('red')
+		meshParent.add(meshChild);
+
+		domEvents.addEventListener(meshChild, 'mouseenter', function(event){
+			meshChild.material.color.set('pink')
+			console.log('received', event.type, 'on', meshChild.name)
+		}, false)
+		domEvents.addEventListener(meshChild, 'mouseleave', function(event){
+			meshChild.material.color.set('red')
+			console.log('received', event.type, 'on', meshChild.name)
+		}, false)
+	})()
+		
 	//////////////////////////////////////////////////////////////////////////////////
 	//		comment								//
 	//////////////////////////////////////////////////////////////////////////////////

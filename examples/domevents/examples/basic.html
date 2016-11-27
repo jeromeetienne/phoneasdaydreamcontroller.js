@@ -232,36 +232,36 @@ function enterFullscreen (element) {
 	
 
 	;(function(){
-		var mesh = createObject()
-		mesh.name = 'torusFront'
-		mesh.position.z = -2
-		mesh.material.color.set('red')
-		scene.add(mesh);
+		var geometry	= new THREE.PlaneGeometry(1,1);
+		var material = new THREE.MeshBasicMaterial()
+		var meshParent = new THREE.Mesh(geometry, material)
+		meshParent.name = 'torusBack'
+		meshParent.position.z = -2
+		meshParent.material.color.set('green')
+		hookEvents(meshParent)
+		scene.add(meshParent);
+
+		var geometry	= new THREE.PlaneGeometry(0.5,0.5);
+		var material = new THREE.MeshBasicMaterial()
+		var meshChild = new THREE.Mesh(geometry, material)
+		meshChild.name = 'torusFront'
+		meshChild.position.z = 0.1
+		meshChild.material.color.set('red')
+		hookEvents(meshChild)
+		meshParent.add(meshChild);
 		
-		var mesh = createObject()
-		mesh.name = 'torusBack'
-		mesh.position.x =  1
-		mesh.position.z = -3
-		mesh.material.color.set('green')
-		scene.add(mesh);
-		
-		function createObject(){
-			var geometry	= new THREE.PlaneGeometry(1,1);
-			var material = new THREE.MeshBasicMaterial()
-			var mesh = new THREE.Mesh(geometry, material)
-		
+		function hookEvents(mesh){
 			domEvents.addEventListener(mesh, 'mousedown', handleMouseEvent, false)
 			domEvents.addEventListener(mesh, 'mouseup', handleMouseEvent, false)
-			domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
+			// domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
 			
 			domEvents.addEventListener(mesh, 'click', handleMouseEvent, false)
 			domEvents.addEventListener(mesh, 'mouseenter', handleMouseEvent, false)
 			domEvents.addEventListener(mesh, 'mouseleave', handleMouseEvent, false)
 		
 			function handleMouseEvent(event){
-				console.log('mesh', mesh.name, 'received', event.type, 'event')
+				console.log('received', event.type, 'on', mesh.name)
 			}
-			return mesh
 		}
 	})()
 		

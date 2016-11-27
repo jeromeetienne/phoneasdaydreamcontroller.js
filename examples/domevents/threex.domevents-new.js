@@ -51,65 +51,77 @@ THREEx.DomEvents.prototype._handleMouseMove = function(pointerContext, intersect
 	console.assert(eventType === 'mousemove')
 	
 	var intersectObject = intersects.length ? intersects[0].object : null
-	
-	var leaveObjects = []
-	var enterObjects = []
 
 	// send mouselease to .lastMouseMoveObject if .lastMouseMoveObject isn't the current intersect object
 	if( intersectObject !== pointerContext.lastMouseMoveObject && pointerContext.lastMouseMoveObject !== null ){
-		notifyLeave(pointerContext.lastMouseMoveObject)
+		// TODO should set hovering = false to lastMouseMoveObject and all its parent
+		// - on each node, dispatch mouseLeave or not depending on previous hovering
+		// - if hovering was already false, do nothing
+		// - if hovering was true, notify a mouse leave
+		// - 	function notifyEnterLeave(object, event, newHovering)
+		notifyEnterLeave(pointerContext.lastMouseMoveObject, {
+			type : 'mouseleave',
+			object : pointerContext.lastMouseMoveObject,
+			intersect : intersects[0]
+		}, false)
 	}
 	if( intersectObject !== pointerContext.lastMouseMoveObject && intersectObject !== null ){
-		notifyEnter(intersectObject)
+		// TODO should set hovering = true to intersectObject and all its parent
+		// - on each node, dispatch mouseEnter or not depending on previous hovering
+		// - if hovering was already true, do nothing
+		// - if hovering was false, notify a mouse enter
+		// - 	function notify(object, event, newHovering)
+		notifyEnterLeave(intersectObject, {
+			type : 'mouseenter',
+			object : intersectObject,
+			intersect : intersects[0]
+		}, true)
 	}
-	
-	notifyArrayObjects(leaveObjects, {
-		type : 'mouseleave',
-		object : pointerContext.lastMouseMoveObject,
-		intersect : intersects[0]
-	})
-
-	notifyArrayObjects(enterObjects, {
-		type : 'mouseenter',
-		object : intersectObject,
-		intersect : intersects[0]
-	})
 
 	// update pointerContext.lastMouseMoveObject
 	pointerContext.lastMouseMoveObject = intersects.length === 0 ? null : intersects[0].object
 	return
+	
+	function notifyEnterLeave(object, event, newHovering) {
+		if( object.userData.hovering !== newHovering ){
+			object.userData.hovering = newHovering
+			object.userData.listeners && object.userData.listeners[event.type].slice(0).forEach(function(listener){		
+				listener.callback(event)
+				// TODO here handle the stopPropagation
+			})			
+		}
+		// propagate the event to the parent
+		if( object.parent ){
+			notifyEnterLeave(object.parent, event, newHovering)
+		}
+	};
+	
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+	function notifyEnterLeave(object, event, newHovering) {
+		if( event.type === 'mouseleave' )	return notifyLeave(object,event,newHovering)
+		else if( event.type === 'mouseenter' )	return notifyEnter(object,event,newHovering)
+		else console.assert(false)
+	}
 
-	function notifyLeave(object) {
-		leaveObjects.push(object)
-		// goto the parent
-		if( object.parent )	notifyLeave(object.parent)
+	function notifyLeave(object, event, newHovering) {
+		object.userData.shouldSendLeave = true
+
+		// propagate the event to the parent
+		if( object.parent ){
+			notifyEnterLeave(object.parent, event, newHovering)
+		}
 	};
 
 	function notifyEnter(object, event, newHovering) {
-		var index = leaveObjects.indexOf(object) 
-		if( index !== -1 ){
-			leaveObjects.splice(index, 1)
-		}else{
-			enterObjects.push(object)
-		}
-		
-		// propagate the event to the parent
-		if( object.parent )	notifyEnter(object.parent)
-	};
-	
-	function notifyArrayObjects(objects, event){
-		objects.forEach(function(object){
-			notifyAllListeners(object, event)
-		})
-	}
+		object.userData.shouldSendEnter = true
 
-	function notifyAllListeners(object, event){
-		// notify all listeners of this event.type
-		object.userData.listeners && object.userData.listeners[event.type].slice(0).forEach(function(listener){		
-			listener.callback(event)
-			// TODO here handle the stopPropagation
-		})		
-	}
+		// propagate the event to the parent
+		if( object.parent ){
+			notifyEnterLeave(object.parent, event, newHovering)
+		}
+	};
 }
 
 /**
@@ -159,17 +171,19 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 				intersect : intersect
 			})
 		})
-	}
-	function notifyToObject(object, event) {
-		// notify all listeners of this event.type
-		object.userData.listeners && object.userData.listeners[event.type].slice(0).forEach(function(listener){		
-			listener.callback(event)
-			// TODO here handle the stopPropagation
-		})
-		
-		// bubble the event to the parent
-		if( object.parent ){
-			notifyToObject(object.parent, event)
+		return
+
+		function notifyToObject(object, event) {
+			// notify all listeners of this event.type
+			object.userData.listeners && object.userData.listeners[event.type].slice(0).forEach(function(listener){		
+				listener.callback(event)
+				// TODO here handle the stopPropagation
+			})
+			
+			// bubble the event to the parent
+			if( object.parent ){
+				notifyToObject(object.parent, event)
+			}
 		}
 	}
 }

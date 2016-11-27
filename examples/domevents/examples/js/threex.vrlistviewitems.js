@@ -4,10 +4,6 @@ THREEx.VRListviewItems = function(domEvents, options){
 	var _this = this
 	this.object3d = new THREE.Group
 
-	this.signals = {
-		selected : new signals.Signal(),
-	}
-
 	this._optionItems = []
 	
 	Object.keys(options.items).forEach(function(itemKey, index){
@@ -21,10 +17,6 @@ THREEx.VRListviewItems = function(domEvents, options){
 
 		vrOptionItem.object3d.position.y = -index*0.5
 		_this.object3d.add( vrOptionItem.object3d )
-		
-		vrOptionItem.signals.selected.add(function(){
-			_this.signals.selected.dispatch(itemKey)
-		})
 	})
 
 	
@@ -34,4 +26,3 @@ THREEx.VRListviewItems = function(domEvents, options){
 		})
 	}
 }
-
