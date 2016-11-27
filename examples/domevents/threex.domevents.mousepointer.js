@@ -14,9 +14,9 @@ THREEx.DomEvents.MousePointer = function(element, domEvents){
 	}
 	
 	// listen to all core events
+	element.addEventListener('mousemove', processDomEvent, false)
 	element.addEventListener('mousedown', processDomEvent, false)
 	element.addEventListener('mouseup', processDomEvent, false)
-	element.addEventListener('mousemove', processDomEvent, false)
 
 	// setup raycaster, compute intersects, and then procee it thru domEvents
 	var raycaster = new THREE.Raycaster();
@@ -31,8 +31,9 @@ THREEx.DomEvents.MousePointer = function(element, domEvents){
 	// dispose of the object - aka remove all listener
 	this.dispose = function(){
 		element.removeEventListener( 'mousemove', onMouseMove, false );
+
+		element.removeEventListener( 'mousemove', processDomEvent, false)
 		element.removeEventListener( 'mousedown', processDomEvent, false)
 		element.removeEventListener( 'mouseup'  , processDomEvent, false)
-		element.removeEventListener( 'mousemove', processDomEvent, false)
 	}
 }

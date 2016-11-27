@@ -256,7 +256,7 @@ function enterFullscreen (element) {
 		var vrButton = new THREEx.VRButton(domEvents, 'click')
 		vrButton.object3d.position.set(0,0,-2)
 		scene.add( vrButton.object3d )
-	} else if( vrWidgetType === 'panelHeader' ){		
+	} else if( vrWidgetType === 'panelHeader' ){	
 		var panelHeader = new THREEx.VRPanelHeader(domEvents, {
 			title : 'super title',
 			actionRight : {

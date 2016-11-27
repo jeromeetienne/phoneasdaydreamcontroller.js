@@ -46,8 +46,11 @@ THREEx.DomEvents.prototype.removeEventListener = function (object, eventType, ca
 //////////////////////////////////////////////////////////////////////////////
 
 
-
-THREEx.DomEvents.prototype._handleMouseMove = function(pointerContext, intersects, eventType){	
+/**
+ * handle mousemove to notify mouseenter/mouseleave according to pointerContext
+ * - it doesnt notify leave, then enter in the same js loop
+ */
+THREEx.DomEvents.prototype._processMouseMove = function(pointerContext, intersects, eventType){	
 	console.assert(eventType === 'mousemove')
 	
 	var intersectObject = intersects.length ? intersects[0].object : null
@@ -57,52 +60,49 @@ THREEx.DomEvents.prototype._handleMouseMove = function(pointerContext, intersect
 
 	// send mouselease to .lastMouseMoveObject if .lastMouseMoveObject isn't the current intersect object
 	if( intersectObject !== pointerContext.lastMouseMoveObject && pointerContext.lastMouseMoveObject !== null ){
-		notifyLeave(pointerContext.lastMouseMoveObject)
-	}
-	if( intersectObject !== pointerContext.lastMouseMoveObject && intersectObject !== null ){
-		notifyEnter(intersectObject)
+		for(var object = pointerContext.lastMouseMoveObject; object !== null; object = object.parent){
+			leaveObjects.push(object)
+		}
 	}
 	
-	notifyArrayObjects(leaveObjects, {
-		type : 'mouseleave',
-		object : pointerContext.lastMouseMoveObject,
-		intersect : intersects[0]
+	// send mouseenter to intersectObject if intersectObject isnt equal to .lastMouseMoveObjects
+	if( intersectObject !== pointerContext.lastMouseMoveObject && intersectObject !== null ){
+		for(var object = intersectObject; object !== null; object = object.parent){
+			// if this object is in leaveObjects, leave and enter cancel each other
+			// so remove it from leaveObjects and dont include in enterObjects
+			var index = leaveObjects.indexOf(object) 
+			if( index !== -1 ){
+				leaveObjects.splice(index, 1)
+				continue
+			}
+			
+			// add this object in enterObjects
+			enterObjects.push(object)
+		}
+	}
+	
+	// notify mouseleave to all the object of leaveObjects
+	leaveObjects.forEach(function(object){
+		notifyAllListeners(object, {
+			type : 'mouseleave',
+			object : pointerContext.lastMouseMoveObject,
+			intersect : intersects[0]
+		})		
 	})
 
-	notifyArrayObjects(enterObjects, {
-		type : 'mouseenter',
-		object : intersectObject,
-		intersect : intersects[0]
+	// notify mouseenter to all object of enterObjects
+	enterObjects.forEach(function(object){
+		notifyAllListeners(object, {
+			type : 'mouseenter',
+			object : intersectObject,
+			intersect : intersects[0]
+		})
 	})
 
 	// update pointerContext.lastMouseMoveObject
 	pointerContext.lastMouseMoveObject = intersects.length === 0 ? null : intersects[0].object
 	return
-
-	function notifyLeave(object) {
-		leaveObjects.push(object)
-		// goto the parent
-		if( object.parent )	notifyLeave(object.parent)
-	};
-
-	function notifyEnter(object, event, newHovering) {
-		var index = leaveObjects.indexOf(object) 
-		if( index !== -1 ){
-			leaveObjects.splice(index, 1)
-		}else{
-			enterObjects.push(object)
-		}
-		
-		// propagate the event to the parent
-		if( object.parent )	notifyEnter(object.parent)
-	};
 	
-	function notifyArrayObjects(objects, event){
-		objects.forEach(function(object){
-			notifyAllListeners(object, event)
-		})
-	}
-
 	function notifyAllListeners(object, event){
 		// notify all listeners of this event.type
 		object.userData.listeners && object.userData.listeners[event.type].slice(0).forEach(function(listener){		
@@ -146,7 +146,7 @@ THREEx.DomEvents.prototype.processIntersects = function(pointerContext, intersec
 	//////////////////////////////////////////////////////////////////////////////
 	// handle mouseleave/mouseenter thru mousemove
 	if( eventType === 'mousemove' ){
-		this._handleMouseMove(pointerContext, intersects, eventType)
+		this._processMouseMove(pointerContext, intersects, eventType)
 	}
 
 	return;
