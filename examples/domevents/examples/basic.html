@@ -253,14 +253,14 @@ function enterFullscreen (element) {
 		function hookEvents(mesh){
 			domEvents.addEventListener(mesh, 'mousedown', handleMouseEvent, false)
 			domEvents.addEventListener(mesh, 'mouseup', handleMouseEvent, false)
-			// domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
-			
 			domEvents.addEventListener(mesh, 'click', handleMouseEvent, false)
+
+			domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
 			domEvents.addEventListener(mesh, 'mouseenter', handleMouseEvent, false)
 			domEvents.addEventListener(mesh, 'mouseleave', handleMouseEvent, false)
 		
 			function handleMouseEvent(event){
-				console.log('received', event.type, 'on', mesh.name)
+				console.log('received', event.type, 'on', mesh.name, 'with target', event.object !== mesh ? 'parent' : 'direct' )
 			}
 		}
 	})()
