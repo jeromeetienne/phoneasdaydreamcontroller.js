@@ -87,7 +87,7 @@ THREEx.DomEvents.prototype._processMouseMove = function(pointerContext, intersec
 			type : 'mouseleave',
 			object : pointerContext.lastMouseMoveObject,
 			intersect : intersects[0]
-		})		
+		})
 	})
 
 	// notify mouseenter to all object of enterObjects
@@ -101,6 +101,7 @@ THREEx.DomEvents.prototype._processMouseMove = function(pointerContext, intersec
 
 	// update pointerContext.lastMouseMoveObject
 	pointerContext.lastMouseMoveObject = intersects.length === 0 ? null : intersects[0].object
+	console.log('lastMouseMoveObject', pointerContext.lastMouseMoveObject === null ? null : pointerContext.lastMouseMoveObject.name )
 	return
 	
 	function notifyAllListeners(object, event){

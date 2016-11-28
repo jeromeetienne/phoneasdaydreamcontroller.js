@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - effects - stereo</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background:#777;
+				padding:0;
+				margin:0;
+				font-weight: bold;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				z-index:1000;
+			}
+
+			a {
+				color: #ffffff;
+			}
+
+			#oldie a { color:#da0 }
+		</style>
+	</head>
+
+	<body>
+		<div id="info">
+			<a href="http://threejs.org" target="_blank">three.js</a> - effects - stereo. skybox by <a href="http://www.zfight.com/" target="_blank">Jochum Skoglund</a>
+		</div>
+
+		<script src="../../vendor/three.js/build/three.js"></script>
+
+		<script src="../../vendor/three.js/examples/js/effects/StereoEffect.js"></script>
+
+		<script>
+
+			var container;
+
+			var camera, scene, renderer, effect;
+
+			var mesh, lightMesh, geometry;
+			var spheres = [];
+
+			var directionalLight, pointLight;
+
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+			function onDocumentMouseMove( event ) {
+
+				mouseX = ( event.clientX - windowHalfX ) * 10;
+				mouseY = ( event.clientY - windowHalfY ) * 10;
+
+			}
+
+
+			container = document.createElement( 'div' );
+			document.body.appendChild( container );
+
+			camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 100 );
+			camera.position.z = 0;
+
+			scene = new THREE.Scene();
+
+			//
+
+			renderer = new THREE.WebGLRenderer();
+			renderer.setPixelRatio( window.devicePixelRatio );
+			container.appendChild( renderer.domElement );
+
+			effect = new THREE.StereoEffect( renderer );
+			effect.setSize( window.innerWidth, window.innerHeight );
+
+			//
+
+			window.addEventListener( 'resize', onWindowResize, false );
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2,
+				windowHalfY = window.innerHeight / 2,
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				effect.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+
+				effect.render( scene, camera );
+
+			}
+			requestAnimationFrame( animate );
+
+		</script>
+
+
+<script src='../threex.domevents.js'></script>
+<script src='../threex.domevents.mousepointer.js'></script>
+
+
+<script>
+	////////////////////////////////////////////////////////////////////////////////
+	//          init domEvents1
+	////////////////////////////////////////////////////////////////////////////////
+	
+	var domEvents = new THREEx.DomEvents()
+	var mousePointer = new THREEx.DomEvents.MousePointer(renderer.domElement, domEvents)
+
+	////////////////////////////////////////////////////////////////////////////////
+	//          Code Separator
+	////////////////////////////////////////////////////////////////////////////////
+	
+
+	;(function(){
+		var geometry	= new THREE.PlaneGeometry(1,1);
+		var material = new THREE.MeshBasicMaterial()
+		var meshParent = new THREE.Mesh(geometry, material)
+		meshParent.name = 'torusBack'
+		meshParent.position.z = -4
+		meshParent.material.color.set('green')
+		hookEvents(meshParent)
+		scene.add(meshParent);
+
+		var geometry	= new THREE.PlaneGeometry(0.5,0.5);
+		var material = new THREE.MeshBasicMaterial()
+		var meshChild = new THREE.Mesh(geometry, material)
+		meshChild.name = 'torusFront'
+		meshChild.position.z = 0.1
+		meshChild.material.color.set('red')
+		hookEvents(meshChild)
+		meshParent.add(meshChild);
+		
+		function hookEvents(mesh){
+			domEvents.addEventListener(mesh, 'mousedown', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseup', handleMouseEvent, false)
+			// domEvents.addEventListener(mesh, 'mousemove', handleMouseEvent, false)
+			
+			domEvents.addEventListener(mesh, 'click', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseenter', handleMouseEvent, false)
+			domEvents.addEventListener(mesh, 'mouseleave', handleMouseEvent, false)
+		
+			function handleMouseEvent(event){
+				console.log('received', event.type, 'on', mesh.name)
+			}
+		}
+	})()
+		
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var light	= new THREE.HemisphereLight( 0xffffff, 0xf0f, 0.4 )
+	scene.add(light)
+</script>
+
+
+	</body>
+</html>

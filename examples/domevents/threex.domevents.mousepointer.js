@@ -21,7 +21,16 @@ THREEx.DomEvents.MousePointer = function(element, domEvents){
 	// setup raycaster, compute intersects, and then procee it thru domEvents
 	var raycaster = new THREE.Raycaster();
 	function processDomEvent(domEvent){
-		raycaster.setFromCamera( mouse, camera );
+		var stereoEnabled = false
+		if( stereoEnabled ){
+			var _stereo = new THREE.StereoCamera();
+			_stereo.aspect = 0.5;
+			_stereo.update( camera );
+			raycaster.setFromCamera( mouse, _stereo.cameraL );			
+		}else{
+			raycaster.setFromCamera( mouse, camera );
+		}
+			
 		
 		var intersects = raycaster.intersectObjects( domEvents._objects );
 		

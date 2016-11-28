@@ -37,13 +37,15 @@ THREEx.VRListviewItem = function(domEvents, options){
 	if( options.actionRight ){
 		this._itemButtonRight = _this._buildItemButton(options.actionRight)
 		this._itemButtonRight.position.x = +(1.5 - 0.5/2);
-		_this.object3d.add(this._itemButtonRight)		
+		// FIXME here if we attach to _this.object3d, mouseenter/mouseleave fails
+		itemBack.add(this._itemButtonRight)		
 	}
 
 	if( options.actionLeft ){
 		this._itemButtonLeft = _this._buildItemButton(options.actionLeft)
 		this._itemButtonLeft.position.x = -(1.5 - 0.5/2);
-		_this.object3d.add(this._itemButtonLeft)		
+		// FIXME here if we attach to _this.object3d, mouseenter/mouseleave fails
+		itemBack.add(this._itemButtonLeft)		
 	}
 }
 
