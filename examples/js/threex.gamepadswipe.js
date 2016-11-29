@@ -1,6 +1,6 @@
 var Appx = Appx || {}
 
-THREEx.VrGestures = function(gamepadSignals){
+THREEx.GamepadSwipe = function(gamepadSignals){
 	var _this = this
         this.signals = {
                 swipe : new signals.Signal(),

@@ -47,6 +47,7 @@ Appx.App = function(){
 		gamepadSignals.update(gamepad)
 		
 		var actionableObjects = _this._uiMode.getActionableObjects(app)
+		actionableObjects = actionableObjects.concat( _this._uiMenu.getActionableObjects(app) )
 		
 		raycaster = controller.getRaycaster()
 		
@@ -54,6 +55,7 @@ Appx.App = function(){
 		_this.intersects	= raycaster.intersectObjects( actionableObjects, true );
 		
 		_this._uiMode.update(app)
+		_this._uiMenu.update(app)
 	})
 	
 	//////////////////////////////////////////////////////////////////////////////
@@ -75,23 +77,25 @@ Appx.App = function(){
 	
 	
 	_this.selected = null
-	_this._postSelectUiMode = 'vrMenu'
-
 
 	// start the first uiMode
+	_this._gotoUiMode('vrMenu')
+	_this._uiMenu = _this._uiMode
+	_this._uiMode = null
+
 	_this._gotoUiMode('select')
 
 	////////////////////////////////////////////////////////////////////////////////
 	//          Handle long press traclpad to toggle menu
 	////////////////////////////////////////////////////////////////////////////////
-	this._initTrackpadToggleMenu()
+	// this._initTrackpadToggleMenu()
 	
 	//////////////////////////////////////////////////////////////////////////////
 	//		Handle gestures
 	//////////////////////////////////////////////////////////////////////////////
-	this._gamepadSwipe = new THREEx.GamepadSwipe(gamepadSignals)
-	this._gamepadSwipe.signals.swipe.add(function(direction){
-		// console.log('app swipe', direction)
+	this._gestures = new THREEx.VrGestures(gamepadSignals)
+	this._gestures.signals.swipe.add(function(direction){
+		console.log('app swipe', direction)
 		
 		// if swipe left, then delete selected object
 		if( direction === 'left' && _this.selected !== null ){
@@ -129,14 +133,13 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 		_this._uiMode.dispose()
 	}
 
+	console.log('switching to uiMode', uiModeType)
+
 	// create new uiMode
 	if(uiModeType === 'select'){
 		_this._uiMode = new UiModeSelect(this)
 		_this._uiMode.signals.select.add(function(selected){
 			_this.select(selected)
-
-			// honor _this._postSelectUiMode
-			if( _this.selected !== null && _this._postSelectUiMode ) _this._gotoUiMode(_this._postSelectUiMode)
 		})
 	}else if(uiModeType === 'vrMenu'){
 		var menuItems = {
@@ -187,35 +190,3 @@ Appx.App.prototype._gotoUiMode = function(uiModeType){
 		})
 	}else console.assert(false)
 }
-
-/**
- * init the vrMenu by trackpad long press
- */
-Appx.App.prototype._initTrackpadToggleMenu = function () {
-	var _this = this
-	var timerId = null
-	// handle touchStart
-	this.gamepadSignals.signals.touchStart.add(function(buttonIndex){
-		if( buttonIndex !== 2 )	return	
-		stopTimerIfNeeded()	
-		timerId = setTimeout(function(){
-			stopTimerIfNeeded()
-			if( _this._uiMode instanceof UiModeVrMenu === false ){
-				_this._gotoUiMode('vrMenu')
-			}else{
-				_this._gotoUiMode('select')						
-			}
-		}, 1000*0.5)
-	})
-	// handle touchEnd
-	this.gamepadSignals.signals.touchEnd.add(function(buttonIndex){
-		if( buttonIndex !== 2 )	return	
-		stopTimerIfNeeded()
-	})
-	return
-	
-	function stopTimerIfNeeded(){
-		if( timerId !== null ) clearTimeout(timerId)
-		timerId = null			
-	}
-};

@@ -1,4 +1,9 @@
 # to fix for mvp
+- rename threex.vrgestures.js into threex.gamepadswipe.js
+  - merge swipedetector.js in it
+  - THREEx.GamepadSwipe.Detector = SwipeDetector
+
+
 - TODO clean up /examples/js if possible ?
 
 - FIXME fix the menu display. weird rotation happen. they are ugly
