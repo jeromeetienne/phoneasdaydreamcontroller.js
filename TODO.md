@@ -1,7 +1,9 @@
 # TODO
 - conclude phoneasvrcontroller 
   - what is the mvp
-  - all what it is now - doodlingvr - domevents
+- remove three.js dependancy ?
+  - use quaternion + euler
+  - repack it under a private namespace
 - what about the examples/js folder ?
   - who use it ?
 

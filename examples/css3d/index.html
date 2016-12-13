@@ -233,7 +233,7 @@
 <script src='../js/threex.gamepadsignals.js'></script>
 <script src='../gestures/js/swipedetector.js'></script>
 <script src='../gestures/vendor/onedollar-unistroke-coffee/lib/onedollar.js'></script>
-<script src="../js/threex.vrgestures.js"></script>
+<script src="../js/threex.gamepadswipe.js"></script>
 <script>
 
 
@@ -247,8 +247,8 @@ onRenderFcts.push(function(){
 //////////////////////////////////////////////////////////////////////////////
 //		Handle gestures
 //////////////////////////////////////////////////////////////////////////////
-var vrGestures = new THREEx.VrGestures(gamepadSignals)
-vrGestures.signals.swipe.add(function(direction){
+var gamepadSwipe = new THREEx.GamepadSwipe(gamepadSignals)
+gamepadSwipe.signals.swipe.add(function(direction){
 	
 	var object3d = scene.getObjectByName('menu')
 	var domElement = object3d.element.querySelector('ul')
