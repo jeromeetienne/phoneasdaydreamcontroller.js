@@ -1,12 +1,12 @@
 # TODO
 - conclude phoneasvrcontroller 
   - what is the mvp
-- remove three.js dependancy ?
-  - use quaternion + euler
-  - repack it under a private namespace
 - what about the examples/js folder ?
   - who use it ?
-- make as build for the part to include in your page
+- DONE remove three.js dependancy ?
+  - use quaternion + euler
+  - repack it under a private namespace
+- DONE make as build for the part to include in your page
   - build/phoneasvrcontroller.js
 
 
