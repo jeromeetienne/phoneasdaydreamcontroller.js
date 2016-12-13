@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "build": "cat src/phone*.js src/Quaternion.js src/Euler.js node_modules/socket.io/node_modules/socket.io-client/socket.io.js > build/phoneasvrcontroller.js"
+    "build": "cat src/phone*.js src/Quaternion.js src/Euler.js node_modules/socket.io/node_modules/socket.io-client/socket.io.js > build/phoneasvrcontroller.js",
+    "minify": "uglifyjs build/phoneasvrcontroller.js > build/phoneasvrcontroller.min.js"
   }
 }
