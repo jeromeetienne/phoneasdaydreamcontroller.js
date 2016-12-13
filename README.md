@@ -49,16 +49,15 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
 
 - ```client/``` is the phone controller, aka the webapps which emulate the daydream controller on your phone
 - ```examples/basic.html``` simply display the gamepad. raw output of the phone gamepad. Good to debug
-- ```examples/doodlingvr/``` doodling in vr : wip application to doodle in VR
+- ```examples/webvr.html``` an example using webvr
+- ```examples/css3d.html``` an example using css3d
+- ```examples/gestures.html``` gestures : gesture detection on gamepad trackpad - support swipe gesture + one dollar gesture
 - ```examples/ray-input/``` an example to use your phone as 3dof controller in [ray-input](https://github.com/borismus/ray-input).
   I like this one a lot :)
   It gives a better experience to people who got no 3dof controller but got a phone.
   e.g. google cardboard can use a 3dof controller now.
   This make the vr experience more democratic.
   As i see it, the goal is about 'giving the best VR experience possible to as many people as possible'
-- ```examples/gestures.html``` gestures : gesture detection on gamepad trackpad - support swipe gesture + one dollar gesture
-- ```examples/css3d.html``` an example using css3d
-- ```examples/webvr.html``` an example using webvr
 
 # Misc
 
