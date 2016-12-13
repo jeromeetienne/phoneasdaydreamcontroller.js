@@ -1,3 +1,22 @@
+# TODO
+- extract domevents, and publish it as threex.domevents2
+  - demo similar to the precedent, simple and visual
+- take all the ui experiments out of this repository
+  - this is the webgl stuff for fourjs
+- port all the doodlinginvr ui on top of domevents
+- DONE doodlinginvr should have its own repo
+  - depends on threex.domevents
+    - normal in vendor
+  - depends on phoneasvrcontroller
+    - normal in vendor ?
+- conclude phoneasvrcontroller 
+  - what is the mvp
+  - all what it is now - doodlingvr - domevents
+  - what about the examples/js folder ?
+
+
+
+
 # to fix for mvp
 - rename threex.vrgestures.js into threex.gamepadswipe.js
   - merge swipedetector.js in it
