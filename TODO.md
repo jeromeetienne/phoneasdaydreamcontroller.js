@@ -6,6 +6,8 @@
   - repack it under a private namespace
 - what about the examples/js folder ?
   - who use it ?
+- make as build for the part to include in your page
+  - build/phoneasvrcontroller.js
 
 
 

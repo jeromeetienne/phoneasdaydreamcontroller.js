@@ -72,21 +72,21 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 			}
 		}
 		if( originViewQuaternion === null ){
-			originViewQuaternion = new THREE.Quaternion().fromArray(context.viewQuaternion)
+			originViewQuaternion = new PhoneAsVRController.Quaternion().fromArray(context.viewQuaternion)
 		}
 		
 		var alpha = event.alpha - originDeviceOrientation.alpha
                 var beta  = event.beta  - originDeviceOrientation.beta
                 var gamma = event.gamma - originDeviceOrientation.gamma
 
-		var deviceEuler = new THREE.Euler()
+		var deviceEuler = new PhoneAsVRController.Euler()
 		deviceEuler.x =  beta  / 180 * Math.PI
 		deviceEuler.y =  alpha / 180 * Math.PI
 		deviceEuler.z = -gamma / 180 * Math.PI
 		deviceEuler.order = "YXZ"
 
 		// FIXME here i include the whole three.js for this loosy line... let avoid that ...
-		var controllerQuaternion = new THREE.Quaternion().setFromEuler(deviceEuler)			
+		var controllerQuaternion = new PhoneAsVRController.Quaternion().setFromEuler(deviceEuler)			
 		var poseQuaternion = originViewQuaternion.clone().multiply( controllerQuaternion )
 		poseQuaternion.toArray(gamepad.pose.orientation)
 		
