@@ -72,17 +72,28 @@ document.addEventListener('touchmove', function(event) {
 </script>
 
 <!-- three.js library -->
-<script src='../vendor/three.js/build/three.js'></script>
+<script src='vendor/three.js/build/three.js'></script>
 
 <!-- VRControls.js applies the WebVR transformations to a three.js camera object. -->
-<script src='../vendor/three.js/examples/js/controls/VRControls.js'></script>
+<script src='vendor/three.js/examples/js/controls/VRControls.js'></script>
 
 <!-- VREffect.js handles stereo camera setup and rendering.  -->
-<script src='../vendor/three.js/examples/js/effects/VREffect.js'></script>
-<!-- <script src='../vendor/three.js/examples/js/effects/VREffect-fromweb.js'></script> -->
+<script src='vendor/three.js/examples/js/effects/VREffect.js'></script>
+<!-- <script src='vendor/three.js/examples/js/effects/VREffect-fromweb.js'></script> -->
 
 <!-- A polyfill for the WebVR API.  -->
-<script src='../vendor/webvr-polyfill.js'></script>
+<script src='vendor/webvr-polyfill.js'></script>
+
+
+<script src='vendor/threex.laser/threex.laserbeam.js'></script>
+<script src='vendor/threex.laser/threex.lasercooked.js'></script>
+<script>THREEx.LaserCooked.baseURL	= 'vendor/threex.laser/';</script>
+
+
+<script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
+<script src='../build/phoneasvrcontroller.js'></script>
+<script src='js/threex.daydreamcontroller.js'></script>
+<script src='vendor/threex.gamepadtools.js/src/threex.gamepadsignals.js'></script>
 
 <script>
 var onRenderFcts = []
@@ -260,7 +271,7 @@ function enterFullscreen (element) {
 	// Add a repeating grid as a skybox.
 	var boxWidth = 10;
 	var loader = new THREE.TextureLoader();
-	loader.load('../images/box.png', function onTextureLoaded(texture) {
+	loader.load('images/box.png', function onTextureLoaded(texture) {
 		texture.wrapS = THREE.RepeatWrapping;
 		texture.wrapT = THREE.RepeatWrapping;
 		texture.repeat.set(boxWidth, boxWidth);
@@ -286,15 +297,6 @@ function enterFullscreen (element) {
 	scene.add(light)
 </script>
 
-<script src='../vendor/threex.laser/threex.laserbeam.js'></script>
-<script src='../vendor/threex.laser/threex.lasercooked.js'></script>
-<script>THREEx.LaserCooked.baseURL	= '../vendor/threex.laser/';</script>
-
-
-<script src='../vendor/three.js/editor/js/libs/signals.min.js'></script>
-<script src='../../build/phoneasvrcontroller.js'></script>
-<script src='../js/threex.daydreamcontroller.js'></script>
-<script src='../vendor/threex.gamepadtools.js/src/threex.gamepadsignals.js'></script>
 <script>
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
