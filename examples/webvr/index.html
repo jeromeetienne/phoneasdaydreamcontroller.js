@@ -286,8 +286,6 @@ function enterFullscreen (element) {
 	scene.add(light)
 </script>
 
-<script src='../js/threex.gamepadsignals.js'></script>
-
 <script src='../vendor/threex.laser/threex.laserbeam.js'></script>
 <script src='../vendor/threex.laser/threex.lasercooked.js'></script>
 <script>THREEx.LaserCooked.baseURL	= '../vendor/threex.laser/';</script>
@@ -296,7 +294,7 @@ function enterFullscreen (element) {
 <script src='../vendor/three.js/editor/js/libs/signals.min.js'></script>
 <script src='../../build/phoneasvrcontroller.js'></script>
 <script src='../js/threex.daydreamcontroller.js'></script>
-<script src='../js/threex.gamepadsignals.js'></script>
+<script src='../vendor/threex.gamepadtools.js/src/threex.gamepadsignals.js'></script>
 <script>
 	var serverUrl = 'http://'+location.hostname+':4000'
 	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);

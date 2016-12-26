@@ -307,23 +307,19 @@ rayInput.on('rayover', function(mesh){
 	mesh.material.color.set(0x1E90FF)
 });
 rayInput.on('rayout', function(mesh){
-	opt_mesh.material.color.set(0x00FF00)
-	// console.log('rayout', mesh)
+	mesh.material.color.set(0x00FF00)
 });
 rayInput.on('raydown', function(opt_mesh){
 	if( opt_mesh === null )	return
 	opt_mesh.material.color.set(0xFF3333)
-	// console.log('rayout', mesh)
 });
 rayInput.on('rayup', function(opt_mesh){
 	if( opt_mesh === null )	return
-	mesh.material.color.set(0x1E90FF)
-	// console.log('rayout', mesh)
+	opt_mesh.material.color.set(0x1E90FF)
 });
 rayInput.on('raycancel', function(opt_mesh){
 	if( opt_mesh === null )	return
-	mesh.material.color.set(0x1E90FF)
-	// console.log('rayout', mesh)
+	opt_mesh.material.color.set(0x1E90FF)
 });
 
 
