@@ -1,6 +1,6 @@
 var PhoneAsVRController = PhoneAsVRController || {}
 
-PhoneAsVRController.Context = function(serverUrl, camera){
+PhoneAsVRController.Context = function(serverUrl){
 	var _this = this
 	
 	_this.viewQuaternion = [0,0,0,1]
@@ -65,10 +65,12 @@ PhoneAsVRController.Context = function(serverUrl, camera){
 //          Code Separator
 ////////////////////////////////////////////////////////////////////////////////
 
-PhoneAsVRController.overloadGamepadsAPI = function(serverUrl, camera){
-	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl, camera)
+PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
+	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl)
 
 	navigator.getGamepads = function(){
         	return phoneAsVRController.getGamepads()
-	}	
+	}
+	
+	return phoneAsVRController
 }

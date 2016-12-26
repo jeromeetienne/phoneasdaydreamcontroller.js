@@ -85,7 +85,6 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 		deviceEuler.z = -gamma / 180 * Math.PI
 		deviceEuler.order = "YXZ"
 
-		// FIXME here i include the whole three.js for this loosy line... let avoid that ...
 		var controllerQuaternion = new PhoneAsVRController.Quaternion().setFromEuler(deviceEuler)			
 		var poseQuaternion = originViewQuaternion.clone().multiply( controllerQuaternion )
 		poseQuaternion.toArray(gamepad.pose.orientation)

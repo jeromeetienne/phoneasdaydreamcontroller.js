@@ -1,6 +1,6 @@
 var PhoneAsVRController = PhoneAsVRController || {}
 
-PhoneAsVRController.Context = function(serverUrl, camera){
+PhoneAsVRController.Context = function(serverUrl){
 	var _this = this
 	
 	_this.viewQuaternion = [0,0,0,1]
@@ -65,12 +65,14 @@ PhoneAsVRController.Context = function(serverUrl, camera){
 //          Code Separator
 ////////////////////////////////////////////////////////////////////////////////
 
-PhoneAsVRController.overloadGamepadsAPI = function(serverUrl, camera){
-	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl, camera)
+PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
+	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl)
 
 	navigator.getGamepads = function(){
         	return phoneAsVRController.getGamepads()
-	}	
+	}
+	
+	return phoneAsVRController
 }
 var PhoneAsVRController = PhoneAsVRController || {}
 
@@ -159,7 +161,6 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 		deviceEuler.z = -gamma / 180 * Math.PI
 		deviceEuler.order = "YXZ"
 
-		// FIXME here i include the whole three.js for this loosy line... let avoid that ...
 		var controllerQuaternion = new PhoneAsVRController.Quaternion().setFromEuler(deviceEuler)			
 		var poseQuaternion = originViewQuaternion.clone().multiply( controllerQuaternion )
 		poseQuaternion.toArray(gamepad.pose.orientation)

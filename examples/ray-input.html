@@ -332,9 +332,12 @@ rayInput.on('raycancel', function(opt_mesh){
 <script>
         window.addEventListener('load', function(){
                 var serverUrl = 'http://'+location.hostname+':4000'
-                // FIXME take the proper camera - used for controller recalibration
-                // var camera = new THREE.PerspectiveCamera(75, 16/9, 0.1, 100)
-                PhoneAsVRController.overloadGamepadsAPI(serverUrl, camera)                        
+                var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+		
+		// update phoneAsVRController.viewQuaternion for recalibration
+		onRenderFcts.push(function(){
+			phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+		})            
         });
 </script>
 </html>

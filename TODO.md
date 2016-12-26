@@ -8,7 +8,8 @@
   - repack it under a private namespace
 - DONE make as build for the part to include in your page
   - build/phoneasvrcontroller.js
-
+- DONE remove camera parameter in Context constructor
+  - PhoneAsVRController.Context = function(serverUrl){
 
 
 
