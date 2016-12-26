@@ -48,11 +48,10 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
 # Show, dont Tell
 
 - ```client/``` is the phone controller, aka the webapps which emulate the daydream controller on your phone
-- ```examples/basic.html``` simply display the gamepad. raw output of the phone gamepad. Good to debug
+- ```examples/json-dump.html``` simply display the gamepad. raw output of the phone gamepad. Good to debug
 - ```examples/webvr.html``` an example using webvr
 - ```examples/css3d.html``` an example using css3d
-- ```examples/gestures.html``` gestures : gesture detection on gamepad trackpad - support swipe gesture + one dollar gesture
-- ```examples/ray-input/``` an example to use your phone as 3dof controller in [ray-input](https://github.com/borismus/ray-input).
+- ```examples/ray-input.html``` an example to use your phone as 3dof controller in [ray-input](https://github.com/borismus/ray-input).
   I like this one a lot :)
   It gives a better experience to people who got no 3dof controller but got a phone.
   e.g. google cardboard can use a 3dof controller now.
@@ -70,3 +69,5 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
   It has been implemented in [webvr-polyfill](https://github.com/googlevr/webvr-polyfill/tree/master/src/sensor-fusion) too.
   It could be ported if needed in ```/client```.
   
+# Futures
+- create a bookmarklet with phoneasvrcontroller.js, thus it is possible in include it in any webpage
