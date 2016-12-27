@@ -24,13 +24,15 @@ THREEx.LightSaberSounds = function(listener, onLoaded){
 	//////////////////////////////////////////////////////////////////////////////
 	//		load all sounds
 	//////////////////////////////////////////////////////////////////////////////
+	// from @sylvainpv sylvain pollet - https://twitter.com/SylvainPV/status/236255017508671488
 	var soundBasenames = ['saberoff', 'saberon', 'saberswing1', 'saberswing2', 'saberswing3']
 	var loadingCount = soundBasenames.length
 	var audioLoader = new THREE.AudioLoader();
 	soundBasenames.forEach(function(soundBasename){
-		var url = THREEx.LightSaberSounds.baseURL + 'sounds/'+soundBasename+'.ogg'
 		_this.sounds[soundBasename]= new THREE.PositionalAudio( listener );
-		console.log('url', THREEx.LightSaberSounds.baseURL)
+		_this.object3d.add( _this.sounds[soundBasename] );
+
+		var url = THREEx.LightSaberSounds.baseURL + 'sounds/'+soundBasename+'.ogg'
 		audioLoader.load( url, function( buffer ) {
 			_this.sounds[soundBasename].setBuffer( buffer );
 			loadingCount--;
@@ -39,7 +41,6 @@ THREEx.LightSaberSounds = function(listener, onLoaded){
 				onLoaded && onLoaded()
 			}
 		});
-		_this.object3d.add( _this.sounds[soundBasename] );
 	})
 
 	//////////////////////////////////////////////////////////////////////////////
