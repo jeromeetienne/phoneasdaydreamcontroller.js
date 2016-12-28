@@ -1,10 +1,16 @@
+# mixed reality movies
+- record/replay webvr / gamepad
+  - do that in a binary file and autodownload
+- have a three.js vive demo to run on the office device
+- take a 3d demo with a black background, record as a video, remove black as 
+  transparent, composite human movie with transparent 3d, sync them together
+
+# tech + visu
 - put it in its own repository
   - demo.LightSaberVRTraining
 - find a better model for the enemy
   - put a basebal for now - threex.sportballs
 - take off the threex.particles.js
-- record/replay webvr / gamepad
-  - do that in a binary file and autodownload
 - make blue particle on impact and/or saber move
   - https://github.com/jeromeetienne/threex/blob/master/src/threex.particles/examples/trailblueparticle.html
 - put a cube map
