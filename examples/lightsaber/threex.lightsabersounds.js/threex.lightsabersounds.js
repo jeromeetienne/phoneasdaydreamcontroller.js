@@ -5,21 +5,7 @@ THREEx.LightSaberSounds = function(listener, onLoaded){
 	this.loaded = false
 	this.object3d = new THREE.Group()
 	this.sounds = {}
-	
-	// handle gamepadsignals
-	_this._gamepadSignals = new THREEx.GamepadSignals()
-	
-	var saberIsOn = false
-	_this._gamepadSignals.signals.touchStart.add(function(buttonIndex){
-		if( buttonIndex !== 0 )	return
-		if( saberIsOn === false ){
-			_this.sounds.saberon.play()
-			saberIsOn = true
-		}else{
-			_this.sounds.saberoff.play()		
-			saberIsOn = false			
-		}
-	})
+	this.enabled = true
 	
 	//////////////////////////////////////////////////////////////////////////////
 	//		load all sounds
@@ -51,10 +37,8 @@ THREEx.LightSaberSounds = function(listener, onLoaded){
 	this.update = function(gamepad){
 		var deltaTime = clock.getDelta()
 
-		_this._gamepadSignals.update(gamepad)
-
 		var quaternion = new THREE.Quaternion().fromArray(gamepad.pose.orientation)
-		if( lastQuaternion !== null ){
+		if( lastQuaternion !== null && _this.enabled === true ){
 			var difference = quaternion.clone().multiply( lastQuaternion.clone().inverse() )
 			var angleDistance = Math.acos(difference.w) * 2;
 

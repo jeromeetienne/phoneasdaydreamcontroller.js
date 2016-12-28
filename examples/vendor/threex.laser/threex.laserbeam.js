@@ -16,17 +16,22 @@ THREEx.LaserBeam	= function(){
 		depthWrite	: false,
 		transparent	: true
 	})
-	var geometry	= new THREE.PlaneGeometry(1, 0.1)
+	var geometry	= new THREE.PlaneGeometry(0.1, 1)
 	var nPlanes	= 16;
 	for(var i = 0; i < nPlanes; i++){
 		var mesh	= new THREE.Mesh(geometry, material)
-		mesh.position.x	= 1/2
-		mesh.rotation.x	= i/nPlanes * Math.PI
+		mesh.rotation.x	= Math.PI/2
+		mesh.position.z	= -1/2
+		mesh.rotation.y	= i/nPlanes * Math.PI
 		object3d.add(mesh)
 	}
 	
+	this.getLength = function(length){
+		return object3d.scale.z
+	}
 	this.setLength = function(length){
-		object3d.scale.x	= length
+		if( length < 0.01 )	length = 0.01
+		object3d.scale.z	= length
 	}
 	return
 	
@@ -34,8 +39,8 @@ THREEx.LaserBeam	= function(){
 		// init canvas
 		var canvas	= document.createElement( 'canvas' );
 		var context	= canvas.getContext( '2d' );
-		canvas.width	= 1;
-		canvas.height	= 64;
+		canvas.width	= 64;
+		canvas.height	= 1;
 		// set gradient
 		var gradient	= context.createLinearGradient(0, 0, canvas.width, canvas.height);		
 		gradient.addColorStop( 0  , 'rgba(  0,  0,  0,0.1)' );

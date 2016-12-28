@@ -90,10 +90,15 @@ document.addEventListener('touchmove', function(event) {
 <!-- load PhoneAsVRController -->
 <script src='../../build/phoneasvrcontroller.js'></script>
 
-
+<!-- load threex.gamepadtools -->
 <script src='../vendor/threex.gamepadtools.js/src/threex.gamepadsignals.js'></script>
-
 <script src='../vendor/threex.gamepadtools.js/vendor/three.js/editor/js/libs/signals.min.js'></script>
+
+
+<script src='threex.lightsabersounds.js/threex.lightsabersounds.js'></script>
+<script src='../vendor/threex.laser/threex.laserbeam.js'></script>
+
+
 
 <script>
 var onRenderFcts = []
@@ -243,8 +248,20 @@ loader.load('../images/box.png', function onTextureLoaded(texture) {
 	});
 	
 	var skybox = new THREE.Mesh(geometry, material);
-	scene.add(skybox);
+	// scene.add(skybox);
 });
+
+
+//////////////////////////////////////////////////////////////////////////////
+//		add lights
+//////////////////////////////////////////////////////////////////////////////
+
+scene.add( new THREE.HemisphereLight( 0x404020, 0x202040, 0.5 ) );
+
+var light = new THREE.DirectionalLight( 0xffffff );
+light.position.set( 1, 1, 1 ).normalize();
+scene.add( light );
+
 
 //////////////////////////////////////////////////////////////////////////////
 //		ray input
@@ -257,7 +274,6 @@ rayInput.setSize(renderer.getSize());
 
 // Add the ray rayInput mesh to the scene.
 scene.add(rayInput.getMesh());
-
 
 window.addEventListener('resize', function(){
 	rayInput.setSize(renderer.getSize());
@@ -312,24 +328,40 @@ rayInput.on('raycancel', function(opt_mesh){
 	opt_mesh.material.color.set(0x1E90FF)
 });
 
-</script>
+//////////////////////////////////////////////////////////////////////////////
+//		phoneasvrcontroller.js
+//////////////////////////////////////////////////////////////////////////////
 
 
-<!-- enable PhoneAsVRController. it overloads gamepad api -->
-<script>
-        window.addEventListener('load', function(){
-                var serverUrl = 'http://'+location.hostname+':4000'
-                var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
-		
-		// update phoneAsVRController.viewQuaternion for recalibration
-		onRenderFcts.push(function(){
-			phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
-		})            
-        });
-</script>
+// enable PhoneAsVRController. it overloads gamepad api
+window.addEventListener('load', function(){
+        var serverUrl = 'http://'+location.hostname+':4000'
+        var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+	
+	// update phoneAsVRController.viewQuaternion for recalibration
+	onRenderFcts.push(function(){
+		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+	})            
+});
 
-<script src='threex.lightsabersounds.js/threex.lightsabersounds.js'></script>
-<script>
+var lastGamePad = navigator.getGamepads()[0]
+onRenderFcts.push(function(){
+	lastGamePad = navigator.getGamepads()[0]
+})
+
+
+// handle gamepadsignals
+var gamepadSignals = new THREEx.GamepadSignals()
+onRenderFcts.push(function(){
+	if( lastGamePad === undefined || lastGamePad === null ) return
+	gamepadSignals.update(lastGamePad)
+})
+
+//////////////////////////////////////////////////////////////////////////////
+//		light saber sounds
+//////////////////////////////////////////////////////////////////////////////
+;(function(){
+	var exports = window
 	THREEx.LightSaberSounds.baseURL = 'threex.lightsabersounds.js/';
 
 	// init listener
@@ -339,16 +371,182 @@ rayInput.on('raycancel', function(opt_mesh){
 	var saberSounds = new THREEx.LightSaberSounds(listener, function onLoaded(){
 		console.log('all light saber sounds are loaded')
 	})
-	
+	exports.saberSounds = saberSounds
 
 	onRenderFcts.push(function(){
-		var gamepad = navigator.getGamepads()[0]
-		if( gamepad === undefined || gamepad === null ) return
-		saberSounds.update(gamepad)
+		if( lastGamePad === undefined || lastGamePad === null ) return
+		saberSounds.update(lastGamePad)	
+	})
+})()
+
+
+
+	
+	
+
+	//////////////////////////////////////////////////////////////////////////////
+	//              Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+;(function(){
+	var exports = window
+	var material = new THREE.MeshPhongMaterial({
+		color: 'lightblue'
+	})
+	var geometry = new THREE.SphereGeometry(0.2, 16,16)
+	var enemyObject = new THREE.Mesh(geometry, material)
+	enemyObject.position.set(0, 0, -1)
+	rayInput.add(enemyObject)
+	scene.add(enemyObject)
+	
+	exports.enemyObject = enemyObject
+	
+	enemyObject.userData.targetPosition = new THREE.Vector3().copy(enemyObject.position);
+	var jumpMaxAge = 1000
+	onRenderFcts.push(function(){
+// return // prevent it to move
+		var age = Date.now() - lastJumpAt
+		if( age > jumpMaxAge )	enemyObject.userData.jump()
+	})
+
+	var lastJumpAt = Date.now()
+	enemyObject.userData.jump = function(){
+		lastJumpAt = Date.now()
+		jumpMaxAge = 1000 + THREE.Math.randFloatSpread(1000)				
+
+		var targetPosition = enemyObject.userData.targetPosition
+		targetPosition.x += THREE.Math.randFloatSpread(1)
+		targetPosition.y += THREE.Math.randFloatSpread(1)
+	}
+	
+	enemyObject.userData.respawn = function(){
+		lastJumpAt = 0
+
+		enemyObject.position.set(0, 0, -1)
+		enemyObject.userData.targetPosition.copy(enemyObject.position)
+
+		// var targetPosition = enemyObject.userData.targetPosition
+		// targetPosition.x += THREE.Math.randFloatSpread(4)
+		// targetPosition.y += THREE.Math.randFloatSpread(4)
+	}
+	
+	onRenderFcts.push(function(){
+		var strengh = 0.05
+		var targetPosition = enemyObject.userData.targetPosition
+		enemyObject.position.x = enemyObject.position.x * (1-strengh) + targetPosition.x * (strengh)
+		enemyObject.position.y = enemyObject.position.y * (1-strengh) + targetPosition.y * (strengh)
+		enemyObject.position.z = enemyObject.position.z * (1-strengh) + targetPosition.z * (strengh)
+	})
+})()
+
+	//////////////////////////////////////////////////////////////////////////////
+	//              Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+;(function(){
+	var groupLaserBeam = new THREE.Group
+	scene.add(groupLaserBeam)
+	
+	var laserBeam	= new THREEx.LaserBeam()
+	groupLaserBeam.add(laserBeam.object3d)
+	laserBeam.setLength(5)
+
+	var saberIsActive = true
+	var lastSaberOnAt = null
+	var lastSaberOffAt = null
+	function toggleSaber(){
+		if( saberIsActive === false ){
+			saberIsActive = true
+			lastSaberOnAt = Date.now()
+			laserBeam.object3d.visible = true
+			saberSounds.enabled = true
+			if( saberSounds.sounds.saberon.isPlaying === false ){
+				saberSounds.sounds.saberon.play()
+			}
+		}else{
+			saberIsActive = false
+			lastSaberOffAt = Date.now()
+			if( saberSounds.sounds.saberoff.isPlaying === false ){
+				saberSounds.sounds.saberoff.play()
+			}
+		}		
+	}
+	gamepadSignals.signals.touchStart.add(function(buttonIndex){
+		if( buttonIndex !== 0 )	return
+		toggleSaber()
+	})
+	
+	onRenderFcts.push(function(){
+		if( lastSaberOnAt === null ) 	return
 		
+		var maxAge = 500
+		var currentAge = Date.now() - lastSaberOnAt
+		if( currentAge >= maxAge ){
+			lastSaberOnAt = null
+			return
+		}
+
+		var normalizedAge = currentAge / maxAge
+		var length = 2  * normalizedAge
+		laserBeam.setLength(length)
+	})
+	
+	onRenderFcts.push(function(){
+		if( lastSaberOffAt === null ) 	return
+
+		var maxAge = 500
+		var currentAge = Date.now() - lastSaberOffAt
+
+		if( currentAge >= maxAge ){
+			lastSaberOffAt = null
+			laserBeam.object3d.visible = false
+			saberSounds.enabled = false
+			return
+		}
+
+		var normalizedAge = currentAge / maxAge
+		var length = 2  * (1-normalizedAge)
+		laserBeam.setLength(length)
 	})
 	
 	
-	
+
+	// set
+	onRenderFcts.push(function(){
+		var position = rayInput.getOrigin()
+		groupLaserBeam.position.copy(position)
+
+		groupLaserBeam.quaternion.copy(rayInput.renderer.orientation)
+		
+		// if( laserBeam.getLength() !== rayInput.renderer.reticleDistance ){
+		// 	laserBeam.setLength(rayInput.renderer.reticleDistance)
+		// }
+	})
+
+
+	//////////////////////////////////////////////////////////////////////////////
+	//              intersection lightSaber and enemyObject
+	//////////////////////////////////////////////////////////////////////////////
+	onRenderFcts.push(function(){
+		if( laserBeam.object3d.visible === false ){
+			enemyObject.material.color.set('lightblue')			
+			return
+		}
+		var start = groupLaserBeam.localToWorld(new THREE.Vector3(0,0,0))
+		var end = groupLaserBeam.localToWorld(new THREE.Vector3(0,0,-1))
+		var line3 = new THREE.Line3
+		line3.set(start, end)
+
+		var enemyPoint = enemyObject.position.clone()
+		
+		var closestPoint = line3.closestPointToPoint(enemyPoint, true)
+		var distance = closestPoint.distanceTo(enemyPoint)
+		if( distance < enemyObject.geometry.parameters.radius + laserBeam.object3d.scale.x/64 ){
+			enemyObject.material.color.set('red')
+			enemyObject.userData.respawn()
+		}else{
+			enemyObject.material.color.set('lightblue')			
+		}
+	})
+
+})()
 </script>
 </html>
