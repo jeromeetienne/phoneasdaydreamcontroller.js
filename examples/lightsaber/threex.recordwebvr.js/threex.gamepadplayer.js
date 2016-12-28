@@ -14,8 +14,15 @@ THREEx.GamepadPlayer = function(){
                 for(var i = 0; i < urls.length; i++){
                         doLoad(urls[i], function(){
                                 countRemaining--
-                                
                         })
+                }
+                function doLoad(url, onLoaded){
+                        var request = new XMLHttpRequest()
+                        request.addEventListener('load', function(){
+                                onLoaded(this.responseText)
+                        })
+                        request.open('GET', url)
+                        request.send()
                 }
         }
 
