@@ -330,17 +330,17 @@ rayInput.on('raycancel', function(opt_mesh){
 //////////////////////////////////////////////////////////////////////////////
 //		phoneasvrcontroller.js
 //////////////////////////////////////////////////////////////////////////////
-// 
-// // enable PhoneAsVRController. it overloads gamepad api
-// window.addEventListener('load', function(){
-//         var serverUrl = 'http://'+location.hostname+':4000'
-//         var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
-// 	
-// 	// update phoneAsVRController.viewQuaternion for recalibration
-// 	onRenderFcts.push(function(){
-// 		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
-// 	}) 
-// }); 
+
+// enable PhoneAsVRController. it overloads gamepad api
+window.addEventListener('load', function(){
+        var serverUrl = 'http://'+location.hostname+':4000'
+        var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+	
+	// update phoneAsVRController.viewQuaternion for recalibration
+	onRenderFcts.push(function(){
+		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+	}) 
+}); 
 
 var lastGamePad = navigator.getGamepads()[0]
 onRenderFcts.push(function(){
