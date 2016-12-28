@@ -98,7 +98,8 @@ document.addEventListener('touchmove', function(event) {
 <script src='threex.lightsabersounds.js/threex.lightsabersounds.js'></script>
 <script src='../vendor/threex.laser/threex.laserbeam.js'></script>
 
-<script src="threex.recordwebvr.js/threex.gamepadrecorder.js" charset="utf-8"></script>
+<script src='threex.recordwebvr.js/threex.gamepadrecorder.js'></script>
+<script src='threex.recordwebvr.js/vendor/download.js'></script>
 
 <script>
 var onRenderFcts = []
@@ -367,6 +368,8 @@ onRenderFcts.push(function(){
 	// init listener
 	var listener = new THREE.AudioListener();
 	camera.add( listener );
+	// set master volume to 0 - useful during dev
+ 	listener.setMasterVolume(0)
 
 	var saberSounds = new THREEx.LightSaberSounds(listener, function onLoaded(){
 		console.log('all light saber sounds are loaded')
@@ -550,7 +553,6 @@ onRenderFcts.push(function(){
 
 ;(function(){
 	var gamepadRecorder = new THREEx.GamepadRecorder()
-	window.gamepadRecorder = gamepadRecorder
 	gamepadRecorder.start();
 })()
 </script>
