@@ -6,3 +6,12 @@
   - what are the alternatives ? to save in binary
   - what about after you did json ?
   - yeah no emergency
+  
+
+
+----
+
+# Notes
+- ability to record data in multiple files
+  - there is like a sessions which is recordedAt
+  - first files

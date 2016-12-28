@@ -12,7 +12,7 @@ THREEx.GamepadPlayer = function(){
                 
                 var countRemaining = urls.length
                 for(var i = 0; i < urls.length; i++){
-                        doLoad(urls[i], function(){
+                        doLoad(urls[i], function(content){
                                 countRemaining--
                         })
                 }
