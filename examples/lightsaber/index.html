@@ -98,7 +98,7 @@ document.addEventListener('touchmove', function(event) {
 <script src='threex.lightsabersounds.js/threex.lightsabersounds.js'></script>
 <script src='../vendor/threex.laser/threex.laserbeam.js'></script>
 
-
+<script src="threex.recordwebvr.js/threex.gamepadrecorder.js" charset="utf-8"></script>
 
 <script>
 var onRenderFcts = []
@@ -546,7 +546,12 @@ onRenderFcts.push(function(){
 			enemyObject.material.color.set('lightblue')			
 		}
 	})
+})()
 
+;(function(){
+	var gamepadRecorder = new THREEx.GamepadRecorder()
+	window.gamepadRecorder = gamepadRecorder
+	gamepadRecorder.start();
 })()
 </script>
 </html>
