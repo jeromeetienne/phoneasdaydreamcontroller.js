@@ -1,17 +1,21 @@
+- test replay on vive ?
+  - possible with only the controller ?
+  - why would i require webvr ? i dont think it is required
+
+
 - put gamepad/webvr recorder/player in a single class ? 
   - overcooked ?
   - threex.jsonplayer.js threex.jsonrecorder.js
 
 - file are getting huge... how to do better ?
+  - store only delta
+  - store in binary
 - LATER save in binary - should i record in json ?
   - large files => slow download + huge memory usage
   - what are the alternatives ? to save in binary
   - what about after you did json ?
   - yeah no emergency
 - merge with https://github.com/jeromeetienne/threejs-video-augmentedreality
-- test replay on vive ?  
-  - possible with only the controller ?
-  - why would i require webvr ?
 
 
 ----

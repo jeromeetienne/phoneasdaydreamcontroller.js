@@ -1,3 +1,14 @@
+
+<!-- enable PhoneAsVRController. it overloads gamepad api -->
+<script src='../../../build/phoneasvrcontroller.js'></script>
+
+<!-- add gamepad recorder/player -->
+<script src='../vendor/download.js'></script>
+<script src='../vendor/cloneObject.js'></script>
+<script src='../threex.gamepadrecorder.js'></script>
+<script src='../threex.gamepadplayer.js'></script>
+
+
 <h2>Here is the raw gamepad api data</h2>
 <pre id='output'></pre>
 <script>
@@ -8,7 +19,8 @@
 		var gamepads = navigator.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
 			if( gamepads[i] === undefined )	continue
-			text += JSON.stringify(gamepads[i], null, '\t')+'\n'
+			var gamepad = cloneObject(gamepads[i])
+			text += JSON.stringify(gamepad, null, '\t')+'\n'
 		}
 		if( text.length === 0 ) text = 'no phone connected'
 
@@ -16,37 +28,31 @@
 		setTimeout(dumpGamepad, 100)
 	}
 	
-	dumpGamepad()
-</script>
+	setTimeout(dumpGamepad, 0)
 
-<!-- enable PhoneAsVRController. it overloads gamepad api -->
-<script src='../../../build/phoneasvrcontroller.js'></script>
+	
+	////////////////////////////////////////////////////////////////////////////////
+	//          Code Separator
+	////////////////////////////////////////////////////////////////////////////////
 
-<!-- add gamepad recorder/player -->
-<script src='../vendor/download.js'></script>
-<script src='../threex.gamepadrecorder.js'></script>
-<script src='../threex.gamepadplayer.js'></script>
-
-<script>
 	// var mode = 'record'
 	var mode = 'play'
+	// var mode = ''
 
 	if( mode === 'record' ){
 		// enable phoneasvrcontroller.js
-		window.addEventListener('load', function(){
-			var serverUrl = 'http://'+location.hostname+':4000'
-			var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
-		});
+		// 	var serverUrl = 'http://'+location.hostname+':4000'
+		// 	var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
 		// start recording gamepads
 		var gamepadRecorder = new THREEx.GamepadRecorder()
 		gamepadRecorder.start()
 	}
 
 	if( mode === 'play' ){		
+		var nRecordsFiles = 1
 		// build the urls of the file to load
 		var urls = []
-		var nUrls = 20
-		for(var i = 0; i < nUrls; i++){
+		for(var i = 0; i < nRecordsFiles; i++){
 			urls.push('data/gamepadrecords'+pad(i, 2)+'.json')
 		}
 		// start loading those urls
@@ -71,4 +77,5 @@
                 while (s.length < size) s = '0' + s;
                 return s;
         }
+	
 </script>

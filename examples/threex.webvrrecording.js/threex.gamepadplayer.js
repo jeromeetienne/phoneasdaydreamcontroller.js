@@ -66,6 +66,7 @@ THREEx.GamepadPlayer = function(){
         }
         this.stop = function(){
                 startedAt = null
+                nextValueIndex = 0
 
                 clearTimeout(timerId)
                 timerId = null
