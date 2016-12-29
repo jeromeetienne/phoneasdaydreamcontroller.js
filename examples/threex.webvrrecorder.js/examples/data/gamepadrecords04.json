@@ -1,0 +1,4390 @@
+{
+	"createdAt": 1483016357939,
+	"values": [
+		{
+			"recordedAt": 1483016357949,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016357960,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016357969,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016357979,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016357988,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358000,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358008,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358019,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358028,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358038,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358049,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358059,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358069,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358080,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358088,
+			"data": [
+				null,
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358100,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358109,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358120,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358128,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358138,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358149,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358158,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358169,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358178,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358190,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358199,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358210,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358218,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358228,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358238,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358249,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358258,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358269,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0,
+							0,
+							0,
+							1
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358278,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0005594207473172613,
+							-0.0006833943759898331,
+							0.0011947340256068895,
+							0.9999988963149722
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358290,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0005594207473172613,
+							-0.0006833943759898331,
+							0.0011947340256068895,
+							0.9999988963149722
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358298,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0005594207473172613,
+							-0.0006833943759898331,
+							0.0011947340256068895,
+							0.9999988963149722
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358309,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358319,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358329,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358338,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358348,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358359,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358369,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358379,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358390,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358399,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358409,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358419,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.000715029734089562,
+							-0.001415347150328813,
+							0.002277320493124731,
+							0.9999961496607349
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358431,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0011794093896069075,
+							-0.0008819092848548454,
+							0.003376565184926856,
+							0.9999932149955103
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358439,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0011794093896069075,
+							-0.0008819092848548454,
+							0.003376565184926856,
+							0.9999932149955103
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358448,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0011794093896069075,
+							-0.0008819092848548454,
+							0.003376565184926856,
+							0.9999932149955103
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358458,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0017193800791945393,
+							-0.001503598960697843,
+							0.004749475033040626,
+							0.9999861126081797
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358468,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0017193800791945393,
+							-0.001503598960697843,
+							0.004749475033040626,
+							0.9999861126081797
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358480,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0017193800791945393,
+							-0.001503598960697843,
+							0.004749475033040626,
+							0.9999861126081797
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358488,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.002111511141806074,
+							-0.0023762836714639572,
+							0.004858795047765676,
+							0.9999831433115732
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358498,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.002111511141806074,
+							-0.0023762836714639572,
+							0.004858795047765676,
+							0.9999831433115732
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358508,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0018643226030919096,
+							-0.0023650055921089425,
+							0.0059603676050293125,
+							0.9999777022853029
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358519,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0018643226030919096,
+							-0.0023650055921089425,
+							0.0059603676050293125,
+							0.9999777022853029
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358528,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0018643226030919096,
+							-0.0023650055921089425,
+							0.0059603676050293125,
+							0.9999777022853029
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358539,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0018643226030919096,
+							-0.0023650055921089425,
+							0.0059603676050293125,
+							0.9999777022853029
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358549,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0018643226030919096,
+							-0.0023650055921089425,
+							0.0059603676050293125,
+							0.9999777022853029
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358558,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0011129521634334844,
+							-0.00015115879038633866,
+							0.0047976450152670625,
+							0.9999878604717205
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358569,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0011129521634334844,
+							-0.00015115879038633866,
+							0.0047976450152670625,
+							0.9999878604717205
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358578,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.00039507335595892354,
+							0.0018206412184599693,
+							0.002137270949862904,
+							0.9999959806196642
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358589,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.00039507335595892354,
+							0.0018206412184599693,
+							0.002137270949862904,
+							0.9999959806196642
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358599,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0003212009569129934,
+							0.0037742310792511433,
+							0.0008346853616471627,
+							0.9999924776267334
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358609,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0003212009569129934,
+							0.0037742310792511433,
+							0.0008346853616471627,
+							0.9999924776267334
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358619,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0005020286765730922,
+							0.005410447679684072,
+							0.0007718219078902683,
+							0.9999849395436192
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358628,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358640,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358649,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358660,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358669,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358679,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358690,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000268712931651216,
+							0.006420669081526024,
+							0.0011551608948320849,
+							0.99997868397542
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358698,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0007321245213392231,
+							0.007410271564656344,
+							0.0018096450513841644,
+							0.9999706380958449
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358710,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0007321245213392231,
+							0.007410271564656344,
+							0.0018096450513841644,
+							0.9999706380958449
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358719,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0004072858568948305,
+							0.008571411898572336,
+							0.0018730555754067977,
+							0.9999614275956383
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358728,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.00004111080176276572,
+							0.010875084025618941,
+							0.00043452840008885896,
+							0.9999407692670638
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358738,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.00004111080176276572,
+							0.010875084025618941,
+							0.00043452840008885896,
+							0.9999407692670638
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358748,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0001131771796495563,
+							0.012171809886072985,
+							0.0013608010577122794,
+							0.9999249884143834
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358759,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0001131771796495563,
+							0.012171809886072985,
+							0.0013608010577122794,
+							0.9999249884143834
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358769,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.00047443192937004776,
+							0.013346224217422962,
+							0.0017579957957162859,
+							0.9999092772168208
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358779,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.00047443192937004776,
+							0.013346224217422962,
+							0.0017579957957162859,
+							0.9999092772168208
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358788,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0006320801604785718,
+							0.014390331042170308,
+							0.0015281816005367304,
+							0.9998950862506343
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358798,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0006025839817364138,
+							0.015663591717885086,
+							0.001261818146659715,
+							0.9998763406551857
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358810,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0006025839817364138,
+							0.015663591717885086,
+							0.001261818146659715,
+							0.9998763406551857
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358818,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0005145389486362002,
+							0.017512588788285422,
+							0.0011453464196686323,
+							0.9998458544521659
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358828,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.0005145389486362002,
+							0.017512588788285422,
+							0.0011453464196686323,
+							0.9998458544521659
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358838,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							-0.00036811238988355814,
+							0.019766011647967374,
+							0.0010404797003982441,
+							0.9998040241361273
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358848,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000038037581623449125,
+							0.02228886795857105,
+							0.0005589569696335595,
+							0.9997514153455217
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358860,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.000038037581623449125,
+							0.02228886795857105,
+							0.0005589569696335595,
+							0.9997514153455217
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358869,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0007316880180785608,
+							0.02489398598280345,
+							-0.0005192788171975318,
+							0.9996896940771383
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358878,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0007316880180785608,
+							0.02489398598280345,
+							-0.0005192788171975318,
+							0.9996896940771383
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358889,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.001344671667754257,
+							0.027345938999137464,
+							-0.0018662234056273897,
+							0.999623383424258
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358898,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0012538261444890934,
+							0.0289923648186876,
+							-0.002628518526784854,
+							0.9995753906497368
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358909,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0012538261444890934,
+							0.0289923648186876,
+							-0.002628518526784854,
+							0.9995753906497368
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358918,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0012538261444890934,
+							0.0289923648186876,
+							-0.002628518526784854,
+							0.9995753906497368
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358928,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0012538261444890934,
+							0.0289923648186876,
+							-0.002628518526784854,
+							0.9995753906497368
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		},
+		{
+			"recordedAt": 1483016358939,
+			"data": [
+				{
+					"id": "PhoneAsGamepad.js Controller",
+					"index": 0,
+					"connected": true,
+					"mapping": "standard",
+					"axes": [
+						[
+							0,
+							0
+						]
+					],
+					"buttons": [
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						},
+						{
+							"pressed": false,
+							"value": 0
+						}
+					],
+					"hand": "right",
+					"pose": {
+						"hasPosition": false,
+						"hasOrientation": true,
+						"position": null,
+						"linearVelocity": null,
+						"linearAcceleration": null,
+						"orientation": [
+							0.0007676991044119013,
+							0.028602144441576112,
+							-0.0004127435581442222,
+							0.9995904949599028
+						],
+						"angularVelocity": null,
+						"angularAcceleration": null
+					}
+				},
+				null,
+				null,
+				null
+			]
+		}
+	]
+}

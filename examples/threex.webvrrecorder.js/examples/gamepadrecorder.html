@@ -21,18 +21,48 @@
 
 <!-- enable PhoneAsVRController. it overloads gamepad api -->
 <script src='../../../build/phoneasvrcontroller.js'></script>
-<script>
-        window.addEventListener('load', function(){
-                var serverUrl = 'http://'+location.hostname+':4000'
-                var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
-        });
-</script>
 
-<!-- add gamepad recorder -->
+<!-- add gamepad recorder/player -->
 <script src='../vendor/download.js'></script>
 <script src='../threex.gamepadrecorder.js'></script>
 <script src='../threex.gamepadplayer.js'></script>
+
 <script>
-	var gamepadRecorder = new THREEx.GamepadRecorder()
-	gamepadRecorder.start()
+// var mode = 'record'
+var mode = 'play'
+	if( mode === 'record' ){
+		// enable phoneasvrcontroller.js
+		window.addEventListener('load', function(){
+			var serverUrl = 'http://'+location.hostname+':4000'
+			var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+		});
+		
+		var gamepadRecorder = new THREEx.GamepadRecorder()
+		gamepadRecorder.start()
+	}
+
+	if( mode === 'play' ){		
+		var gamepadPlayer = new THREEx.GamepadPlayer()
+		// polyfill to high-jack gamepad API
+		navigator.getGamepads = function(){
+			return gamepadPlayer.gamepads
+		}
+		
+		var urls = []
+		var nUrls = 20
+		for(var i = 0; i < nUrls; i++){
+			urls.push('data/gamepadrecords'+pad(i, 2)+'.json')
+		}
+		gamepadPlayer.load(urls, function onLoaded(){
+			console.log('loaded all gamepad records')
+			gamepadPlayer.start()
+		})
+	}
+
+
+	function pad(num, size) {
+                var s = num + '';
+                while (s.length < size) s = '0' + s;
+                return s;
+        }
 </script>

@@ -5,7 +5,7 @@ THREEx.GamepadRecorder = function(){
         
         // parameters
         this.autoSave = true
-        this.autoSaveMaxLength = 10000
+        this.autoSaveMaxLength = 100
         this.updatePeriod = 1000/100
         this.autoSaveBaseName = 'gamepadrecords'
         var autoSaveCounter = 0
@@ -34,7 +34,8 @@ THREEx.GamepadRecorder = function(){
         return
 
         function update(){
-                var gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+                var gamepads = navigator.getGamepads();
+                gamepads = JSON.parse(JSON.stringify(gamepads))
                 // add this value 
                 records.values.push({
                         recordedAt : Date.now(),
@@ -49,7 +50,8 @@ THREEx.GamepadRecorder = function(){
         function autoSave(){
                 // save records
                 var basename = _this.autoSaveBaseName+pad(autoSaveCounter, 2)+'.json'
-                var jsonString = JSON.stringify(records)
+                var jsonString = JSON.stringify(records, null, "\t"); 
+                // var jsonString = JSON.stringify(records); 
                 download(jsonString, basename, 'application/json');
 
                 // update autoSaveCounter
