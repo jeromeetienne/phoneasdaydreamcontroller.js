@@ -5,9 +5,9 @@ THREEx.GamepadRecorder = function(){
         
         // parameters
         this.autoSave = true
-        this.autoSaveMaxLength = 100
-        this.updatePeriod = 1000/100
+        this.autoSaveMaxLength = 1000
         this.autoSaveBaseName = 'gamepadrecords'
+        this.updatePeriod = 1000/100
         var autoSaveCounter = 0
 
         var records = {
