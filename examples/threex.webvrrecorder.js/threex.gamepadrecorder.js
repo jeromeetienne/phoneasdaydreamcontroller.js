@@ -35,6 +35,7 @@ THREEx.GamepadRecorder = function(){
 
         function update(){
                 var gamepads = navigator.getGamepads();
+                // clone the struct
                 gamepads = JSON.parse(JSON.stringify(gamepads))
                 // add this value 
                 records.values.push({
