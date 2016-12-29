@@ -162,9 +162,9 @@ function sendTrackpadEvent(domEvent){
 		event.positionY = (touch.clientY / boundRect.height- 0.5) * 2
 		// touchmove is still notified out of the touchstart element, so here clamp the position
 		event.positionX = Math.min(event.positionX, 1.0)
-		event.positionX = Math.max(event.positionX, 0.0)
+		event.positionX = Math.max(event.positionX,-1.0)
 		event.positionY = Math.min(event.positionY, 1.0)
-		event.positionY = Math.max(event.positionY, 0.0)
+		event.positionY = Math.max(event.positionY,-1.0)
 	}else{
 		event.positionX = 0
 		event.positionY = 0
