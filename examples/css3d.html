@@ -111,7 +111,7 @@
 		var gamepads = phoneAsVRController.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
 			var gamepad = gamepads[i]
-			if( gamepad === undefined )	continue
+			if( gamepad === null )	continue
 			if( gamepad.hand !== hand )	continue
 			return gamepad
 		}

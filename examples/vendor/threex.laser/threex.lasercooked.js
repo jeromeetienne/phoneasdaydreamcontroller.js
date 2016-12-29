@@ -14,7 +14,8 @@ THREEx.LaserCooked	= function(laserBeam){
 	sprite.scale.x = 1
 	sprite.scale.y = 1;
 
-	sprite.position.x	= 1-0.01
+	// sprite.position.x	= 1-0.01
+	sprite.position.z	= -1+0.1
 	object3d.add(sprite)
 
 	// add a point light

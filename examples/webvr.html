@@ -267,25 +267,25 @@ function enterFullscreen (element) {
 	//////////////////////////////////////////////////////////////////////////////
 	//		Code Separator
 	//////////////////////////////////////////////////////////////////////////////
-
-	// Add a repeating grid as a skybox.
-	var boxWidth = 10;
-	var loader = new THREE.TextureLoader();
-	loader.load('images/box.png', function onTextureLoaded(texture) {
-		texture.wrapS = THREE.RepeatWrapping;
-		texture.wrapT = THREE.RepeatWrapping;
-		texture.repeat.set(boxWidth, boxWidth);
-		
-		var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
-		var material = new THREE.MeshPhongMaterial({
-			map: texture,
-			color: 0x015500,
-			side: THREE.BackSide
-		});
-		
-		var skybox = new THREE.Mesh(geometry, material);
-		scene.add(skybox);
-	});
+	// 
+	// // Add a repeating grid as a skybox.
+	// var boxWidth = 10;
+	// var loader = new THREE.TextureLoader();
+	// loader.load('images/box.png', function onTextureLoaded(texture) {
+	// 	texture.wrapS = THREE.RepeatWrapping;
+	// 	texture.wrapT = THREE.RepeatWrapping;
+	// 	texture.repeat.set(boxWidth, boxWidth);
+	// 	
+	// 	var geometry = new THREE.BoxGeometry(boxWidth, boxWidth, boxWidth);
+	// 	var material = new THREE.MeshPhongMaterial({
+	// 		map: texture,
+	// 		color: 0x015500,
+	// 		side: THREE.BackSide
+	// 	});
+	// 	
+	// 	var skybox = new THREE.Mesh(geometry, material);
+	// 	scene.add(skybox);
+	// });
 
     
 	//////////////////////////////////////////////////////////////////////////////////
@@ -311,7 +311,7 @@ function enterFullscreen (element) {
 		var gamepads = phoneAsVRController.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
 			var gamepad = gamepads[i]
-			if( gamepad === undefined )	continue
+			if( gamepad === null )	continue
 			if( gamepad.hand !== hand )	continue
 			return gamepad
 		}

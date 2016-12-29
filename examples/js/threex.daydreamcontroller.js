@@ -20,10 +20,10 @@ THREEx.DaydreamController.prototype._initRayModel = function () {
 	this._phoneModel = phoneModel
 	
 	var laserBeam	= new THREEx.LaserBeam()
-	laserBeam.object3d.rotation.y = Math.PI/2
-	laserBeam.object3d.scale.x = 0.5
-	laserBeam.object3d.scale.z = 0.5
-	laserBeam.object3d.position.z = -0.5*0.2
+	// laserBeam.object3d.rotation.y = Math.PI/2
+	// laserBeam.object3d.scale.x = 0.5
+	// laserBeam.object3d.scale.z = 0.5
+	// laserBeam.object3d.position.z = -0.5*0.2
 	this._laserBeam = laserBeam
 	
 	this._laserCooked	= new THREEx.LaserCooked(laserBeam)
@@ -83,7 +83,7 @@ THREEx.DaydreamController.prototype.getRaycaster = function(){
 	matrixWorld.setPosition(new THREE.Vector3(0,0,0))		
 	// set the direction
 	// TODO use instead .setFromRotationMatrix ???
-	raycaster.ray.direction.set(1,0,0)
+	raycaster.ray.direction.set(0,0,-1)
 		.applyMatrix4( matrixWorld )
 		.normalize()
 		
