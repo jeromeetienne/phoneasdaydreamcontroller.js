@@ -1,4 +1,3 @@
-
 <!-- enable PhoneAsVRController. it overloads gamepad api -->
 <script src='../../../build/phoneasvrcontroller.js'></script>
 
@@ -29,8 +28,8 @@
 	}
 	
 	setTimeout(dumpGamepad, 0)
-
-	
+</script>
+<script>	
 	////////////////////////////////////////////////////////////////////////////////
 	//          Code Separator
 	////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +52,7 @@
 		// build the urls of the file to load
 		var urls = []
 		for(var i = 0; i < nRecordsFiles; i++){
-			urls.push('data/gamepadrecords'+pad(i, 2)+'.json')
+			urls.push('data/gamepadrecords'+pad(i, 4)+'.json')
 		}
 		// start loading those urls
 		var gamepadPlayer = new THREEx.GamepadPlayer()

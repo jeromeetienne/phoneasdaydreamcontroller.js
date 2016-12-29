@@ -15,7 +15,7 @@
   - what are the alternatives ? to save in binary
   - what about after you did json ?
   - yeah no emergency
-- merge with https://github.com/jeromeetienne/threejs-video-augmentedreality
+- DONE merge with https://github.com/jeromeetienne/threejs-video-augmentedreality
 
 
 ----

@@ -1,0 +1,95 @@
+<!-- add gamepad recorder/player -->
+<script src='../vendor/download.js'></script>
+<script src='../vendor/cloneObject.js'></script>
+<script src='../threex.webvrrecorder.js'></script>
+<script src='../threex.webvrplayer.js'></script>
+
+
+<h2>Here is the raw gamepad api data</h2>
+<pre id='output'></pre>
+<canvas id='myCanvas'></canvas>
+<script>
+	var vrDisplay = null
+	navigator.getVRDisplays().then(function(displays){
+		displays = displays.filter(function(display){
+			return display.capabilities.canPresent
+		})
+		// If there are no devices available, quit out.
+		if (displays.length === 0) {
+    			console.warn('No devices available able to present.');
+			return;
+		}
+
+		vrDisplay = displays[0]
+		console.dir(vrDisplay)
+		vrDisplay.requestPresent([{
+			source: document.querySelector('#myCanvas')
+		}]);
+		
+		////////////////////////////////////////////////////////////////////////////////
+		//          Code Separator
+		////////////////////////////////////////////////////////////////////////////////
+
+		var mode = 'record'
+		var mode = 'play'
+		// var mode = ''
+
+		if( mode === 'record' ){
+			// start recording gamepads
+			var webvrRecorder = new THREEx.WebvrRecorder()
+			webvrRecorder.start(vrDisplay)
+		}
+
+		if( mode === 'play' ){		
+			var nRecordsFiles = 6
+			// build the urls of the file to load
+			var urls = []
+			for(var i = 0; i < nRecordsFiles; i++){
+				urls.push('data-webvr/webvrrecords'+pad(i, 4)+'.json')
+			}
+			// start loading those urls
+			var webvrPlayer = new THREEx.WebvrPlayer()
+			webvrPlayer.load(urls, function onLoaded(){
+				console.log('loaded all webvr records')
+				// once it is all loaded, start replaying
+				webvrPlayer.start()
+			})
+window.webvrPlayer = webvrPlayer
+			// vrDisplay.getFrameData = function(frameData){
+			// 	
+			// }
+		}
+			
+	})
+
+	var frameData = new VRFrameData();
+	function dumpFrameData(){
+		// if( vrDisplay === null )	return
+		// vrDisplay.getFrameData(frameData);
+		if( webvrPlayer === null )	return
+		var frameData = webvrPlayer.frameData
+
+
+		var text = ''
+		text += JSON.stringify(frameData, null, '\t')+'\n'
+
+		var domElement = document.querySelector('#output')
+		domElement.innerText = text
+		setTimeout(dumpFrameData, 100)
+	}
+	setTimeout(dumpFrameData, 0)
+	
+
+	////////////////////////////////////////////////////////////////////////////////
+	//          utils functions
+	////////////////////////////////////////////////////////////////////////////////
+
+	function pad(num, size) {
+                var s = num + '';
+                while (s.length < size) s = '0' + s;
+                return s;
+        }
+</script>
+<script>	
+
+</script>
