@@ -3,27 +3,16 @@ var THREEx = THREEx || {}
 THREEx.GamepadRecorder = function(){
         var _this = this
         
+        // parameters
         this.autoSave = true
-        this.autoSaveMaxLength = 1000
+        this.autoSaveMaxLength = 10000
         this.updatePeriod = 1000/100
+        this.autoSaveBaseName = 'gamepadrecords'
+        var autoSaveCounter = 0
 
         var records = {
                 createdAt : Date.now(),
                 values : []    
-        }
-
-        function update(){
-                var gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
-                // add this value 
-                records.values.push({
-                        recordedAt : Date.now(),
-                        data : gamepads
-                })
-                // honor autoSave
-                if( _this.autoSave === true && records.values.length >= _this.autoSaveMaxLength ){
-                        saveRecords()
-                        clearRecords()
-                }
         }
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -35,21 +24,45 @@ THREEx.GamepadRecorder = function(){
                 timerId = setInterval(update, _this.updatePeriod)
         }
         this.stop = function(){
+                if( _this.autoSave === true )   autoSave()
+
+                autoSaveCounter = 0
+                
                 clearInterval(timerId)
                 timerId = null
         }
         return
 
-        function clearRecords(){
+        function update(){
+                var gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+                // add this value 
+                records.values.push({
+                        recordedAt : Date.now(),
+                        data : gamepads
+                })
+                // honor autoSave
+                if( _this.autoSave === true && records.values.length >= _this.autoSaveMaxLength ){
+                        autoSave()
+                }
+        }
+        
+        function autoSave(){
+                // save records
+                var basename = _this.autoSaveBaseName+pad(autoSaveCounter, 2)+'.json'
+                var jsonString = JSON.stringify(records)
+                download(jsonString, basename, 'application/json');
+
+                // update autoSaveCounter
+                autoSaveCounter++;                
+                
+                // clear records
                 records.createdAt = Date.now()
                 records.values = []                
         }
-        function saveRecords(){
-                // pick a better names
-                // - from-startedAt-to-savedAt.json
-                var basename = 'gamepadapi-records.json'
-                var jsonString = JSON.stringify(records)
-                download(jsonString, basename, "text/plain");
-        }        
+        function pad(num, size) {
+                var s = num + '';
+                while (s.length < size) s = '0' + s;
+                return s;
+        }
 }
 

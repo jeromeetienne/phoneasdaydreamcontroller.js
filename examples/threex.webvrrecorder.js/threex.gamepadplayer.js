@@ -54,7 +54,7 @@ THREEx.GamepadPlayer = function(){
                 if( nextValueIndex >= _this._records.values.length )    return -1
                 
                 var value = _this._records.values[nextValueIndex]
-                var value.recordedAt - _this.records.createdAt
+                // var value.recordedAt - _this.records.createdAt
                 
         }
 }
