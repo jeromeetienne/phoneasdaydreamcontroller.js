@@ -48,10 +48,10 @@ PhoneAsVRController.Context = function(serverUrl){
 
 	this.getGamepads = function(){
 		var gamepads = [
-			undefined,
-			undefined,
-			undefined,
-			undefined,
+			null,
+			null,
+			null,
+			null,
 		]
 		_this._phones.forEach(function(phone){
 			var index = phone.gamepad.index
