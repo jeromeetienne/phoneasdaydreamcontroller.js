@@ -1,12 +1,6 @@
 - make a pause/seek in the player
-- test replay on vive ?
-  - possible with only the controller ?
-  - why would i require webvr ? i dont think it is required
 
 - started theex.webvrrecorder.js
-- put gamepad/webvr recorder/player in a single class ? 
-  - overcooked ?
-  - threex.jsonplayer.js threex.jsonrecorder.js
 
 - file are getting huge... how to do better ?
   - store only delta
@@ -18,6 +12,14 @@
   - yeah no emergency
 - DONE merge with https://github.com/jeromeetienne/threejs-video-augmentedreality
 
+
+----
+- DONE test replay on vive ?
+  - possible with only the controller ?
+  - why would i require webvr ? i dont think it is required
+- DONE put gamepad/webvr recorder/player in a single class ? 
+  - overcooked ?
+  - threex.jsonplayer.js threex.jsonrecorder.js
 
 ----
 
