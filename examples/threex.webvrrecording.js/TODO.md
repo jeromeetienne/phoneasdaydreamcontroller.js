@@ -2,7 +2,7 @@
   - possible with only the controller ?
   - why would i require webvr ? i dont think it is required
 
-
+- started theex.webvrrecorder.js
 - put gamepad/webvr recorder/player in a single class ? 
   - overcooked ?
   - threex.jsonplayer.js threex.jsonrecorder.js
