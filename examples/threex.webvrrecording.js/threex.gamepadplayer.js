@@ -86,7 +86,7 @@ THREEx.GamepadPlayer = function(){
         }
 
         function computeNextValuesDelay(){
-                console.log('nextValueIndex', nextValueIndex)
+                // console.log('nextValueIndex', nextValueIndex)
                 if( nextValueIndex >= _this._records.values.length )    return -1
                 var value = _this._records.values[nextValueIndex]
 

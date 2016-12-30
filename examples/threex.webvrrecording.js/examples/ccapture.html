@@ -19,8 +19,9 @@
 	// init renderer
 	var renderer	= new THREE.WebGLRenderer({
 		antialias	: true,
+		alpha : true
 	});
-	renderer.setClearColor(new THREE.Color('lightgrey'), 1)
+	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 

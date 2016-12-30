@@ -1,3 +1,4 @@
+- make a pause/seek in the player
 - test replay on vive ?
   - possible with only the controller ?
   - why would i require webvr ? i dont think it is required

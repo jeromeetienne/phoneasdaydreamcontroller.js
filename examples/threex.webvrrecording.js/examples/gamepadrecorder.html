@@ -35,13 +35,13 @@
 	////////////////////////////////////////////////////////////////////////////////
 
 	// var mode = 'record'
-	var mode = 'play'
+	// var mode = 'play'
 	// var mode = ''
 
 	if( mode === 'record' ){
 		// enable phoneasvrcontroller.js
-		// 	var serverUrl = 'http://'+location.hostname+':4000'
-		// 	var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+			var serverUrl = 'http://'+location.hostname+':4000'
+			var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
 		// start recording gamepads
 		var gamepadRecorder = new THREEx.GamepadRecorder()
 		gamepadRecorder.start()
@@ -52,7 +52,7 @@
 		// build the urls of the file to load
 		var urls = []
 		for(var i = 0; i < nRecordsFiles; i++){
-			urls.push('data/gamepadrecords'+pad(i, 4)+'.json')
+			urls.push('data-gamepads/gamepadrecords'+pad(i, 4)+'.json')
 		}
 		// start loading those urls
 		var gamepadPlayer = new THREEx.GamepadPlayer()

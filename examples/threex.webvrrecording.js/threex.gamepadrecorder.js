@@ -51,7 +51,7 @@ THREEx.GamepadRecorder = function(){
         
         function autoSave(){
                 // save records
-                var basename = _this.autoSaveBaseName+pad(autoSaveCounter, 2)+'.json'
+                var basename = _this.autoSaveBaseName+pad(autoSaveCounter, 4)+'.json'
                 var jsonString = JSON.stringify(records, null, "\t"); 
                 // var jsonString = JSON.stringify(records); 
                 download(jsonString, basename, 'application/json');
