@@ -389,7 +389,6 @@ THREE.VREffect = function( renderer, onError ) {
 		}
 
 		// Regular render mode if not HMD
-renderer.setClearColor(new THREE.Color('red'), 1)
 		renderer.render( scene, camera, renderTarget, forceClear );
 
 	};

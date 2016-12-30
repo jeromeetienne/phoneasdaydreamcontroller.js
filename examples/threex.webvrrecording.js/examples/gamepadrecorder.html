@@ -35,7 +35,7 @@
 	////////////////////////////////////////////////////////////////////////////////
 
 	// var mode = 'record'
-	// var mode = 'play'
+	var mode = 'play'
 	// var mode = ''
 
 	if( mode === 'record' ){
@@ -55,7 +55,7 @@
 			urls.push('data-gamepads/gamepadrecords'+pad(i, 4)+'.json')
 		}
 		// start loading those urls
-		var gamepadPlayer = new THREEx.GamepadPlayer()
+		var gamepadPlayer = new THREEx.GamepadPlayer2()
 		gamepadPlayer.load(urls, function onLoaded(){
 			console.log('loaded all gamepad records')
 			// once it is all loaded, start replaying

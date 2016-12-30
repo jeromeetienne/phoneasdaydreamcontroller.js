@@ -1,10 +1,11 @@
 var THREEx = THREEx || {}
 
-THREEx.WebvrPlayer = function(){
+THREEx.JsonPlayer = function(){
         var _this = this
 
-        _this.frameData = null
         _this._records = null
+	_this._onNewRecord = function(newRecord){}      // overload this function
+        _this.playbackRate = 1
 
         ////////////////////////////////////////////////////////////////////////////////
         //          load files
@@ -15,6 +16,7 @@ THREEx.WebvrPlayer = function(){
                 return
                 
                 function loadUrl(){
+                        // if there is no more urls to load, return now
                         if( urls.length === 0 ){
                                 onLoaded()
                                 return
@@ -24,19 +26,19 @@ THREEx.WebvrPlayer = function(){
                         // load next url
                         doHttpRequest(url, function(content){
                                 var loadedRecords = JSON.parse(content)
-                                // TODO merge them instead of overwrite the last
-                                // - be carefull with the order... onLoaded can be called out of order\
-                                // - cache value until countRemaining === 0, and then merge
                                 if( _this._records === null ){
+                                        // if this is the first file ot be loaded
                                         _this._records = loadedRecords                                        
                                 }else{
+                                        // concatenate the values array of local records and the loaded ones
                                         _this._records.values.push.apply(_this._records.values, loadedRecords.values);
                                 }
                                 
                                 loadUrl()
                         })
                 }
-                
+                return
+
                 function doHttpRequest(url, onLoaded){
                         var request = new XMLHttpRequest()
                         request.addEventListener('load', function(){
@@ -71,24 +73,35 @@ THREEx.WebvrPlayer = function(){
         function dispatchNextValue(){
                 var value = _this._records.values[nextValueIndex]
 
-                _this.framedata = value.data
+		_this._onNewRecord(value.data)
 
                 nextValueIndex ++
 
                 var nextDelay = computeNextValuesDelay()
-                if( nextDelay === -1 )  return
-                timerId = setTimeout( dispatchNextValue, nextDelay )
+                if( nextDelay === null )  return
+                if( nextDelay > 0 ){
+                        timerId = setTimeout( dispatchNextValue, nextDelay )
+                }else{
+                        dispatchNextValue()
+                }
         }
 
         function computeNextValuesDelay(){
-                console.log('nextValueIndex', nextValueIndex)
-                if( nextValueIndex >= _this._records.values.length )    return -1
+                // console.log('nextValueIndex', nextValueIndex)
+                // if there is no more records, return now
+                if( nextValueIndex >= _this._records.values.length )    return null
+                // get the next return
                 var value = _this._records.values[nextValueIndex]
-
-                var deltaTime = value.recordedAt - _this._records.createdAt
-                var absoluteTime = startedAt + deltaTime
-
+                // compute the record age in recorder time
+                var recordAge = value.recordedAt - _this._records.createdAt
+                console.assert(recordAge >= 0 )
+                // honor playbackRate
+                recordAge /= _this.playbackRate
+                // compute when to dispatch this record in absolute local time
+                var absoluteTime = startedAt + recordAge
+                // compute how much time we need to wait between absolute time and now
                 var waitTime = absoluteTime - Date.now()
+                // return waitTime
                 return waitTime
         }
 }

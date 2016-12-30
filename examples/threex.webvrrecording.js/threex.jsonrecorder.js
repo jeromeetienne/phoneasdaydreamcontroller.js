@@ -1,29 +1,17 @@
 var THREEx = THREEx || {}
 
-THREEx.GamepadRecorder2 = function(){
-        THREEx.JsonPlayer.call( this );
-        
-        this._fetchNewRecordData = function(newRecord){
-                var gamepads = navigator.getGamepads();
-                // clone the struct
-                // gamepads = JSON.parse(JSON.stringify(gamepads))
-                gamepads = cloneObject(gamepads)
-                return gamepads
-        }
-}
-THREEx.GamepadRecorder2.prototype = Object.create( THREEx.JsonRecorder.prototype );
-THREEx.GamepadRecorder2.prototype.constructor = THREEx.GamepadRecorder2;
-
-
-THREEx.GamepadRecorder = function(){
+THREEx.JsonRecorder = function(){
         var _this = this
+
+	_this._fetchNewRecordData = function(){ return 'newRecord'}      // overload this function
         
         // parameters
         this.autoSave = true
         this.autoSaveMaxLength = 1000
-        this.autoSaveBaseName = 'gamepadrecords'
+        this.autoSaveBaseName = 'jsonrecords'
         this.updatePeriod = 1000/100
         var autoSaveCounter = 0
+
 
         var records = {
                 createdAt : Date.now(),
@@ -49,14 +37,11 @@ THREEx.GamepadRecorder = function(){
         return
 
         function update(){
-                var gamepads = navigator.getGamepads();
-                // clone the struct
-                // gamepads = JSON.parse(JSON.stringify(gamepads))
-                gamepads = cloneObject(gamepads)
+                var recordData = _this._fetchNewRecordData()
                 // add this value 
                 records.values.push({
                         recordedAt : Date.now(),
-                        data : gamepads
+                        data : recordData
                 })
                 // honor autoSave
                 if( _this.autoSave === true && records.values.length >= _this.autoSaveMaxLength ){
