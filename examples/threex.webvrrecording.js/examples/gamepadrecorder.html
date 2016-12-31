@@ -41,42 +41,18 @@
 	var mode = 'play'
 
 	if( mode === 'record' ){
+		var gamepadRecorder = new THREEx.GamepadRecorder().start()
+	}
+
+	if( mode === 'play' ){
+		var gamepadPlayer = THREEx.GamepadPlayer.cookedLoad('data-gamepads/gamepadrecords', 3, function onLoaded(){
+			gamepadPlayer.start()
+		})
+	}
+
+	if( false && mode === 'record'){
 		// enable phoneasvrcontroller.js
 		var serverUrl = 'http://'+location.hostname+':4000'
 		var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
-		// start recording gamepads
-		var gamepadRecorder = new THREEx.GamepadRecorder()
-		gamepadRecorder.start()
 	}
-
-	if( mode === 'play' ){		
-		var nRecordsFiles = 3
-		// build the urls of the file to load
-		var urls = []
-		for(var i = 0; i < nRecordsFiles; i++){
-			urls.push('data-gamepads/gamepadrecords'+pad(i, 4)+'.json')
-		}
-		// start loading those urls
-		var gamepadPlayer = new THREEx.GamepadPlayer()
-		gamepadPlayer.load(urls, function onLoaded(){
-			console.log('loaded all gamepad records')
-			// once it is all loaded, start replaying
-			gamepadPlayer.start()
-		})
-		// polyfill to high-jack gamepad API
-		navigator.getGamepads = function(){
-			return gamepadPlayer.gamepads
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////
-	//          utils functions
-	////////////////////////////////////////////////////////////////////////////////
-
-	function pad(num, size) {
-                var s = num + '';
-                while (s.length < size) s = '0' + s;
-                return s;
-        }
-	
 </script>

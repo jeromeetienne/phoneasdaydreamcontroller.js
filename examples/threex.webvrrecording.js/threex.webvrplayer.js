@@ -1,94 +1,40 @@
 var THREEx = THREEx || {}
 
 THREEx.WebvrPlayer = function(){
-        var _this = this
-
-        _this.frameData = null
-        _this._records = null
-
-        ////////////////////////////////////////////////////////////////////////////////
-        //          load files
-        ////////////////////////////////////////////////////////////////////////////////
+        THREEx.JsonPlayer.call( this );
         
-        this.load = function(urls, onLoaded){
-                loadUrl()
-                return
-                
-                function loadUrl(){
-                        if( urls.length === 0 ){
-                                onLoaded()
-                                return
-                        }
-                        // get next url
-                        var url = urls.shift()
-                        // load next url
-                        doHttpRequest(url, function(content){
-                                var loadedRecords = JSON.parse(content)
-                                // TODO merge them instead of overwrite the last
-                                // - be carefull with the order... onLoaded can be called out of order\
-                                // - cache value until countRemaining === 0, and then merge
-                                if( _this._records === null ){
-                                        _this._records = loadedRecords                                        
-                                }else{
-                                        _this._records.values.push.apply(_this._records.values, loadedRecords.values);
-                                }
-                                
-                                loadUrl()
-                        })
-                }
-                
-                function doHttpRequest(url, onLoaded){
-                        var request = new XMLHttpRequest()
-                        request.addEventListener('load', function(){
-                                onLoaded(this.responseText)
-                        })
-                        request.open('GET', url)
-                        request.send()
-                }
-        }
-
-        var nextValueIndex = 0
-        var startedAt = null
-        var timerId = null
-
-        this.start = function(){
-                console.assert(startedAt === null)
-                startedAt = Date.now()
-                
-                console.assert(timerId === null)
-                var nextDelay = computeNextValuesDelay()
-                timerId = setTimeout( dispatchNextValue, nextDelay )
-        }
-        this.stop = function(){
-                startedAt = null
-                nextValueIndex = 0
-
-                clearTimeout(timerId)
-                timerId = null
-        }
-        return
+        this.frameData = null   // TODO put a fake one
         
-        function dispatchNextValue(){
-                var value = _this._records.values[nextValueIndex]
-
-                _this.framedata = value.data
-
-                nextValueIndex ++
-
-                var nextDelay = computeNextValuesDelay()
-                if( nextDelay === -1 )  return
-                timerId = setTimeout( dispatchNextValue, nextDelay )
+        this._onNewRecord = function(newRecord){
+                this.frameData = newRecord
         }
+}
+THREEx.WebvrPlayer.prototype = Object.create( THREEx.JsonPlayer.prototype );
+THREEx.WebvrPlayer.prototype.constructor = THREEx.WebvrPlayer;
 
-        function computeNextValuesDelay(){
-                console.log('nextValueIndex', nextValueIndex)
-                if( nextValueIndex >= _this._records.values.length )    return -1
-                var value = _this._records.values[nextValueIndex]
-
-                var deltaTime = value.recordedAt - _this._records.createdAt
-                var absoluteTime = startedAt + deltaTime
-
-                var waitTime = absoluteTime - Date.now()
-                return waitTime
+THREEx.WebvrPlayer.cookedLoad = function(baseUrl, nRecordsFiles, onLoaded){
+	// var nRecordsFiles = 3
+	// build the urls of the file to load
+	var urls = []
+	for(var i = 0; i < nRecordsFiles; i++){
+		urls.push(baseUrl+pad(i, 4)+'.json')
+	}
+	// start loading those urls	
+        var webvrPlayer = new THREEx.WebvrPlayer()
+	webvrPlayer.load(urls, function(){
+		console.log('loaded all webvr records')
+                onLoaded && onLoaded(webvrPlayer)	
+	})
+	// polyfill to high-jack webvr API
+	navigator.getGamepads = function(){
+		return webvrPlayer.webvrs
+	}
+        
+        return webvrPlayer
+        
+	function pad(num, size) {
+                var s = num + '';
+                while (s.length < size) s = '0' + s;
+                return s;
         }
 }

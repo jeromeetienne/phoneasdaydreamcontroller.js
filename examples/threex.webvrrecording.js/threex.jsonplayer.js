@@ -53,9 +53,22 @@ THREEx.JsonPlayer = function(){
         var startedAt = null
         var timerId = null
 
-        this.start = function(){
+        this.start = function(skipTime){
                 console.assert(startedAt === null)
                 startedAt = Date.now()
+                
+                // honor skipTime
+                if( skipTime !== undefined ){
+                        startedAt -= skipTime
+                        // find nextValueIndex for this skipTime
+                        while(true){
+                                if( nextValueIndex + 1 >= _this._records.values.length ) break;
+                                var value = _this._records.values[nextValueIndex+1]
+                                if( value.recordedAt >= _this._records.startedAt + skipTime ) break
+                                nextValueIndex++
+                        }
+                }
+                // console.log('startedAt', startedAt, nextValueIndex, skipTime)
                 
                 console.assert(timerId === null)
                 var nextDelay = computeNextValuesDelay()
@@ -87,13 +100,13 @@ THREEx.JsonPlayer = function(){
         }
 
         function computeNextValuesDelay(){
-                // console.log('nextValueIndex', nextValueIndex)
+                // console.log('nextValueIndex', nextValueIndex, recordAge)
                 // if there is no more records, return now
                 if( nextValueIndex >= _this._records.values.length )    return null
                 // get the next return
                 var value = _this._records.values[nextValueIndex]
                 // compute the record age in recorder time
-                var recordAge = value.recordedAt - _this._records.createdAt
+                var recordAge = value.recordedAt - _this._records.startedAt
                 console.assert(recordAge >= 0 )
                 // honor playbackRate
                 recordAge /= _this.playbackRate

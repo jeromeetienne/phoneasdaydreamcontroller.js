@@ -14,7 +14,7 @@ THREEx.JsonRecorder = function(){
 
 
         var records = {
-                createdAt : Date.now(),
+                startedAt : Date.now(),
                 values : []    
         }
 
@@ -25,6 +25,7 @@ THREEx.JsonRecorder = function(){
         this.start = function(){
                 console.assert(timerId === null)
                 timerId = setInterval(update, _this.updatePeriod)
+                return this
         }
         this.stop = function(){
                 if( _this.autoSave === true )   autoSave()
@@ -33,6 +34,7 @@ THREEx.JsonRecorder = function(){
                 
                 clearInterval(timerId)
                 timerId = null
+                return this
         }
         return
 
@@ -60,7 +62,7 @@ THREEx.JsonRecorder = function(){
                 autoSaveCounter++;                
                 
                 // clear records
-                records.createdAt = Date.now()
+                records.startedAt = Date.now()
                 records.values = []                
         }
         function pad(num, size) {

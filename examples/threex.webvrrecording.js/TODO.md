@@ -1,6 +1,7 @@
 - make a pause/seek in the player
-
-- started theex.webvrrecorder.js
+- make a keyboard stuff to move in the record, it will help the syncup
+- make webvrrecorder.html and gamepadrecorder.html more homogeneous
+- put in its own repository and rename it recording-webvr
 
 - file are getting huge... how to do better ?
   - store only delta
@@ -10,6 +11,8 @@
   - what are the alternatives ? to save in binary
   - what about after you did json ?
   - yeah no emergency
+- DONE reduce the boilerplate in .html
+- DONE rewrite webvr recorder/player with json
 - DONE merge with https://github.com/jeromeetienne/threejs-video-augmentedreality
 
 

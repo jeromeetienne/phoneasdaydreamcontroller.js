@@ -1,4 +1,4 @@
-<!-- add gamepad recorder/player -->
+<!-- add webvr recorder/player -->
 <script src='../vendor/download.js'></script>
 <script src='../vendor/cloneObject.js'></script>
 <script src='../threex.jsonplayer.js'></script>
@@ -7,7 +7,7 @@
 <script src='../threex.webvrrecorder.js'></script>
 <script src='../threex.webvrplayer.js'></script>
 
-<h2>Here is the raw gamepad api data</h2>
+<h2>Here is the raw webvr api data</h2>
 <pre id='output'></pre>
 <canvas id='myCanvas'></canvas>
 <script>
@@ -32,44 +32,34 @@
 		//          Code Separator
 		////////////////////////////////////////////////////////////////////////////////
 
-		var mode = 'record'
+		// var mode = 'record'
 		var mode = 'play'
 		// var mode = ''
+window.mode = mode
 
 		if( mode === 'record' ){
-			// start recording gamepads
-			var webvrRecorder = new THREEx.WebvrRecorder()
-			webvrRecorder.start(vrDisplay)
+			var webvrRecorder = new THREEx.WebvrRecorder().start()
 		}
 
-		if( mode === 'play' ){		
-			var nRecordsFiles = 6
-			// build the urls of the file to load
-			var urls = []
-			for(var i = 0; i < nRecordsFiles; i++){
-				urls.push('data-webvr/webvrrecords'+pad(i, 4)+'.json')
-			}
-			// start loading those urls
-			var webvrPlayer = new THREEx.WebvrPlayer()
-			webvrPlayer.load(urls, function onLoaded(){
-				console.log('loaded all webvr records')
-				// once it is all loaded, start replaying
+		if( mode === 'play' ){
+			var webvrPlayer = THREEx.WebvrPlayer.cookedLoad('data-webvr/webvrrecords', 1, function onLoaded(){
 				webvrPlayer.start()
 			})
-window.webvrPlayer = webvrPlayer
-			// vrDisplay.getFrameData = function(frameData){
-			// 	
-			// }
 		}
-			
+window.webvrPlayer = webvrPlayer
+		// vrDisplay.getFrameData = function(frameData){}
+		// 				
 	})
 
 	var frameData = new VRFrameData();
 	function dumpFrameData(){
-		// if( vrDisplay === null )	return
-		// vrDisplay.getFrameData(frameData);
-		if( webvrPlayer === null )	return
-		var frameData = webvrPlayer.frameData
+		if( mode === 'record'){		
+			if( vrDisplay === null )	return
+			vrDisplay.getFrameData(frameData);
+		}else{
+			if( webvrPlayer === null )	return
+			frameData = webvrPlayer.frameData			
+		}
 
 
 		var text = ''
