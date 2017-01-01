@@ -79,7 +79,10 @@ document.addEventListener('touchmove', function(event) {
 
 <!-- VREffect.js handles stereo camera setup and rendering.  -->
 <script src='vendor/three.js/examples/js/effects/VREffect.js'></script>
-<!-- <script src='vendor/three.js/examples/js/effects/VREffect-fromweb.js'></script> -->
+
+<script src='vendor/three.js/examples/js/loaders/MTLLoader.js'></script>
+<script src='vendor/three.js/examples/js/loaders/OBJLoader.js'></script>
+<script src='js/threex.daydreammodel.js'></script>
 
 <!-- A polyfill for the WebVR API.  -->
 <script src='vendor/webvr-polyfill.js'></script>
@@ -100,9 +103,9 @@ var onRenderFcts = []
 
 // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
 // Only enable it if you actually need to.
-var renderer = new THREE.WebGLRenderer({antialias: false});
+var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
-renderer.setPixelRatio(1/2);
+// renderer.setPixelRatio(1/2);
 
 // Append the canvas element created by the renderer to fullScreenContainer
 document.querySelector('#fullScreenContainer').appendChild(renderer.domElement);
@@ -327,6 +330,7 @@ function enterFullscreen (element) {
 
 	function createController(hand){
 		var controllerRight = new THREEx.DaydreamController()
+		controllerRight.object3d.name = 'controllerRight'
 		scene.add(controllerRight.object3d)
 		var gamepadSignals = new THREEx.GamepadSignals()
 
@@ -395,5 +399,39 @@ function enterFullscreen (element) {
 	}
 })()
 
+;(function(){
+	var object3d	= new THREE.AmbientLight(0x101010)
+	object3d.name	= 'Ambient light'
+	scene.add(object3d)
+
+	var object3d	= new THREE.DirectionalLight('white', 0.225)
+	object3d.position.set(2.6,1,3)
+	object3d.name	= 'Back light'
+	scene.add(object3d)
+
+	var object3d	= new THREE.DirectionalLight('white', 0.375)
+	object3d.position.set(-2, -1, 0)
+	object3d.name 	= 'Key light'
+	scene.add(object3d)
+
+	var object3d	= new THREE.DirectionalLight('white', 0.75)
+	object3d.position.set(3, 3, 2)
+	object3d.name	= 'Fill light'
+	scene.add(object3d)
+})()
+
+
+;(function(){
+	var daydreamModel = new THREEx.DaydreamModel()
+
+	var container = scene.getObjectByName('controllerRight')
+	container.add(daydreamModel.object3d)
+	onRenderFcts.push(function(){
+		var gamepad = getGamepad('right')
+		if( gamepad === null )	return
+		
+		daydreamModel.update(gamepad)
+	})
+})()
 </script>
 </html>

@@ -76,6 +76,15 @@ PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
 }
 var PhoneAsVRController = PhoneAsVRController || {}
 
+PhoneAsVRController.axesIndex = {
+	'trackpad'	: 0
+}
+PhoneAsVRController.buttonIndex = {
+	'app'		: 0,
+	'home'		: 1,
+	'trackpad'	: 2
+}
+
 PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 	var _this = this
 	
