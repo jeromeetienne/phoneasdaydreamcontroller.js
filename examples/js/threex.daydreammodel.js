@@ -1,52 +1,43 @@
 var THREEx = THREEx || {}
 
 
-THREEx.DaydreamModel = function(){
+THREEx.DaydreamModel = function(modelPath){
 	var _this = this
 	this.object3d = new THREE.Group
 	
-	var modelPath = 'vendor/VR-Controller-Daydream/'
+	modelPath = modelPath || 'vendor/VR-Controller-Daydream/'
 	var meshes = {}
-	var model = null
 
 	this.update = function(gamepad){
-		if( model === null )	return 
-// return
-		var bodyMesh = model.getObjectByName('Body_Body_Cylinder')
-		var volDownMesh = model.getObjectByName('VolDownButton_VolDownButton_Cylinder.001')
-		var volUpMesh = model.getObjectByName('VolUpButton_VolUpButton_Cylinder.002')
-		var touchpadMesh = model.getObjectByName('TouchPad_TouchPad_Cylinder.003')
-		var appButtonMesh = model.getObjectByName('AppButton_AppButton_Cylinder.004')
-		var homeButtonMesh = model.getObjectByName('HomeButton_HomeButton_Cylinder.005')
-		var touchpadLocationMesh = model.getObjectByName('TouchpadTouchLocation')
+		// if meshes arent yet loaded, return now
+		if( Object.keys(meshes).length === 0 )	return 
 			
-
 		var appButton = gamepad.buttons[PhoneAsVRController.buttonIndex.app]
 		if( appButton.pressed === true ){
-			appButtonMesh.material.emissive.set('#333')
+			meshes.appButton.material.emissive.set('#333')
 		}else{
-			appButtonMesh.material.emissive.set('#000')			
+			meshes.appButton.material.emissive.set('#000')			
 		}
 
 		var homeButton = gamepad.buttons[PhoneAsVRController.buttonIndex.home]
 		if( homeButton.pressed === true ){
-			homeButtonMesh.material.emissive.set('#333')
+			meshes.homeButton.material.emissive.set('#333')
 		}else{
-			homeButtonMesh.material.emissive.set('#000')
+			meshes.homeButton.material.emissive.set('#000')
 		}
 
 		var trackpadButton = gamepad.buttons[PhoneAsVRController.buttonIndex.trackpad]
 		if( trackpadButton.pressed === true ){
-			touchpadMesh.material.emissive.set('#333')
-			touchpadLocationMesh.visible = true
+			meshes.touchpad.material.emissive.set('#333')
+			meshes.touchpadLocation.visible = true
 
 			var touchpadAxes = gamepad.axes[PhoneAsVRController.axesIndex.trackpad]
-			touchpadLocationMesh.position.copy(touchpadLocationMesh.userData.center)
-			touchpadLocationMesh.position.x += touchpadAxes[0] * touchpadLocationMesh.userData.ray
-			touchpadLocationMesh.position.z += touchpadAxes[1] * touchpadLocationMesh.userData.ray
+			meshes.touchpadLocation.position.copy(meshes.touchpadLocation.userData.center)
+			meshes.touchpadLocation.position.x += touchpadAxes[0] * meshes.touchpadLocation.userData.ray
+			meshes.touchpadLocation.position.z += touchpadAxes[1] * meshes.touchpadLocation.userData.ray
 		}else{
-			touchpadMesh.material.emissive.set('#000')
-			touchpadLocationMesh.visible = false					
+			meshes.touchpad.material.emissive.set('#000')
+			meshes.touchpadLocation.visible = false					
 		}
 	}
 	
@@ -61,46 +52,42 @@ THREEx.DaydreamModel = function(){
 		objLoader.setMaterials( materials );
 		objLoader.setPath( modelPath );
 		objLoader.load( 'vr_controller_daydream.obj', function ( object ) {
-			model = object
+			meshes.model = object
 			
 
-			_this.object3d.add(object)
+			_this.object3d.add(meshes.model)
 
-			object.scale.multiplyScalar(4)
+			meshes.model.scale.multiplyScalar(4)
 
 			// create touchpadLocationMesh
 			var geometry = new THREE.SphereGeometry(0.002)
 			var material = new THREE.MeshBasicMaterial({
 				color : 'lightgrey'
 			})
-			var touchpadLocationMesh = new THREE.Mesh(geometry, material)
-			touchpadLocationMesh.name = 'TouchpadTouchLocation'
-			touchpadLocationMesh.visible = false
-			touchpadLocationMesh.userData.center = new THREE.Vector3(0,0.008, -0.035)
-			touchpadLocationMesh.userData.ray = 0.015
-			object.add(touchpadLocationMesh)
+			meshes.touchpadLocation = new THREE.Mesh(geometry, material)
+			meshes.touchpadLocation.name = 'TouchpadTouchLocation'
+			meshes.touchpadLocation.visible = false
+			meshes.touchpadLocation.userData.center = new THREE.Vector3(0,0.008, -0.035)
+			meshes.touchpadLocation.userData.ray = 0.015
+			meshes.model.add(meshes.touchpadLocation)
 
 			
-			var bodyMesh = object.getObjectByName('Body_Body_Cylinder')
-			var volDownMesh = object.getObjectByName('VolDownButton_VolDownButton_Cylinder.001')
-			var volUpMesh = object.getObjectByName('VolUpButton_VolUpButton_Cylinder.002')
-			var touchpadMesh = object.getObjectByName('TouchPad_TouchPad_Cylinder.003')
-			var appButtonMesh = object.getObjectByName('AppButton_AppButton_Cylinder.004')
-			var homeButtonMesh = object.getObjectByName('HomeButton_HomeButton_Cylinder.005')
-			var touchpadLocationMesh = object.getObjectByName('TouchpadTouchLocation')
+			meshes.body = meshes.model.getObjectByName('Body_Body_Cylinder')
+			meshes.volDown = meshes.model.getObjectByName('VolDownButton_VolDownButton_Cylinder.001')
+			meshes.volUp = meshes.model.getObjectByName('VolUpButton_VolUpButton_Cylinder.002')
+			meshes.touchpad = meshes.model.getObjectByName('TouchPad_TouchPad_Cylinder.003')
+			meshes.appButton = meshes.model.getObjectByName('AppButton_AppButton_Cylinder.004')
+			meshes.homeButton = meshes.model.getObjectByName('HomeButton_HomeButton_Cylinder.005')
+			meshes.touchpadLocation = meshes.model.getObjectByName('TouchpadTouchLocation')
 			
-			bodyMesh.material.shininess = 6
-			bodyMesh.material.shading = THREE.SmoothShading
-			bodyMesh.material.needsUpdate = true
+			meshes.body.material.shininess = 6
+			meshes.body.material.shading = THREE.SmoothShading
+			meshes.body.material.needsUpdate = true
 			
-			bodyMesh.material = bodyMesh.material.clone()
-			appButtonMesh.material = bodyMesh.material.clone()
-
-			homeButtonMesh.material = bodyMesh.material.clone()
-			
-			touchpadMesh.material = bodyMesh.material.clone()
+			meshes.body.material = meshes.body.material.clone()
+			meshes.appButton.material = meshes.body.material.clone()
+			meshes.homeButton.material = meshes.body.material.clone()
+			meshes.touchpad.material = meshes.body.material.clone()
 		});
-
 	});	
-
 }
