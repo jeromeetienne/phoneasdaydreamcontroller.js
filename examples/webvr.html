@@ -94,7 +94,6 @@ document.addEventListener('touchmove', function(event) {
 
 
 <script src='vendor/three.js/editor/js/libs/signals.min.js'></script>
-<script src='../build/phoneasvrcontroller.js'></script>
 <script src='js/threex.daydreamcontroller.js'></script>
 <script src='vendor/threex.gamepadtools.js/src/threex.gamepadsignals.js'></script>
 
@@ -300,18 +299,22 @@ function enterFullscreen (element) {
 	scene.add(light)
 </script>
 
+
+<!-- enable PhoneAsVRController. it overloads gamepad api -->
+<script src='../build/phoneasvrcontroller.js'></script>
 <script>
-	var serverUrl = 'http://'+location.hostname+':4000'
-	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
+        var serverUrl = 'http://'+location.hostname+':4000'
+        var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+	
 	// update phoneAsVRController.viewQuaternion for recalibration
 	onRenderFcts.push(function(){
 		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
-	})
+	})            
+</script>
 
-
+<script>
 	function getGamepad(hand){
-		// var gamepads = navigator.getGamepads()
-		var gamepads = phoneAsVRController.getGamepads()
+		var gamepads = navigator.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
 			var gamepad = gamepads[i]
 			if( gamepad === null )	continue
@@ -399,6 +402,8 @@ function enterFullscreen (element) {
 	}
 })()
 
+
+// ADD LIGHTS
 ;(function(){
 	var object3d	= new THREE.AmbientLight(0x101010)
 	object3d.name	= 'Ambient light'
@@ -420,7 +425,7 @@ function enterFullscreen (element) {
 	scene.add(object3d)
 })()
 
-
+// ADD DAYDREAMMODEL
 ;(function(){
 	var daydreamModel = new THREEx.DaydreamModel()
 

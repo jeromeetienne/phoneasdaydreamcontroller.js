@@ -95,20 +95,25 @@
 
 </script>
 
-<script type='text/javascript'>
-	//////////////////////////////////////////////////////////////////////////////
-	//		handle phone as controller
-	//////////////////////////////////////////////////////////////////////////////
+<!-- overload gamepad API with phoneasvrcontroller.js -->
+<script src='../build/phoneasvrcontroller.js'></script>
+<script>
 	var serverUrl = 'http://'+location.hostname+':4000'
-	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl);
+	var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
 	// update phoneAsVRController.viewQuaternion for recalibration
 	onRenderFcts.push(function(){
 		phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
 	})
+</script>
+
+
+<script type='text/javascript'>
+	//////////////////////////////////////////////////////////////////////////////
+	//		handle phone as controller
+	//////////////////////////////////////////////////////////////////////////////
 
 	function getGamepad(hand){
-		// var gamepads = navigator.getGamepads()
-		var gamepads = phoneAsVRController.getGamepads()
+		var gamepads = navigator.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
 			var gamepad = gamepads[i]
 			if( gamepad === null )	continue

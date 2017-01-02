@@ -1,25 +1,31 @@
-<script src='../build/phoneasvrcontroller.js'></script>
 <h2>Here is the raw gamepad api data</h2>
 <pre id='output'></pre>
 <script>
-	var serverUrl = 'http://'+location.hostname+':4000'
-	var controllerContext = new PhoneAsVRController.Context(serverUrl);
-
 	function dumpGamepad(){
 		var domElement = document.querySelector('#output')
 
 		var text = ''
-		// var gamepads = navigator.getGamepads()
-		var gamepads = controllerContext.getGamepads()
+		var gamepads = navigator.getGamepads()
 		for(var i = 0; i < gamepads.length; i++){
-			if( gamepads[i] === undefined )	continue
+			if( gamepads[i] === null )	continue
 			text += JSON.stringify(gamepads[i], null, '\t')+'\n'
 		}
-		if( text.length === 0 ) text = 'no phone connected'
+		if( text.length === 0 ) text = 'no gamepad connected'
 
 		domElement.innerText = text
 		setTimeout(dumpGamepad, 100)
 	}
 	
 	dumpGamepad()
+</script>
+
+<!-- overload gamepad API with phoneasvrcontroller.js -->
+<script src='../build/phoneasvrcontroller.js'></script>
+<script>
+	var serverUrl = 'http://'+location.hostname+':4000'
+	var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+	// // update phoneAsVRController.viewQuaternion for recalibration
+	// onRenderFcts.push(function(){
+	// 	phoneAsVRController.viewQuaternion = camera.quaternion.toArray()
+	// })
 </script>
