@@ -26,17 +26,17 @@ body, html, #container {
 }
 
 /*******************************************************************************
-	trackpad
+	touchpad
 *******************************************************************************/
 
-#trackpad {
+#touchpad {
 	height:60%;
 	width:100%;
 	margin:auto;
 	border-bottom: 1px solid #aaa;
 }
 
-#trackpad img {
+#touchpad img {
 
     position: absolute;
     left: 0px;

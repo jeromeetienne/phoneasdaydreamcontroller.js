@@ -42,7 +42,7 @@ In my case it is like that. Change the ip address to match your case.
 
 [http://192.168.0.2:8080/examples](http://192.168.0.2:8080/examples) and pick 'phone controller'
 
-it will run the controller emulation on your phone. Aka a daydream kind of controller (orientation, one trackpad and 3 button)
+it will run the controller emulation on your phone. Aka a daydream kind of controller (orientation, one touchpad and 3 button)
 
 
 # Show, dont Tell

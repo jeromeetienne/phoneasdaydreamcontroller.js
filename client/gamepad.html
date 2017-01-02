@@ -11,7 +11,7 @@
 </head>
 <link rel="stylesheet" href="css/gamepad.css">
 <div id="container">
-	<div id="trackpad">Trackpad
+	<div id="touchpad">Touchpad
 		<img src="images/fullscreen.png" alt="" />
 	</div>    
 	<div id="bottomRow">
@@ -130,34 +130,34 @@ console.log('sendButtonsEvent', event)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//		Handle trackpad
+//		Handle touchpad
 //////////////////////////////////////////////////////////////////////////////
 
-document.querySelector('#trackpad').addEventListener('touchstart', function(event){
-	document.querySelector('#trackpad').classList.add('touched')
-	sendTrackpadEvent(event)
+document.querySelector('#touchpad').addEventListener('touchstart', function(event){
+	document.querySelector('#touchpad').classList.add('touched')
+	sendtouchpadEvent(event)
 })
-document.querySelector('#trackpad').addEventListener('touchend', function(event){
-	document.querySelector('#trackpad').classList.remove('touched')
-	sendTrackpadEvent(event)
-})
-
-document.querySelector('#trackpad').addEventListener('touchmove', function(event){
-	sendTrackpadEvent(event)
+document.querySelector('#touchpad').addEventListener('touchend', function(event){
+	document.querySelector('#touchpad').classList.remove('touched')
+	sendtouchpadEvent(event)
 })
 
-function sendTrackpadEvent(domEvent){
+document.querySelector('#touchpad').addEventListener('touchmove', function(event){
+	sendtouchpadEvent(event)
+})
+
+function sendtouchpadEvent(domEvent){
 	var event = {
 		type : domEvent.type,
 		gamepadIndex: queryParameters.index,
 		// data properties
-		target : 'trackpad'
+		target : 'touchpad'
 	}
 
 	var touch = domEvent.touches[0]
 	if( touch ){
-		var trackpadElement = document.querySelector('#trackpad')
-		var boundRect = trackpadElement.getBoundingClientRect()
+		var touchpadElement = document.querySelector('#touchpad')
+		var boundRect = touchpadElement.getBoundingClientRect()
 		event.positionX = (touch.clientX / boundRect.width - 0.5) * 2
 		event.positionY = (touch.clientY / boundRect.height- 0.5) * 2
 		// touchmove is still notified out of the touchstart element, so here clamp the position
@@ -174,7 +174,7 @@ function sendTrackpadEvent(domEvent){
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//		display touch on trackpad
+//		display touch on touchpad
 //////////////////////////////////////////////////////////////////////////////
 var img = document.createElement('img')
 img.src = 'images/sprite0.png'
@@ -192,8 +192,8 @@ function updateImgPosition(domEvent){
 
 		img.style.left = touch.clientX+'px'
 		
-		var trackpadElement = document.querySelector('#trackpad')
-		var boundRect = trackpadElement.getBoundingClientRect()
+		var touchpadElement = document.querySelector('#touchpad')
+		var boundRect = touchpadElement.getBoundingClientRect()
 		if( touch.clientY > boundRect.height ){
 			img.style.top = boundRect.height+'px'
 		}else{
@@ -204,9 +204,9 @@ function updateImgPosition(domEvent){
 	}
 	
 }
-document.querySelector('#trackpad').addEventListener('touchstart', updateImgPosition)
-document.querySelector('#trackpad').addEventListener('touchend', updateImgPosition)
-document.querySelector('#trackpad').addEventListener('touchmove', updateImgPosition)
+document.querySelector('#touchpad').addEventListener('touchstart', updateImgPosition)
+document.querySelector('#touchpad').addEventListener('touchend', updateImgPosition)
+document.querySelector('#touchpad').addEventListener('touchmove', updateImgPosition)
 
 
 
@@ -276,8 +276,8 @@ function onDeviceOrientation(event) {
 //////////////////////////////////////////////////////////////////////////////
 ;(function(){
 	// FIXME find a good way to start it
-	document.querySelector('#trackpad img').addEventListener('click', onClick)
-	document.querySelector('#trackpad img').addEventListener('touchstart', onClick)
+	document.querySelector('#touchpad img').addEventListener('click', onClick)
+	document.querySelector('#touchpad img').addEventListener('touchstart', onClick)
 	function onClick(event){
 		event.stopPropagation()
 		if (document.webkitFullscreenElement) { 

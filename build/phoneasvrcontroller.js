@@ -77,12 +77,12 @@ PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
 var PhoneAsVRController = PhoneAsVRController || {}
 
 PhoneAsVRController.axesIndex = {
-	'trackpad'	: 0
+	'touchpad'	: 0
 }
 PhoneAsVRController.buttonIndex = {
 	'app'		: 0,
 	'home'		: 1,
-	'trackpad'	: 2
+	'touchpad'	: 2
 }
 
 PhoneAsVRController.Phone = function(context, socket, phoneParameters){
@@ -102,7 +102,7 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 
 	socket.on('broadcast', onBroadcast)
 
-	var buttonNames = ['appButton', 'homeButton', 'trackpad']
+	var buttonNames = ['appButton', 'homeButton', 'touchpad']
 
 	this.dispose = function(){
 		console.log('dispose of phone', _this.gamepad.index)
@@ -136,8 +136,8 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 			gamepad.buttons[index].pressed = false
 			gamepad.buttons[index].value = 0
 		}
-		// update axes[0] with trackpad
-		if( event.target === 'trackpad' && ['touchstart', 'touchmove'].indexOf(event.type) !== -1 ){
+		// update axes[0] with touchpad
+		if( event.target === 'touchpad' && ['touchstart', 'touchmove'].indexOf(event.type) !== -1 ){
 			gamepad.axes[0] = [
 				event.positionX,
 				event.positionY

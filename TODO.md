@@ -4,6 +4,6 @@
 - do we provide timestamp ? i think the real gamepads do
 - do a threex.vrcontrollermodel.js
   - use the model and mirror with the gamepad
-- it is named trackpad all over my code... is that a trackapd or a touchpad ?
+- it is named touchpad all over my code... is that a trackapd or a touchpad ?
 - port all demo to pure gamepad API
   - overload stuff with it
