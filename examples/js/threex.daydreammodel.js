@@ -87,8 +87,8 @@ THREEx.DaydreamModel = function(modelPath){
 		meshes.volDown = model.getObjectByName('VolDownButton_VolDownButton_Cylinder.001')
 		meshes.volUp = model.getObjectByName('VolUpButton_VolUpButton_Cylinder.002')
 		meshes.touchpad = model.getObjectByName('TouchPad_TouchPad_Cylinder.003')
-		meshes.appButton = model.getObjectByName('AppButton_AppButton_Cylinder.004')
-		meshes.homeButton = model.getObjectByName('HomeButton_HomeButton_Cylinder.005')
+		meshes.appButton = model.getObjectByName('HomeButton_HomeButton_Cylinder.005')
+		meshes.homeButton = model.getObjectByName('AppButton_AppButton_Cylinder.004')
 		meshes.touchpadLocation = model.getObjectByName('TouchpadTouchLocation')
 		
 		var baseMaterial = meshes.body.material
