@@ -1,14 +1,14 @@
-# phoneasvrcontroller.js
-phoneasvrcontroller.js  makes your phone act as a daydream vr controller. Thus you can start experimenting
+# phoneasdaydreamcontroller.js
+phoneasdaydreamcontroller.js  makes your phone act as a daydream vr controller. Thus you can start experimenting
 with daydream vr without a pixel phone or daydream viewer.
 
-phoneasvrcontroller.js uses your phone as a gamepad (3dof Virtual reality gamepad).
+phoneasdaydreamcontroller.js uses your phone as a gamepad (3dof Virtual reality gamepad).
 It is widely inspired by daydream controller.
 In fact, originally i wrote this to experiment on daydream, because i could not 
 get my hand on a Pixel Phone and its daydream viewer. So i wrote this 
 emulator to start experimenting now :) 
 
-This repository contains the phoneasvrcontroller library that you can reuse.
+This repository contains the phoneasdaydreamcontroller library that you can reuse.
 Technically it exports the data in the same format as the gamepad api.
 My experimentations are in the ```/examples``` folder.
 You can even have up to 4 phones connected at the same time :)
@@ -70,4 +70,4 @@ it will run the controller emulation on your phone. Aka a daydream kind of contr
   It could be ported if needed in ```/client```.
   
 # Futures
-- create a bookmarklet with phoneasvrcontroller.js, thus it is possible in include it in any webpage
+- create a bookmarklet with phoneasdaydreamcontroller.js, thus it is possible in include it in any webpage

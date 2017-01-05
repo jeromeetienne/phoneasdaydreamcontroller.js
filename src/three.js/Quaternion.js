@@ -1,3 +1,5 @@
+var PhoneAsVRController = PhoneAsVRController || {}
+
 /**
  * @author mikael emtinger / http://gomo.se/
  * @author alteredq / http://alteredqualia.com/

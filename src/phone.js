@@ -142,4 +142,4 @@ PhoneAsVRController.Phone._gamepadTemplate = {
 		'angularVelocity' : null,
 		'angularAcceleration' : null
 	}
-}
+};

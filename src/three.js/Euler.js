@@ -1,3 +1,5 @@
+var PhoneAsVRController = PhoneAsVRController || {}
+
 /**
  * @author mrdoob / http://mrdoob.com/
  * @author WestLangley / http://github.com/WestLangley
