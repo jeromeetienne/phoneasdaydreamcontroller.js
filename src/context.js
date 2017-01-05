@@ -66,11 +66,24 @@ PhoneAsDaydreamController.Context = function(serverUrl){
 ////////////////////////////////////////////////////////////////////////////////
 
 PhoneAsDaydreamController.overloadGamepadsAPI = function(serverUrl){
-	var phoneAsVRController = new PhoneAsDaydreamController.Context(serverUrl)
-
+	var phoneAsDaydreamController = new PhoneAsDaydreamController.Context(serverUrl)
+	// save the original navigator.getGamepads - thus it is possible if actual gamepads are connected
+	var originalGetGamepads = navigator.getGamepads ? navigator.getGamepads.bind(navigator) : function(){ return [null, null, null, null] }
+	// overload gamepads API
 	navigator.getGamepads = function(){
-        	return phoneAsVRController.getGamepads()
+		var actualGamepads = originalGetGamepads()
+		// test is there is at least one actual gamepad
+		var actualGamepadConnected = false
+		for( var i = 0; i < actualGamepads.length; i++ ){
+			if( actualGamepads[i] !== null )	actualGamepadConnected = true
+		}
+
+		// if an actual gamepads are connected, return this one (an not phoneAsDaydreamController ones)
+		if( actualGamepadConnected )	return actualGamepads
+
+		// if no actual gamepad is connected, notify the phoneAsDaydreamController ones
+        	return phoneAsDaydreamController.getGamepads()
 	}
 	
-	return phoneAsVRController
+	return phoneAsDaydreamController
 }
