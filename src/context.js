@@ -77,7 +77,6 @@ PhoneAsDaydreamController.overloadGamepadsAPI = function(serverUrl){
 		for( var i = 0; i < actualGamepads.length; i++ ){
 			if( actualGamepads[i] !== null )	actualGamepadConnected = true
 		}
-
 		// if an actual gamepads are connected, return this one (an not phoneAsDaydreamController ones)
 		if( actualGamepadConnected )	return actualGamepads
 
