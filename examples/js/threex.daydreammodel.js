@@ -14,7 +14,7 @@ THREEx.DaydreamModel = function(modelPath){
 		if( Object.keys(meshes).length === 0 )	return 
 			
 		// appButton
-		var appButton = gamepad.buttons[PhoneAsVRController.buttonIndex.app]
+		var appButton = gamepad.buttons[PhoneAsDaydreamController.buttonIndex.app]
 		if( appButton.pressed === true ){
 			meshes.appButton.material.emissive.set('#333')
 		}else{
@@ -22,7 +22,7 @@ THREEx.DaydreamModel = function(modelPath){
 		}
 
 		// homeButton
-		var homeButton = gamepad.buttons[PhoneAsVRController.buttonIndex.home]
+		var homeButton = gamepad.buttons[PhoneAsDaydreamController.buttonIndex.home]
 		if( homeButton.pressed === true ){
 			meshes.homeButton.material.emissive.set('#333')
 		}else{
@@ -30,12 +30,12 @@ THREEx.DaydreamModel = function(modelPath){
 		}
 
 		// touchpadButton
-		var touchpadButton = gamepad.buttons[PhoneAsVRController.buttonIndex.touchpad]
+		var touchpadButton = gamepad.buttons[PhoneAsDaydreamController.buttonIndex.touchpad]
 		if( touchpadButton.pressed === true ){
 			meshes.touchpad.material.emissive.set('#333')
 			meshes.touchpadLocation.visible = true
 
-			var touchpadAxes = gamepad.axes[PhoneAsVRController.axesIndex.touchpad]
+			var touchpadAxes = gamepad.axes[PhoneAsDaydreamController.axesIndex.touchpad]
 			meshes.touchpadLocation.position.copy(meshes.touchpadLocation.userData.center)
 			meshes.touchpadLocation.position.x += touchpadAxes[0] * meshes.touchpadLocation.userData.ray
 			meshes.touchpadLocation.position.z += touchpadAxes[1] * meshes.touchpadLocation.userData.ray

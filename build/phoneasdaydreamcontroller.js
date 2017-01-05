@@ -1,4 +1,4 @@
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
 /**
  * @author mikael emtinger / http://gomo.se/
@@ -7,7 +7,7 @@ var PhoneAsVRController = PhoneAsVRController || {}
  * @author bhouston / http://clara.io
  */
 
-PhoneAsVRController.Quaternion = function ( x, y, z, w ) {
+PhoneAsDaydreamController.Quaternion = function ( x, y, z, w ) {
 
 	this._x = x || 0;
 	this._y = y || 0;
@@ -16,9 +16,9 @@ PhoneAsVRController.Quaternion = function ( x, y, z, w ) {
 
 };
 
-PhoneAsVRController.Quaternion.prototype = {
+PhoneAsDaydreamController.Quaternion.prototype = {
 
-	constructor: PhoneAsVRController.Quaternion,
+	constructor: PhoneAsDaydreamController.Quaternion,
 
 	get x () {
 
@@ -106,9 +106,9 @@ PhoneAsVRController.Quaternion.prototype = {
 
 	setFromEuler: function ( euler, update ) {
 
-		if ( euler instanceof PhoneAsVRController.Euler === false ) {
+		if ( euler instanceof PhoneAsDaydreamController.Euler === false ) {
 
-			throw new Error( 'PhoneAsVRController.Quaternion: .setFromEuler() now expects a Euler rotation rather than a Vector3 and order.' );
+			throw new Error( 'PhoneAsDaydreamController.Quaternion: .setFromEuler() now expects a Euler rotation rather than a Vector3 and order.' );
 
 		}
 
@@ -265,7 +265,7 @@ PhoneAsVRController.Quaternion.prototype = {
 
 		return function ( vFrom, vTo ) {
 
-			if ( v1 === undefined ) v1 = new PhoneAsVRController.Vector3();
+			if ( v1 === undefined ) v1 = new PhoneAsDaydreamController.Vector3();
 
 			r = vFrom.dot( vTo ) + 1;
 
@@ -372,7 +372,7 @@ PhoneAsVRController.Quaternion.prototype = {
 
 		if ( p !== undefined ) {
 
-			console.warn( 'PhoneAsVRController.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.' );
+			console.warn( 'PhoneAsDaydreamController.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.' );
 			return this.multiplyQuaternions( q, p );
 
 		}
@@ -511,7 +511,7 @@ PhoneAsVRController.Quaternion.prototype = {
 
 };
 
-Object.assign( PhoneAsVRController.Quaternion, {
+Object.assign( PhoneAsDaydreamController.Quaternion, {
 
 	slerp: function( qa, qb, qm, t ) {
 
@@ -583,7 +583,7 @@ Object.assign( PhoneAsVRController.Quaternion, {
 	}
 
 } );
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -591,22 +591,22 @@ var PhoneAsVRController = PhoneAsVRController || {}
  * @author bhouston / http://clara.io
  */
 
-PhoneAsVRController.Euler = function ( x, y, z, order ) {
+PhoneAsDaydreamController.Euler = function ( x, y, z, order ) {
 
 	this._x = x || 0;
 	this._y = y || 0;
 	this._z = z || 0;
-	this._order = order || PhoneAsVRController.Euler.DefaultOrder;
+	this._order = order || PhoneAsDaydreamController.Euler.DefaultOrder;
 
 };
 
-PhoneAsVRController.Euler.RotationOrders = [ 'XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX' ];
+PhoneAsDaydreamController.Euler.RotationOrders = [ 'XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX' ];
 
-PhoneAsVRController.Euler.DefaultOrder = 'XYZ';
+PhoneAsDaydreamController.Euler.DefaultOrder = 'XYZ';
 
-PhoneAsVRController.Euler.prototype = {
+PhoneAsDaydreamController.Euler.prototype = {
 
-	constructor: PhoneAsVRController.Euler,
+	constructor: PhoneAsDaydreamController.Euler,
 
 	get x () {
 
@@ -694,7 +694,7 @@ PhoneAsVRController.Euler.prototype = {
 
 	setFromRotationMatrix: function ( m, order, update ) {
 
-		var clamp = PhoneAsVRController.Math.clamp;
+		var clamp = PhoneAsDaydreamController.Math.clamp;
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
 
@@ -803,7 +803,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		} else {
 
-			console.warn( 'PhoneAsVRController.Euler: .setFromRotationMatrix() given unsupported order: ' + order );
+			console.warn( 'PhoneAsDaydreamController.Euler: .setFromRotationMatrix() given unsupported order: ' + order );
 
 		}
 
@@ -821,7 +821,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		return function ( q, order, update ) {
 
-			if ( matrix === undefined ) matrix = new PhoneAsVRController.Matrix4();
+			if ( matrix === undefined ) matrix = new PhoneAsDaydreamController.Matrix4();
 			matrix.makeRotationFromQuaternion( q );
 			this.setFromRotationMatrix( matrix, order, update );
 
@@ -841,7 +841,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		// WARNING: this discards revolution information -bhouston
 
-		var q = new PhoneAsVRController.Quaternion();
+		var q = new PhoneAsDaydreamController.Quaternion();
 
 		return function ( newOrder ) {
 
@@ -893,7 +893,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		} else {
 
-			return new PhoneAsVRController.Vector3( this._x, this._y, this._z );
+			return new PhoneAsDaydreamController.Vector3( this._x, this._y, this._z );
 
 		}
 
@@ -910,9 +910,9 @@ PhoneAsVRController.Euler.prototype = {
 	onChangeCallback: function () {}
 
 };
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
-PhoneAsVRController.Context = function(serverUrl){
+PhoneAsDaydreamController.Context = function(serverUrl){
 	var _this = this
 	
 	_this.viewQuaternion = [0,0,0,1]
@@ -938,7 +938,7 @@ PhoneAsVRController.Context = function(serverUrl){
 			phone.dispose()
 		}
 		
-		_this._phones[message.gamepadIndex] =  new PhoneAsVRController.Phone(_this, _this._socket, {
+		_this._phones[message.gamepadIndex] =  new PhoneAsDaydreamController.Phone(_this, _this._socket, {
 			hand : message.hand,
 			gamepadIndex: message.gamepadIndex
 		})
@@ -977,8 +977,8 @@ PhoneAsVRController.Context = function(serverUrl){
 //          Code Separator
 ////////////////////////////////////////////////////////////////////////////////
 
-PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
-	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl)
+PhoneAsDaydreamController.overloadGamepadsAPI = function(serverUrl){
+	var phoneAsVRController = new PhoneAsDaydreamController.Context(serverUrl)
 
 	navigator.getGamepads = function(){
         	return phoneAsVRController.getGamepads()
@@ -986,23 +986,23 @@ PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
 	
 	return phoneAsVRController
 }
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
-PhoneAsVRController.axesIndex = {
+PhoneAsDaydreamController.axesIndex = {
 	'touchpad'	: 0
 }
-PhoneAsVRController.buttonIndex = {
+PhoneAsDaydreamController.buttonIndex = {
 	'app'		: 0,
 	'home'		: 1,
 	'touchpad'	: 2
 }
 
-PhoneAsVRController.Phone = function(context, socket, phoneParameters){
+PhoneAsDaydreamController.Phone = function(context, socket, phoneParameters){
 	var _this = this
 	
 	
 
-	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsVRController.Phone._gamepadTemplate))
+	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsDaydreamController.Phone._gamepadTemplate))
 	this.gamepad.index = phoneParameters.gamepadIndex
 	this.gamepad.hand = phoneParameters.hand
 	var gamepad = this.gamepad
@@ -1069,20 +1069,20 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 			}
 		}
 		if( originViewQuaternion === null ){
-			originViewQuaternion = new PhoneAsVRController.Quaternion().fromArray(context.viewQuaternion)
+			originViewQuaternion = new PhoneAsDaydreamController.Quaternion().fromArray(context.viewQuaternion)
 		}
 		
 		var alpha = event.alpha - originDeviceOrientation.alpha
                 var beta  = event.beta  - originDeviceOrientation.beta
                 var gamma = event.gamma - originDeviceOrientation.gamma
 
-		var deviceEuler = new PhoneAsVRController.Euler()
+		var deviceEuler = new PhoneAsDaydreamController.Euler()
 		deviceEuler.x =  beta  / 180 * Math.PI
 		deviceEuler.y =  alpha / 180 * Math.PI
 		deviceEuler.z = -gamma / 180 * Math.PI
 		deviceEuler.order = "YXZ"
 
-		var controllerQuaternion = new PhoneAsVRController.Quaternion().setFromEuler(deviceEuler)			
+		var controllerQuaternion = new PhoneAsDaydreamController.Quaternion().setFromEuler(deviceEuler)			
 		var poseQuaternion = originViewQuaternion.clone().multiply( controllerQuaternion )
 		poseQuaternion.toArray(gamepad.pose.orientation)
 		
@@ -1097,7 +1097,7 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 //////////////////////////////////////////////////////////////////////////////
 
 // general spec for Gamepad API - https://www.w3.org/TR/gamepad/
-PhoneAsVRController.Phone._gamepadTemplate = {
+PhoneAsDaydreamController.Phone._gamepadTemplate = {
 	'id' : 'PhoneAsGamepad.js Controller',
 	'index' : 0,
 	'connected' : true,

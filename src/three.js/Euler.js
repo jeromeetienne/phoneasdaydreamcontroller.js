@@ -1,4 +1,4 @@
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -6,22 +6,22 @@ var PhoneAsVRController = PhoneAsVRController || {}
  * @author bhouston / http://clara.io
  */
 
-PhoneAsVRController.Euler = function ( x, y, z, order ) {
+PhoneAsDaydreamController.Euler = function ( x, y, z, order ) {
 
 	this._x = x || 0;
 	this._y = y || 0;
 	this._z = z || 0;
-	this._order = order || PhoneAsVRController.Euler.DefaultOrder;
+	this._order = order || PhoneAsDaydreamController.Euler.DefaultOrder;
 
 };
 
-PhoneAsVRController.Euler.RotationOrders = [ 'XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX' ];
+PhoneAsDaydreamController.Euler.RotationOrders = [ 'XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX' ];
 
-PhoneAsVRController.Euler.DefaultOrder = 'XYZ';
+PhoneAsDaydreamController.Euler.DefaultOrder = 'XYZ';
 
-PhoneAsVRController.Euler.prototype = {
+PhoneAsDaydreamController.Euler.prototype = {
 
-	constructor: PhoneAsVRController.Euler,
+	constructor: PhoneAsDaydreamController.Euler,
 
 	get x () {
 
@@ -109,7 +109,7 @@ PhoneAsVRController.Euler.prototype = {
 
 	setFromRotationMatrix: function ( m, order, update ) {
 
-		var clamp = PhoneAsVRController.Math.clamp;
+		var clamp = PhoneAsDaydreamController.Math.clamp;
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
 
@@ -218,7 +218,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		} else {
 
-			console.warn( 'PhoneAsVRController.Euler: .setFromRotationMatrix() given unsupported order: ' + order );
+			console.warn( 'PhoneAsDaydreamController.Euler: .setFromRotationMatrix() given unsupported order: ' + order );
 
 		}
 
@@ -236,7 +236,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		return function ( q, order, update ) {
 
-			if ( matrix === undefined ) matrix = new PhoneAsVRController.Matrix4();
+			if ( matrix === undefined ) matrix = new PhoneAsDaydreamController.Matrix4();
 			matrix.makeRotationFromQuaternion( q );
 			this.setFromRotationMatrix( matrix, order, update );
 
@@ -256,7 +256,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		// WARNING: this discards revolution information -bhouston
 
-		var q = new PhoneAsVRController.Quaternion();
+		var q = new PhoneAsDaydreamController.Quaternion();
 
 		return function ( newOrder ) {
 
@@ -308,7 +308,7 @@ PhoneAsVRController.Euler.prototype = {
 
 		} else {
 
-			return new PhoneAsVRController.Vector3( this._x, this._y, this._z );
+			return new PhoneAsDaydreamController.Vector3( this._x, this._y, this._z );
 
 		}
 

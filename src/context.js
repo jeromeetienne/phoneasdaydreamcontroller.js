@@ -1,6 +1,6 @@
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
-PhoneAsVRController.Context = function(serverUrl){
+PhoneAsDaydreamController.Context = function(serverUrl){
 	var _this = this
 	
 	_this.viewQuaternion = [0,0,0,1]
@@ -26,7 +26,7 @@ PhoneAsVRController.Context = function(serverUrl){
 			phone.dispose()
 		}
 		
-		_this._phones[message.gamepadIndex] =  new PhoneAsVRController.Phone(_this, _this._socket, {
+		_this._phones[message.gamepadIndex] =  new PhoneAsDaydreamController.Phone(_this, _this._socket, {
 			hand : message.hand,
 			gamepadIndex: message.gamepadIndex
 		})
@@ -65,8 +65,8 @@ PhoneAsVRController.Context = function(serverUrl){
 //          Code Separator
 ////////////////////////////////////////////////////////////////////////////////
 
-PhoneAsVRController.overloadGamepadsAPI = function(serverUrl){
-	var phoneAsVRController = new PhoneAsVRController.Context(serverUrl)
+PhoneAsDaydreamController.overloadGamepadsAPI = function(serverUrl){
+	var phoneAsVRController = new PhoneAsDaydreamController.Context(serverUrl)
 
 	navigator.getGamepads = function(){
         	return phoneAsVRController.getGamepads()

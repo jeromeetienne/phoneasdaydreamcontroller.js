@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang='en'><head>
-<title>Ray Input and PhoneAsVRController</title>
+<title>Ray Input and PhoneAsDaydreamController</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no'>
 <meta name='mobile-web-app-capable' content='yes'>
@@ -326,11 +326,11 @@ rayInput.on('raycancel', function(opt_mesh){
 </script>
 
 
-<!-- enable PhoneAsVRController. it overloads gamepad api -->
+<!-- enable PhoneAsDaydreamController. it overloads gamepad api -->
 <script src='../build/phoneasdaydreamcontroller.js'></script>
 <script>
         var serverUrl = 'http://'+location.hostname+':4000'
-        var phoneAsVRController = PhoneAsVRController.overloadGamepadsAPI(serverUrl)            
+        var phoneAsVRController = PhoneAsDaydreamController.overloadGamepadsAPI(serverUrl)            
 	
 	// update phoneAsVRController.viewQuaternion for recalibration
 	onRenderFcts.push(function(){

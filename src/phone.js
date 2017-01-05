@@ -1,20 +1,20 @@
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
-PhoneAsVRController.axesIndex = {
+PhoneAsDaydreamController.axesIndex = {
 	'touchpad'	: 0
 }
-PhoneAsVRController.buttonIndex = {
+PhoneAsDaydreamController.buttonIndex = {
 	'app'		: 0,
 	'home'		: 1,
 	'touchpad'	: 2
 }
 
-PhoneAsVRController.Phone = function(context, socket, phoneParameters){
+PhoneAsDaydreamController.Phone = function(context, socket, phoneParameters){
 	var _this = this
 	
 	
 
-	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsVRController.Phone._gamepadTemplate))
+	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsDaydreamController.Phone._gamepadTemplate))
 	this.gamepad.index = phoneParameters.gamepadIndex
 	this.gamepad.hand = phoneParameters.hand
 	var gamepad = this.gamepad
@@ -81,20 +81,20 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 			}
 		}
 		if( originViewQuaternion === null ){
-			originViewQuaternion = new PhoneAsVRController.Quaternion().fromArray(context.viewQuaternion)
+			originViewQuaternion = new PhoneAsDaydreamController.Quaternion().fromArray(context.viewQuaternion)
 		}
 		
 		var alpha = event.alpha - originDeviceOrientation.alpha
                 var beta  = event.beta  - originDeviceOrientation.beta
                 var gamma = event.gamma - originDeviceOrientation.gamma
 
-		var deviceEuler = new PhoneAsVRController.Euler()
+		var deviceEuler = new PhoneAsDaydreamController.Euler()
 		deviceEuler.x =  beta  / 180 * Math.PI
 		deviceEuler.y =  alpha / 180 * Math.PI
 		deviceEuler.z = -gamma / 180 * Math.PI
 		deviceEuler.order = "YXZ"
 
-		var controllerQuaternion = new PhoneAsVRController.Quaternion().setFromEuler(deviceEuler)			
+		var controllerQuaternion = new PhoneAsDaydreamController.Quaternion().setFromEuler(deviceEuler)			
 		var poseQuaternion = originViewQuaternion.clone().multiply( controllerQuaternion )
 		poseQuaternion.toArray(gamepad.pose.orientation)
 		
@@ -109,7 +109,7 @@ PhoneAsVRController.Phone = function(context, socket, phoneParameters){
 //////////////////////////////////////////////////////////////////////////////
 
 // general spec for Gamepad API - https://www.w3.org/TR/gamepad/
-PhoneAsVRController.Phone._gamepadTemplate = {
+PhoneAsDaydreamController.Phone._gamepadTemplate = {
 	'id' : 'PhoneAsGamepad.js Controller',
 	'index' : 0,
 	'connected' : true,

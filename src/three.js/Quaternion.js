@@ -1,4 +1,4 @@
-var PhoneAsVRController = PhoneAsVRController || {}
+var PhoneAsDaydreamController = PhoneAsDaydreamController || {}
 
 /**
  * @author mikael emtinger / http://gomo.se/
@@ -7,7 +7,7 @@ var PhoneAsVRController = PhoneAsVRController || {}
  * @author bhouston / http://clara.io
  */
 
-PhoneAsVRController.Quaternion = function ( x, y, z, w ) {
+PhoneAsDaydreamController.Quaternion = function ( x, y, z, w ) {
 
 	this._x = x || 0;
 	this._y = y || 0;
@@ -16,9 +16,9 @@ PhoneAsVRController.Quaternion = function ( x, y, z, w ) {
 
 };
 
-PhoneAsVRController.Quaternion.prototype = {
+PhoneAsDaydreamController.Quaternion.prototype = {
 
-	constructor: PhoneAsVRController.Quaternion,
+	constructor: PhoneAsDaydreamController.Quaternion,
 
 	get x () {
 
@@ -106,9 +106,9 @@ PhoneAsVRController.Quaternion.prototype = {
 
 	setFromEuler: function ( euler, update ) {
 
-		if ( euler instanceof PhoneAsVRController.Euler === false ) {
+		if ( euler instanceof PhoneAsDaydreamController.Euler === false ) {
 
-			throw new Error( 'PhoneAsVRController.Quaternion: .setFromEuler() now expects a Euler rotation rather than a Vector3 and order.' );
+			throw new Error( 'PhoneAsDaydreamController.Quaternion: .setFromEuler() now expects a Euler rotation rather than a Vector3 and order.' );
 
 		}
 
@@ -265,7 +265,7 @@ PhoneAsVRController.Quaternion.prototype = {
 
 		return function ( vFrom, vTo ) {
 
-			if ( v1 === undefined ) v1 = new PhoneAsVRController.Vector3();
+			if ( v1 === undefined ) v1 = new PhoneAsDaydreamController.Vector3();
 
 			r = vFrom.dot( vTo ) + 1;
 
@@ -372,7 +372,7 @@ PhoneAsVRController.Quaternion.prototype = {
 
 		if ( p !== undefined ) {
 
-			console.warn( 'PhoneAsVRController.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.' );
+			console.warn( 'PhoneAsDaydreamController.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.' );
 			return this.multiplyQuaternions( q, p );
 
 		}
@@ -511,7 +511,7 @@ PhoneAsVRController.Quaternion.prototype = {
 
 };
 
-Object.assign( PhoneAsVRController.Quaternion, {
+Object.assign( PhoneAsDaydreamController.Quaternion, {
 
 	slerp: function( qa, qb, qm, t ) {
 
