@@ -1,7 +1,7 @@
 {
   "name": "phoneasdaydreamcontroller",
-  "version": "0.0.1",
-  "description": "using your phone as a controller for VR",
+  "version": "1.0.0",
+  "description": "Use your phone as a daydream controller",
   "dependencies": {
     "socket.io": "^1.5.1"
   },

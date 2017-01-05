@@ -12,7 +12,6 @@ PhoneAsDaydreamController.buttonIndex = {
 PhoneAsDaydreamController.Phone = function(context, socket, phoneParameters){
 	var _this = this
 	
-	
 
 	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsDaydreamController.Phone._gamepadTemplate))
 	this.gamepad.index = phoneParameters.gamepadIndex
