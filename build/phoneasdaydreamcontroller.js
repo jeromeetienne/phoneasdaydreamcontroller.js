@@ -987,9 +987,8 @@ PhoneAsDaydreamController.overloadGamepadsAPI = function(serverUrl){
 		// test is there is at least one actual gamepad
 		var actualGamepadConnected = false
 		for( var i = 0; i < actualGamepads.length; i++ ){
-			if( actualGamepads[i] !== null )	actualGamepadConnected = true
+			if( actualGamepads[i] )	actualGamepadConnected = true
 		}
-
 		// if an actual gamepads are connected, return this one (an not phoneAsDaydreamController ones)
 		if( actualGamepadConnected )	return actualGamepads
 
@@ -1012,7 +1011,6 @@ PhoneAsDaydreamController.buttonIndex = {
 
 PhoneAsDaydreamController.Phone = function(context, socket, phoneParameters){
 	var _this = this
-	
 	
 
 	this.gamepad  = JSON.parse(JSON.stringify(PhoneAsDaydreamController.Phone._gamepadTemplate))
@@ -1111,7 +1109,7 @@ PhoneAsDaydreamController.Phone = function(context, socket, phoneParameters){
 
 // general spec for Gamepad API - https://www.w3.org/TR/gamepad/
 PhoneAsDaydreamController.Phone._gamepadTemplate = {
-	'id' : 'PhoneAsGamepad.js Controller',
+	'id' : 'PhoneAsDaydreamController.js Controller',
 	'index' : 0,
 	'connected' : true,
 	'mapping' : 'standard',

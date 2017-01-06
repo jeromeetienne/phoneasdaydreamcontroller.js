@@ -109,7 +109,7 @@ PhoneAsDaydreamController.Phone = function(context, socket, phoneParameters){
 
 // general spec for Gamepad API - https://www.w3.org/TR/gamepad/
 PhoneAsDaydreamController.Phone._gamepadTemplate = {
-	'id' : 'PhoneAsGamepad.js Controller',
+	'id' : 'PhoneAsDaydreamController.js Controller',
 	'index' : 0,
 	'connected' : true,
 	'mapping' : 'standard',
